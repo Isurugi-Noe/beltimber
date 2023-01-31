@@ -13,5 +13,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BELTIMBER }}'
-          projectId: beltimber
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BELTIMBER_D5BDA }}'
+          projectId: beltimber-d5bda

@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "beltimber"
-  }
+    "default": "beltimber-d5bda",
+    "beltimber": "beltimber-d5bda"
+  },
+  "targets": {},
+  "etags": {}
 }
