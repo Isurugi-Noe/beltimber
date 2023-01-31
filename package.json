@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/Isurugi-Noe/beltimber/issues"
   },
-  "homepage": "https://github.com/Isurugi-Noe/beltimber#readme"
+  "homepage": "https://github.com/Isurugi-Noe/beltimber#readme",
+  "dependencies": {
+    "firebase-functions": "^4.2.0"
+  }
 }
