@@ -1,0 +1,19 @@
+{
+  "name": "beltimber",
+  "version": "1.0.0",
+  "description": "Bel Site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Isurugi-Noe/beltimber.git"
+  },
+  "author": "Rue",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Isurugi-Noe/beltimber/issues"
+  },
+  "homepage": "https://github.com/Isurugi-Noe/beltimber#readme"
+}
