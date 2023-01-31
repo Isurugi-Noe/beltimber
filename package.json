@@ -1,9 +1,19 @@
 {
-  "engines": {
-    "node": "12"
+  "name": "beltimber",
+  "version": "1.0.0",
+  "description": "Beltimber Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "firebase-admin": "^9.3.0",
-    "firebase-functions": "^3.11.0"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Isurugi-Noe/beltimber.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Isurugi-Noe/beltimber/issues"
+  },
+  "homepage": "https://github.com/Isurugi-Noe/beltimber#readme"
 }
