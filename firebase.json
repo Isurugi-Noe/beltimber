@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "beltimber",
+    "site": "beltimber-d02e2",
     "public": "public",
     "ignore": [
       "firebase.json",
