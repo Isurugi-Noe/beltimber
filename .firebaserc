@@ -1,8 +1,6 @@
 {
   "projects": {
     "default": "beltimber",
-    "beltimber": "beltimber",
-    "staging": "beltimber"
   },
   "targets": {},
   "etags": {}
