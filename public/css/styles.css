@@ -1,7 +1,7 @@
 body {
 	margin: 0;
 	font-family: 'Oswald', sans-serif;
-	color:  #fff;
+	color:  #fff !important;
 	background: #000;
 }
 
@@ -67,7 +67,7 @@ body {
 div.hr {
 	width: 50%;
 	height: 1.5px;
-	background-color: #fff;
+	background-color: #fff !important;
 	margin: 10px 0;
 }
 
@@ -125,7 +125,7 @@ div.hr {
 	right: 10px;
 	bottom: 5px;
 	opacity: 0.5;
-	color: #fff;
+	color: #fff !important;
 	text-decoration: none;
 }
 
@@ -200,7 +200,7 @@ div.hr {
 
 .char-wrapper h2, .char-wrapper h5, .char-wrapper ul, .char-wrapper p, .inner-stats {
 	mix-blend-mode: screen;
-	color: #cfcfcf;
+	color: #cfcfcf !important;
 	font-family: 'PT Sans Narrow', sans-serif;
 }
 
@@ -269,7 +269,7 @@ div.hr {
 	min-width: 70px;
 	text-align: center;
 	border-radius: 5px;
-	color: #333;
+	color: #333 !important;
 }
 
 .row.perceptions {
@@ -296,7 +296,7 @@ div.hr {
 
 .column.page h1, .column.page h2, .column.page p, .column.page img {
 	font-family: 'Bad Script', cursive;
-	color: #333;
+	color: #333 !important;
 	mix-blend-mode: multiply;
 	font-weight: bold;
 }
