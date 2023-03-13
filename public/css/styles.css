@@ -330,6 +330,7 @@ div.hr {
 	height: auto;
 	width: 100%;
 	align-items: center;
+	justify-content: center;
 }
 
 .ooc-info img{
