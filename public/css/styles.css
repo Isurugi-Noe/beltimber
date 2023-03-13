@@ -344,6 +344,8 @@ div.hr {
 	max-width: 100%;
 	padding: 0 10px;
 	flex-direction: column;
+	box-sizing: border-box;
+	margin-bottom: 25px;
 }
 
 @keyframes glitch{
@@ -430,7 +432,6 @@ div.hr {
 	.ooc-w div {
 		width: 50%;
 		padding: 5px;
-		margin-bottom: 5px;
 	}
 	.ooc-r {
 		text-align: right;
@@ -481,7 +482,6 @@ div.hr {
 	.ooc-w div {
 		width: 50%;
 		padding: 5px;
-		margin-bottom: 5px;
 	}
 	.ooc-r {
 		text-align: right;
@@ -551,7 +551,6 @@ div.hr {
 	.ooc-w div {
 		width: 50%;
 		padding: 5px;
-		margin-bottom: 5px;
 	}
 	.ooc-r {
 		text-align: right;
