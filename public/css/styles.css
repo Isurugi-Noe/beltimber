@@ -326,6 +326,22 @@ div.hr {
 	text-align: center;
 }
 
+.ooc-info {
+	width: 100%;
+	align-items: center;
+}
+
+.ooc-info img{
+	width: 500px;
+	max-width: 100%;
+}
+
+.ooc-w {
+	display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
 @keyframes glitch{
 	2%,64%{
 		transform: translate(2px,0) skew(0deg);
