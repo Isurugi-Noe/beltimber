@@ -346,6 +346,12 @@ div.hr {
 
 .ooc-w div {
 	width: 50%;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+.ooc-r {
+	text-align: right;
 }
 
 @keyframes glitch{
