@@ -133,7 +133,7 @@ div.hr {
 	opacity: 1;
 }
 
-.row.about {
+.row.about, .row.ooc {
 	background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/page-v.jpg');
 	background-size:  100% 100%;
 	flex-direction: column-reverse;
@@ -460,7 +460,7 @@ div.hr {
 	.main .column{
 		width: 25%;
 	}
-	.row.about {
+	.row.about, .row.ooc {
 		background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/page-h.jpg');
 		flex-direction: row;
 		justify-content: center;
