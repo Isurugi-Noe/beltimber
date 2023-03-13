@@ -344,6 +344,10 @@ div.hr {
     flex-direction: row;
 }
 
+.ooc-w div {
+	width: 50%;
+}
+
 @keyframes glitch{
 	2%,64%{
 		transform: translate(2px,0) skew(0deg);
