@@ -333,6 +333,10 @@ div.hr {
 	height: auto;
 	min-height: 100vh;
 	justify-content: flex-end;
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 .ooc-info {
