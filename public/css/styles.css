@@ -326,10 +326,13 @@ div.hr {
 	text-align: center;
 }
 
-.row.ooc {
+.row.about {
 	background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/marble-v.jpg');
-	flex-direction: row;
-	justify-content: center;
+	background-size:  100% 100%;
+	flex-direction: column-reverse;
+	height: auto;
+	min-height: 100vh;
+	justify-content: flex-end;
 }
 
 .ooc-info {
