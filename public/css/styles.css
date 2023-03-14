@@ -446,6 +446,11 @@ div.hr {
 	.column.page {
 		background-image: url('../img/paper.png');
 	}
+	.row.ooc {
+		background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/marble-h.jpg');
+		flex-direction: row;
+		justify-content: center;
+	}
 	.ooc-w {    
 		justify-content: space-between;
 		flex-direction: row;
@@ -498,6 +503,11 @@ div.hr {
 	}
 	.column.page {
 		background-image: url('../img/paper.png');
+	}
+	.row.ooc {
+		background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/marble-h.jpg');
+		flex-direction: row;
+		justify-content: center;
 	}
 	.ooc-w {    
 		justify-content: space-between;
