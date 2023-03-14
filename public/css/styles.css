@@ -336,6 +336,7 @@ div.hr {
 .ooc-info img{
 	width: 500px;
 	max-width: 95%;
+	margin-top: 25px;
 }
 
 .ooc-w {
@@ -449,6 +450,9 @@ div.hr {
 	.ooc-r {
 		text-align: right;
 	}
+	.ooc-info img {
+		margin-top: 0;
+	}
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
@@ -501,6 +505,9 @@ div.hr {
 	}
 	.ooc-r {
 		text-align: right;
+	}
+	.ooc-info img {
+		margin-top: 0;
 	}
 }
 
@@ -573,5 +580,8 @@ div.hr {
 	}
 	.ooc-r {
 		text-align: right;
+	}
+	.ooc-info img {
+		margin-top: 0;
 	}
 }
