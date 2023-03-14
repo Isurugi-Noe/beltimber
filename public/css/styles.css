@@ -353,6 +353,7 @@ div.hr {
 .ooc-w div {
     margin-bottom: 10px;
     text-align: center;
+    box-sizing: border-box;
 }
 
 .ooc-w .ooc-m {
@@ -441,7 +442,7 @@ div.hr {
 		flex-direction: row;
 	}
 	.ooc-w div {
-		width: 45%;
+		width: 50%;
 		padding: 5px;
 	}
 	.ooc-w .ooc-l {
@@ -497,7 +498,7 @@ div.hr {
 		flex-direction: row;
 	}
 	.ooc-w div {
-		width: 45%;
+		width: 50%;
 		padding: 5px;
 	}
 	.ooc-w .ooc-l {
@@ -572,7 +573,7 @@ div.hr {
 		flex-direction: row;
 	}
 	.ooc-w div {
-		width: 45%;
+		width: 50%;
 		padding: 5px;
 	}
 	.ooc-w .ooc-l {
