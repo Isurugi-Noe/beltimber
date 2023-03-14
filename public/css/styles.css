@@ -326,7 +326,7 @@ div.hr {
 	text-align: center;
 }
 
-.row.about {
+.row.ooc {
 	background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/marble-v.jpg');
 	background-size:  100% 100%;
 	flex-direction: column-reverse;
