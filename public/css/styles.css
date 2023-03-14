@@ -349,6 +349,10 @@ div.hr {
 	margin-bottom: 25px;
 }
 
+.ooc-w div {
+    margin-bottom: 10px;
+}
+
 .ooc-w .ooc-m {
 	width: 100%;
 }
