@@ -129,11 +129,11 @@ div.hr {
 	text-decoration: none;
 }
 
-.credit:hover{
+.credit:hover {
 	opacity: 1;
 }
 
-.row.about, .row.ooc {
+.row.about {
 	background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/page-v.jpg');
 	background-size:  100% 100%;
 	flex-direction: column-reverse;
@@ -164,7 +164,7 @@ div.hr {
 	align-items: center;
 }
 
-.charcard .char-wrapper{
+.charcard .char-wrapper {
 	position: relative;
 	width: 80%;
 	max-width: 500px;
@@ -175,7 +175,7 @@ div.hr {
 	box-shadow: 0px 0px 20px 1px black;;
 }
 
-.char-wrapper:before, .char-wrapper:after{
+.char-wrapper:before, .char-wrapper:after {
 	content: "";
 	display: block;
 	width: 100.5%;
@@ -204,7 +204,7 @@ div.hr {
 	font-family: 'PT Sans Narrow', sans-serif;
 }
 
-.char-wrapper .attributes{
+.char-wrapper .attributes {
 	color: #8164a9;
 }
 
@@ -223,7 +223,7 @@ div.hr {
 	margin: 10px 0 0;
 }
 
-.chartitle{
+.chartitle {
 	font-style: italic;
 	font-size: 80%;
 	margin: 0;
@@ -301,12 +301,12 @@ div.hr {
 	font-weight: bold;
 }
 
-.column.page h1, .column.page h2{
+.column.page h1, .column.page h2 {
 	text-align: center;
 	margin: 5px 0;
 }
 
-.page-cols{
+.page-cols {
 	display: flex;
 	flex-direction: column-reverse;
 }
@@ -315,7 +315,7 @@ div.hr {
 	flex-direction: column;
 }
 
-.page-cols img{
+.page-cols img {
 	max-width: 100%;
 	width: 275px;
 	margin: 0 auto;
@@ -326,6 +326,12 @@ div.hr {
 	text-align: center;
 }
 
+.row.ooc {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/marble-v.jpg');
+	flex-direction: row;
+	justify-content: center;
+}
+
 .ooc-info {
 	height: auto;
 	width: 100%;
@@ -333,7 +339,7 @@ div.hr {
 	justify-content: center;
 }
 
-.ooc-info img{
+.ooc-info img {
 	width: 500px;
 	max-width: 95%;
 	margin-top: 25px;
@@ -413,10 +419,10 @@ div.hr {
 		padding: 0px 20px 20px;
 		max-height: initial;
 	}
-	.main .column{
+	.main .column {
 		width: 25%;
 	}
-	.credit{
+	.credit {
 		top: 5px;
 		left: 10px;
 		bottom: initial;
@@ -425,7 +431,7 @@ div.hr {
 	.column.page {
 		background-size: cover;
 	}
-	.page-cols, .page-cols.rv{
+	.page-cols, .page-cols.rv {
 		flex-direction: row;
 	}
 	.l {
@@ -466,10 +472,10 @@ div.hr {
 		padding: 0px 20px 20px;
 		max-height: initial;
 	}
-	.main .column{
+	.main .column {
 		width: 25%;
 	}
-	.credit{
+	.credit {
 		top: 5px;
 		left: 10px;
 		bottom: initial;
@@ -478,7 +484,7 @@ div.hr {
 	.column.page {
 		background-size: cover;
 	}
-	.page-cols, .page-cols.rv{
+	.page-cols, .page-cols.rv {
 		flex-direction: row;
 	}
 	.l {
@@ -519,15 +525,15 @@ div.hr {
 		padding: 0px 20px 20px;
 		max-height: initial;
 	}
-	.main .column{
+	.main .column {
 		width: 25%;
 	}
-	.row.about, .row.ooc {
+	.row.about {
 		background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/page-h.jpg');
 		flex-direction: row;
 		justify-content: center;
 	}
-	.column.info{
+	.column.info {
 		justify-content: center;
 		width: 50%;
 	}
@@ -541,7 +547,7 @@ div.hr {
 	.stats{
 		justify-content: flex-start;
 	}
-	.credit{
+	.credit {
 		top: 5px;
 		left: 10px;
 		bottom: initial;
@@ -550,7 +556,7 @@ div.hr {
 	.column.page {
 		background-size: cover;
 	}
-	.page-cols, .page-cols.rv{
+	.page-cols, .page-cols.rv {
 		flex-direction: row;
 	}
 	.l {
@@ -561,6 +567,11 @@ div.hr {
 	}
 	.column.page {
 		background-image: url('../img/paper.png');
+	}
+	.row.ooc {
+		background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/marble-h.jpg');
+		flex-direction: row;
+		justify-content: center;
 	}
 	.ooc-w {    
 		justify-content: space-between;
