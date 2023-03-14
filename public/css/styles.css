@@ -223,6 +223,10 @@ div.hr {
 	margin: 10px 0 0;
 }
 
+.charcard sub {
+	font-family: 'Libre Baskerville', serif;
+}
+
 .chartitle {
 	font-style: italic;
 	font-size: 80%;
