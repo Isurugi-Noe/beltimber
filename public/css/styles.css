@@ -385,6 +385,7 @@ div.hr {
     height: auto;
     background-image: url('../img/collage.jpg?v=21');
     background-position: center;
+    background-size: cover;
 }
 
 .gallery .column {
