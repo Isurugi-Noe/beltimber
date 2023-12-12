@@ -29,13 +29,13 @@ body {
 	z-index: 1;
 }
 
-.main .column{
+.main .column, .gallery .column{
 	cursor: pointer;
 	padding: 20px;
 	max-height: 25vh;
 }
 
-.main .column::before { 
+.main .column::before, .gallery .column::before { 
 	content:"";
 	opacity: 1;
 	position:absolute; top:0;right:0;bottom:0;left:0;
@@ -45,7 +45,7 @@ body {
 	z-index: 0;
 }
 
-.main .column:hover::before { 
+.main .column:hover::before, .gallery .column:hover::before { 
 	transform: scale(1.2);
 	opacity: 0.3;
 }
@@ -375,6 +375,67 @@ div.hr {
 
 .ooc-w .ooc-m {
 	width: 100%;
+}
+
+.row.gallery {
+	display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: auto;
+    background-image: url('../img/collage.jpg?v=21');
+    background-position: center;
+}
+
+.gallery .column {
+	width: 38vw;
+	cursor: default;
+	justify-content: end;
+	background: #000;
+}
+
+.column.cd::before {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('../img/gl/cd.jpg?v=21');
+}
+
+.column.bj::before {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('../img/gl/bj.jpg?v=21');
+}
+
+.column.bs::before {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('../img/gl/bs.jpg?v=21');
+}
+
+.column.dhk::before {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('../img/gl/dhk.jpg?v=21');
+}
+
+.column.hrs::before {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('../img/gl/hr.jpg?v=21');
+}
+
+.column.hygba::before {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('../img/gl/hygba.jpg?v=21');
+}
+
+.column.lh::before {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('../img/gl/lh.jpg?v=21');
+}
+
+.column.mwf::before {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('../img/gl/mwf.jpg?v=21');
+}
+
+.column.nsb::before {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('../img/gl/nsb.jpg?v=21');
+}
+
+.column.rgl::before {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('../img/gl/rgl.jpg?v=21');
+}
+
+.gallery .column:hover .col-title:after {
+	top: 0;
 }
 
 @keyframes glitch{
