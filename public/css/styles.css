@@ -148,7 +148,7 @@ div.hr {
 }
 
 .column.img {
-	justify-content: end;
+	justify-content: center;
 	height: auto;
 	overflow: visible;
 }
@@ -651,7 +651,7 @@ div.hr {
 		width: 50%;
 	}
 	.column.img img{
-		height: 95vh;
+		height: 75vh;
 		width: auto;
 	}
 	.inner-stats {
