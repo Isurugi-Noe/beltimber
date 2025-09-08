@@ -31,6 +31,14 @@ body::before {
   text-shadow: 0 0 10px rgba(227, 199, 122, 1);
 }
 
+.main h1 span {
+	color: #b7b763;
+	font-size: 120%;
+	margin-bottom: 20px;
+	display: block;
+	text-shadow: 0 0 10px rgb(243 239 145);
+}
+
 #firefly-container {
   position: fixed;
   inset: 0;
@@ -78,7 +86,7 @@ body::before {
     display: flex;
     justify-content: center;
     align-items: center;
-		background-size: 110%;
+		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: center;
 		transition: background-position 0.1s ease;
