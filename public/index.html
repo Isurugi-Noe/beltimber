@@ -197,17 +197,42 @@
 	</script>
 	<script>
 	  const mainContainer = document.querySelector('.container.main');
+	  const fireflyContainer = document.getElementById('firefly-container');
+
+	  let targetX = 0;
+	  let targetY = 0;
+	  let bgX = 0;
+	  let bgY = 0;
+	  let ffX = 0;
+	  let ffY = 0;
 
 	  document.addEventListener('mousemove', (e) => {
 	    const { innerWidth, innerHeight } = window;
-	    const x = (e.clientX / innerWidth - 0.5) * 2; // range: -1 to 1
+	    const x = (e.clientX / innerWidth - 0.5) * 2;
 	    const y = (e.clientY / innerHeight - 0.5) * 2;
 
-	    const moveX = x * 10; // Adjust for intensity
-	    const moveY = y * 10;
-
-	    mainContainer.style.backgroundPosition = `${50 + moveX}% ${50 + moveY}%`;
+	    targetX = x;
+	    targetY = y;
 	  });
+
+	  function animateParallax() {
+	    // Smooth interpolation
+	    bgX += (targetX * 10 - bgX) * 0.05;
+	    bgY += (targetY * 10 - bgY) * 0.05;
+
+	    ffX += (targetX * 4 - ffX) * 0.04; // smaller scale for fireflies
+	    ffY += (targetY * 4 - ffY) * 0.04;
+
+	    // Apply to background
+	    mainContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
+
+	    // Apply to firefly container using transform (better performance)
+	    fireflyContainer.style.transform = `translate(${ffX}px, ${ffY}px)`;
+
+	    requestAnimationFrame(animateParallax);
+	  }
+
+	  animateParallax();
 	</script>
 </body>
 </html>
