@@ -23,6 +23,10 @@ body::before {
   );
 }
 
+body h1 {
+	margin: 0;
+}
+
 .fireflies {
   position: fixed;
   top: 0;
