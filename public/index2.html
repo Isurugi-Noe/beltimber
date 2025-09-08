@@ -52,20 +52,7 @@
 </head>
 
 <body> <!-- debug 5 -->
-	<div class="fireflies">
-	  <div class="firefly"></div>
-	  <div class="firefly"></div>
-	  <div class="firefly"></div>
-	  <div class="firefly"></div>
-	  <div class="firefly"></div>
-	  <div class="firefly"></div>
-	  <div class="firefly"></div>
-	  <div class="firefly"></div>
-	  <div class="firefly"></div>
-	  <div class="firefly"></div>
-	  <div class="firefly"></div>
-	  <div class="firefly"></div>
-	</div>
+	<div id="firefly-container"></div>
 	<div class="container main">
 		<h1>"This place hasn't been silent since he learned to listen."</h1>
 	</div>
@@ -152,6 +139,61 @@
 		}
 
 		next()
+	</script>
+	<script>
+	  const NUM_FIREFLIES = 30;
+	  const MIN_DISTANCE = 50; // Minimum distance between fireflies
+
+	  const container = document.getElementById("firefly-container");
+	  const usedPositions = [];
+
+	  function getRandomPosition() {
+	    const maxWidth = window.innerWidth;
+	    const maxHeight = window.innerHeight;
+	    let x, y;
+	    let attempts = 0;
+
+	    do {
+	      x = Math.random() * maxWidth;
+	      y = Math.random() * maxHeight;
+	      attempts++;
+	    } while (
+	      usedPositions.some(pos => {
+	        const dx = pos.x - x;
+	        const dy = pos.y - y;
+	        return Math.sqrt(dx * dx + dy * dy) < MIN_DISTANCE;
+	      }) && attempts < 50
+	    );
+
+	    usedPositions.push({ x, y });
+	    return { x, y };
+	  }
+
+	  for (let i = 0; i < NUM_FIREFLIES; i++) {
+	    const firefly = document.createElement("div");
+	    firefly.classList.add("firefly");
+
+	    const { x, y } = getRandomPosition();
+
+	    // Random scale (size variation)
+	    const scale = 0.6 + Math.random() * 1.2;
+
+	    // Random durations and delays
+	    const flickerDuration = 1.5 + Math.random() * 1.5;
+	    const wanderDuration = 15 + Math.random() * 10;
+	    const delay = Math.random() * 5;
+
+	    firefly.style.top = `${y}px`;
+	    firefly.style.left = `${x}px`;
+	    firefly.style.transform = `scale(${scale})`;
+
+	    firefly.style.animation = `
+	      flicker ${flickerDuration.toFixed(2)}s ease-in-out ${delay.toFixed(2)}s infinite,
+	      wander ${wanderDuration.toFixed(2)}s ease-in-out ${delay.toFixed(2)}s infinite
+	    `;
+
+	    container.appendChild(firefly);
+	  }
 	</script>
 </body>
 </html>
