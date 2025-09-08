@@ -23,10 +23,12 @@ body::before {
   );
 }
 
-body h1 {
-	margin: 0;
+.main h1 {
+	text-align: center;
+  max-width: 85%;
+  margin: 0;
 	color: #fff3d5;
-    text-shadow: 0 0 10px rgba(227, 199, 122, 1);
+  text-shadow: 0 0 10px rgba(227, 199, 122, 1);
 }
 
 #firefly-container {
@@ -76,7 +78,7 @@ body h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-		background-size: cover;
+		background-size: 110%;
 		background-repeat: no-repeat;
 		background-position: center;
 		transition: background-position 0.1s ease;
