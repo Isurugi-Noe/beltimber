@@ -31,7 +31,7 @@ body::before {
   text-shadow: 0 0 10px rgba(227, 199, 122, 1);
 }
 
-.main h1 span {
+.main h1 span.text {
 	color: #b7b763;
 	font-size: 120%;
 	margin-bottom: 20px;
