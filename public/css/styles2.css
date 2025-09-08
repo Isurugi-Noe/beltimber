@@ -3,10 +3,15 @@ body {
 	font-family: 'Oswald', sans-serif;
 	color:  #fff;
 	background: #000;
+	height: 100vh;
+	width: 100%;
 }
 
 .main {
 	position: relative;
+	height: 100vh;
+	width: 100%;
+	background-image: url('../img/bg1.png')
 }
 
 .row, .column {
@@ -79,22 +84,6 @@ div.hr {
 	animation: glitchBotom 1.5s linear infinite;
 	clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
 	-webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
-}
-
-.column.about::before {
-	background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/perceptively.jpg');
-}
-
-.column.perceptions::before {
-	background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/blindly.jpg');
-}
-
-.column.gallery::before {
-	background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/luminously.jpg');
-}
-
-.column.ooc::before {
-	background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../img/oocly.jpg');
 }
 
 .credit {
