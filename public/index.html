@@ -195,5 +195,19 @@
 	    container.appendChild(firefly);
 	  }
 	</script>
+	<script>
+	  const mainContainer = document.querySelector('.container.main');
+
+	  document.addEventListener('mousemove', (e) => {
+	    const { innerWidth, innerHeight } = window;
+	    const x = (e.clientX / innerWidth - 0.5) * 2; // range: -1 to 1
+	    const y = (e.clientY / innerHeight - 0.5) * 2;
+
+	    const moveX = x * 10; // Adjust for intensity
+	    const moveY = y * 10;
+
+	    mainContainer.style.backgroundPosition = `${50 + moveX}% ${50 + moveY}%`;
+	  });
+	</script>
 </body>
 </html>

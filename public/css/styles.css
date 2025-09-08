@@ -76,6 +76,10 @@ body h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+		transition: background-position 0.1s ease;
 }
 
 .row, .column {
