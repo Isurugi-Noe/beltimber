@@ -286,10 +286,9 @@
 		const svg = document.getElementById('map-lines');
 		svg.innerHTML = ''; // Clear previous lines
 
-		// Get bounding rect of map overlay
 		const parentRect = document.getElementById('map-overlay').getBoundingClientRect();
 
-		// Get center positions of each sketch image
+		// Get center positions of each sketch
 		const positions = Array.from(sketches).map(img => {
 			const rect = img.getBoundingClientRect();
 			return {
@@ -298,19 +297,55 @@
 			};
 		});
 
-		// Draw dotted lines between each consecutive point
+		const trimAmount = 40; // Distance from image center to start/stop drawing
+
 		for (let i = 0; i < positions.length - 1; i++) {
-			const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-			line.setAttribute('x1', positions[i].x);
-			line.setAttribute('y1', positions[i].y);
-			line.setAttribute('x2', positions[i + 1].x);
-			line.setAttribute('y2', positions[i + 1].y);
-			line.setAttribute('stroke', 'black');
-			line.setAttribute('stroke-width', '2');
-			line.setAttribute('stroke-dasharray', '5, 5'); // dotted line
-			svg.appendChild(line);
+			const p1 = positions[i];
+			const p2 = positions[i + 1];
+
+			// Vector between points
+			const dx = p2.x - p1.x;
+			const dy = p2.y - p1.y;
+			const length = Math.hypot(dx, dy);
+
+			// Unit direction vector
+			const ux = dx / length;
+			const uy = dy / length;
+
+			// Trimmed points
+			const start = {
+				x: p1.x + ux * trimAmount,
+				y: p1.y + uy * trimAmount
+			};
+			const end = {
+				x: p2.x - ux * trimAmount,
+				y: p2.y - uy * trimAmount
+			};
+
+			// Midpoint for curve control
+			const midX = (start.x + end.x) / 2;
+			const midY = (start.y + end.y) / 2;
+
+			// Random offset for hand-drawn curve
+			const randomOffsetX = (Math.random() - 0.5) * 80;
+			const randomOffsetY = (Math.random() - 0.5) * 80;
+
+			const controlX = midX + randomOffsetX;
+			const controlY = midY + randomOffsetY;
+
+			// Create SVG path
+			const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+			const d = `M ${start.x},${start.y} Q ${controlX},${controlY} ${end.x},${end.y}`;
+			path.setAttribute('d', d);
+			path.setAttribute('fill', 'none');
+			path.setAttribute('stroke', 'black');
+			path.setAttribute('stroke-width', '2');
+			path.setAttribute('stroke-dasharray', '5, 5');
+
+			svg.appendChild(path);
 		}
 	}
+
 
 	// Recalculate lines on resize (responsive)
 	window.addEventListener('resize', function () {
