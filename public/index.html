@@ -288,7 +288,6 @@
 
 		const parentRect = document.getElementById('map-overlay').getBoundingClientRect();
 
-		// Get center positions of each sketch
 		const positions = Array.from(sketches).map(img => {
 			const rect = img.getBoundingClientRect();
 			return {
@@ -297,22 +296,18 @@
 			};
 		});
 
-		const trimAmount = 40; // Distance from image center to start/stop drawing
+		const trimAmount = 40;
 
 		for (let i = 0; i < positions.length - 1; i++) {
 			const p1 = positions[i];
 			const p2 = positions[i + 1];
 
-			// Vector between points
 			const dx = p2.x - p1.x;
 			const dy = p2.y - p1.y;
 			const length = Math.hypot(dx, dy);
-
-			// Unit direction vector
 			const ux = dx / length;
 			const uy = dy / length;
 
-			// Trimmed points
 			const start = {
 				x: p1.x + ux * trimAmount,
 				y: p1.y + uy * trimAmount
@@ -322,30 +317,52 @@
 				y: p2.y - uy * trimAmount
 			};
 
-			// Midpoint for curve control
-			const midX = (start.x + end.x) / 2;
-			const midY = (start.y + end.y) / 2;
+			// Create intermediate control points for bends
+			const segments = 3; // Increase for more bends
+			const points = [start];
 
-			// Random offset for hand-drawn curve
-			const randomOffsetX = (Math.random() - 0.5) * 80;
-			const randomOffsetY = (Math.random() - 0.5) * 80;
+			for (let j = 1; j < segments; j++) {
+				const t = j / segments;
+				const x = start.x + dx * t;
+				const y = start.y + dy * t;
 
-			const controlX = midX + randomOffsetX;
-			const controlY = midY + randomOffsetY;
+				// Random offset for bendiness
+				const offsetX = (Math.random() - 0.5) * 60;
+				const offsetY = (Math.random() - 0.5) * 60;
+
+				points.push({
+					x: x + offsetY, // Swap XY here to make bends more irregular
+					y: y + offsetX
+				});
+			}
+
+			points.push(end);
+
+			// Build a smooth path using quadratic curves between the points
+			let d = `M ${points[0].x},${points[0].y}`;
+			for (let j = 1; j < points.length; j++) {
+				const cp = points[j - 1]; // control point
+				const pt = points[j]; // target point
+				const mx = (cp.x + pt.x) / 2;
+				const my = (cp.y + pt.y) / 2;
+
+				// Use midpoints to smooth curve
+				d += ` Q ${cp.x},${cp.y} ${mx},${my}`;
+			}
 
 			// Create SVG path
 			const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-			const d = `M ${start.x},${start.y} Q ${controlX},${controlY} ${end.x},${end.y}`;
 			path.setAttribute('d', d);
 			path.setAttribute('fill', 'none');
 			path.setAttribute('stroke', 'black');
 			path.setAttribute('stroke-width', '2');
-			path.setAttribute('stroke-dasharray', '5, 5');
+			path.setAttribute('stroke-dasharray', '5 5');
+			path.setAttribute('stroke-dashoffset', '1000'); // initially hidden
+			path.style.animation = 'draw-dots 2s linear forwards';
 
 			svg.appendChild(path);
 		}
 	}
-
 
 	// Recalculate lines on resize (responsive)
 	window.addEventListener('resize', function () {
