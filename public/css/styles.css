@@ -60,12 +60,14 @@ body::before {
 	position: absolute;
 }
 
-@keyframes draw-dots {
-  from {
-    stroke-dashoffset: 1000; /* or whatever total length */
-  }
+#map-lines circle {
+  opacity: 0;
+  animation: fadeInDot 0.3s ease forwards;
+}
+
+@keyframes fadeInDot {
   to {
-    stroke-dashoffset: 0;
+    opacity: 1;
   }
 }
 
