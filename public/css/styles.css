@@ -31,16 +31,21 @@ body::before {
   text-shadow: 0 0 10px rgba(227, 199, 122, 1);
 }
 #map-overlay {
-	position: absolute;
-	top: 100vh; /* start below the screen */
+	position: fixed; /* <-- changed from absolute */
+	top: 0;
 	left: 0;
 	width: 100%;
-	max-width: 1000px;
 	height: 100vh;
 	z-index: 9999999999999;
 	background-image: url(img/paper-r.png);
 	background-size: cover;
-	transition: top 0.8s ease-in-out; /* smooth animation */
+	transform: translateY(100vh); /* start fully below viewport */
+	transition: transform 0.8s ease-in-out;
+	pointer-events: none; /* initially non-interactive */
+}
+#map-overlay.active {
+	transform: translateY(0); /* slide into view */
+	pointer-events: auto;
 }
 .main h1 span.text {
 	color: #d5d585;

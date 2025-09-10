@@ -286,10 +286,9 @@
 
 	// Wait for map to be shown then draw
 	document.getElementById('show-map-btn').addEventListener('click', function () {
-		const overlay = document.getElementById('map-overlay');
-		overlay.style.top = '0';
-
-		setTimeout(drawDottedLines, 900); // delay to wait for animation
+	const overlay = document.getElementById('map-overlay');
+	overlay.classList.add('active');
+	setTimeout(drawDottedLines, 900); // Delay to wait for animation
 	});
 
 	window.addEventListener('resize', drawDottedLines);
