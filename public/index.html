@@ -344,16 +344,27 @@ function drawDottedLines() {
       d += ` Q ${cp.x},${cp.y} ${mx},${my}`;
     }
 
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.setAttribute("d", d);
-    path.setAttribute("fill", "none");
-    path.setAttribute("stroke", "#fff3d5");
-    path.setAttribute("stroke-width", "2");
-    path.setAttribute("stroke-dasharray", "4 6");
-    path.setAttribute("stroke-dashoffset", "1000");
-    path.style.animation = "draw-dots 3s ease forwards";
+	const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+	path.setAttribute("d", d);
+	path.setAttribute("fill", "none");
+	path.setAttribute("stroke", "#fff3d5");
+	path.setAttribute("stroke-width", "2");
 
-    svg.appendChild(path);
+	// Use dashed line
+	path.setAttribute("stroke-dasharray", "4 6");
+
+	// This makes it start invisible
+	const totalLength = path.getTotalLength();
+	path.setAttribute("stroke-dashoffset", totalLength);
+
+	// Animate dashoffset from totalLength to 0
+	path.style.animation = "draw-dots 2s ease forwards";
+
+	// Optional: smooth fade-in
+	path.style.opacity = "1";
+
+	svg.appendChild(path);
+
   }
 }
 
