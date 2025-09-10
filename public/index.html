@@ -323,8 +323,8 @@
 	      const x = start.x + dx * t;
 	      const y = start.y + dy * t;
 
-	      const offsetX = (Math.random() - 0.5) * 60;
-	      const offsetY = (Math.random() - 0.5) * 60;
+	      const offsetX = (Math.random() - 0.5) * 120;
+	      const offsetY = (Math.random() - 0.5) * 120;
 
 	      points.push({
 	        x: x + offsetY,
@@ -338,7 +338,7 @@
 	  }
 	}
 
-	function animateDotsOnCurve(svg, points, totalDots = 60, interval = 30) {
+	function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 	  // Build curve from points using quadratic segments
 	  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
 	  let d = `M ${points[0].x},${points[0].y}`;
@@ -376,7 +376,7 @@
 
 	  drawNextDot();
 	}
-	
+
 	let resizeTimeout;
 	window.addEventListener('resize', () => {
 	  clearTimeout(resizeTimeout);
