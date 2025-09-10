@@ -44,6 +44,10 @@ body::before {
 	overflow: hidden; /* prevent content "falling out" */
 	pointer-events: none;
 	opacity: 0; /* fully invisible initially */
+	max-width: 1000px;
+	left: 0;
+  right: 0;
+  margin: auto;
 }
 
 #map-overlay.active {
@@ -51,6 +55,11 @@ body::before {
 	opacity: 1; /* now visible */
 	pointer-events: auto;
 }
+
+.sketch {
+	position: absolute;
+}
+
 .main h1 span.text {
 	color: #d5d585;
 	font-size: 120%;
