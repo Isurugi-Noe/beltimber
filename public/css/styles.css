@@ -63,27 +63,27 @@ body::before {
 
 /* Desktop layout (original) */
 .sketch.bones {
-  top: 4.8%;
-  left: 5.5%;
-  max-width: 15%;
+	top: 12%;
+	left: 14%;
+	max-width: 30%;
 }
 
 .sketch.cards {
-  top: 27.5%;
-  left: 27.5%;
-  max-width: 18%;
+	top: 20%;
+	left: 61%;
+	max-width: 24%;
 }
 
 .sketch.dreamcatcher {
-  top: 41.5%;
-  left: 5%;
-  max-width: 10%;
+	top: 61%;
+	left: 16%;
+	max-width: 200px;
 }
 
 .sketch.paths {
-  top: 66%;
-  left: 33.5%;
-  max-width: 15%;
+	top: 60%;
+	left: 57%;
+	max-width: 24%;
 }
 
 @media (max-width: 768px) {
