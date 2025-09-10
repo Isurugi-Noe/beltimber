@@ -57,11 +57,15 @@
 </head>
 
 <body> <!-- debug 5 -->
-	<div id="map-overlay" class="parchment">
-	  <img class="sketch" src="img/bones.png" style="top: 10%; left: 20%;" />
-	  <img class="sketch" src="img/cards.png" style="top: 40%; left: 50%;" />
-	  <img class="sketch" src="img/dreamcatcher.png" style="top: 30%; left: 30%;" />
-	  <img class="sketch" src="img/paths.png" style="top: 30%; left: 30%;" />
+	<div id="map-container" style="position: relative;">
+		<div id="map-overlay" class="parchment">
+			<svg id="map-lines" style="position: absolute; width: 100%; height: 100%; z-index: 1;"></svg>
+			
+			<img class="sketch" src="img/bones.png" style="top: 12%;left: 14%;max-width: 30%;">
+			<img class="sketch" src="img/cards.png" style="top: 20%;left: 61%;max-width: 24%;">
+			<img class="sketch" src="img/dreamcatcher.png" style="top: 61%;left: 16%;max-width: 200px;">
+			<img class="sketch" src="img/paths.png" style="top: 60%;left: 57%;max-width: 24%;">
+		</div>
 	</div>
 	<div id="firefly-container"></div>
 	<div class="container main">
@@ -248,6 +252,47 @@
 	  }
 
 	  animateParallax();
+	</script>
+	<script>
+		function drawDottedLines() {
+		const sketches = document.querySelectorAll('#map-overlay .sketch');
+		const svg = document.getElementById('map-lines');
+		svg.innerHTML = ''; // Clear old lines
+
+		// Get positions of images
+		const positions = Array.from(sketches).map(img => {
+			const rect = img.getBoundingClientRect();
+			const parentRect = img.parentElement.getBoundingClientRect();
+
+			return {
+				x: rect.left + rect.width / 2 - parentRect.left,
+				y: rect.top + rect.height / 2 - parentRect.top
+			};
+		});
+
+		// Draw dotted lines between each consecutive point
+		for (let i = 0; i < positions.length - 1; i++) {
+			const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+			line.setAttribute('x1', positions[i].x);
+			line.setAttribute('y1', positions[i].y);
+			line.setAttribute('x2', positions[i + 1].x);
+			line.setAttribute('y2', positions[i + 1].y);
+			line.setAttribute('stroke', 'black');
+			line.setAttribute('stroke-width', '2');
+			line.setAttribute('stroke-dasharray', '5,5'); // dotted style
+			svg.appendChild(line);
+		}
+	}
+
+	// Wait for map to be shown then draw
+	document.getElementById('show-map-btn').addEventListener('click', function () {
+		const overlay = document.getElementById('map-overlay');
+		overlay.style.top = '0';
+
+		setTimeout(drawDottedLines, 900); // delay to wait for animation
+	});
+
+	window.addEventListener('resize', drawDottedLines);
 	</script>
 </body>
 </html>

@@ -30,8 +30,17 @@ body::before {
 	color: #fff3d5;
   text-shadow: 0 0 10px rgba(227, 199, 122, 1);
 }
-#map-overlay{
-	display: none;
+#map-overlay {
+	position: absolute;
+	top: 100vh; /* start below the screen */
+	left: 0;
+	width: 100%;
+	max-width: 1000px;
+	height: 100vh;
+	z-index: 9999999999999;
+	background-image: url(img/paper-r.png);
+	background-size: cover;
+	transition: top 0.8s ease-in-out; /* smooth animation */
 }
 .main h1 span.text {
 	color: #d5d585;
