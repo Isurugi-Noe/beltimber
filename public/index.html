@@ -356,11 +356,19 @@
 			path.setAttribute('fill', 'none');
 			path.setAttribute('stroke', 'black');
 			path.setAttribute('stroke-width', '2');
-			path.setAttribute('stroke-dasharray', '5 5');
-			path.setAttribute('stroke-dashoffset', '1000'); // initially hidden
-			path.style.animation = 'draw-dots 2s linear forwards';
+			path.setAttribute('stroke-dasharray', '5 5'); // dotted style
 
+			// Append first to calculate length
 			svg.appendChild(path);
+
+			// Measure the full dashed path length
+			const pathLength = path.getTotalLength();
+
+			// Apply animation style
+			path.style.strokeDasharray = pathLength;
+			path.style.strokeDashoffset = pathLength;
+			path.style.animation = `draw-dots 2s ease-out forwards`;
+			path.style.animationDelay = `${i * 0.4}s`; // optional: staggered drawing
 		}
 	}
 
