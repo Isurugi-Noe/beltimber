@@ -367,7 +367,7 @@
 	    dot.setAttribute("cx", point.x);
 	    dot.setAttribute("cy", point.y);
 	    dot.setAttribute("r", 2);
-	    dot.setAttribute("fill", "#fff3d5");
+	    dot.setAttribute("fill", "#3a2f28");
 	    svg.appendChild(dot);
 
 	    i++;
@@ -376,6 +376,14 @@
 
 	  drawNextDot();
 	}
+	
+	let resizeTimeout;
+	window.addEventListener('resize', () => {
+	  clearTimeout(resizeTimeout);
+	  resizeTimeout = setTimeout(() => {
+	    drawDottedLines();
+	  }, 150); // delay in ms
+	});
 
 	</script>
 </body>
