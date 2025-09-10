@@ -254,16 +254,43 @@
 	  animateParallax();
 	</script>
 	<script>
-		function drawDottedLines() {
+	// Show the map when button is clicked
+	document.getElementById('show-map-btn').addEventListener('click', function () {
+		const overlay = document.getElementById('map-overlay');
+
+		// Add active class to slide map into view
+		overlay.classList.add('active');
+
+		// Lock background scroll
+		document.body.style.overflow = 'hidden';
+
+		// Wait for the animation to finish, then draw lines
+		setTimeout(drawDottedLines, 900);
+	});
+
+	// Close the map
+	document.getElementById('close-map-btn').addEventListener('click', function () {
+		const overlay = document.getElementById('map-overlay');
+
+		// Remove active class to slide map out
+		overlay.classList.remove('active');
+
+		// Re-enable background scroll
+		document.body.style.overflow = '';
+	});
+
+	// Draw dotted lines between .sketch images
+	function drawDottedLines() {
 		const sketches = document.querySelectorAll('#map-overlay .sketch');
 		const svg = document.getElementById('map-lines');
-		svg.innerHTML = ''; // Clear old lines
+		svg.innerHTML = ''; // Clear previous lines
 
-		// Get positions of images
+		// Get bounding rect of map overlay
+		const parentRect = document.getElementById('map-overlay').getBoundingClientRect();
+
+		// Get center positions of each sketch image
 		const positions = Array.from(sketches).map(img => {
 			const rect = img.getBoundingClientRect();
-			const parentRect = img.parentElement.getBoundingClientRect();
-
 			return {
 				x: rect.left + rect.width / 2 - parentRect.left,
 				y: rect.top + rect.height / 2 - parentRect.top
@@ -279,19 +306,17 @@
 			line.setAttribute('y2', positions[i + 1].y);
 			line.setAttribute('stroke', 'black');
 			line.setAttribute('stroke-width', '2');
-			line.setAttribute('stroke-dasharray', '5,5'); // dotted style
+			line.setAttribute('stroke-dasharray', '5, 5'); // dotted line
 			svg.appendChild(line);
 		}
 	}
 
-	// Wait for map to be shown then draw
-	document.getElementById('show-map-btn').addEventListener('click', function () {
-	const overlay = document.getElementById('map-overlay');
-	overlay.classList.add('active');
-	setTimeout(drawDottedLines, 900); // Delay to wait for animation
+	// Recalculate lines on resize (responsive)
+	window.addEventListener('resize', function () {
+		if (document.getElementById('map-overlay').classList.contains('active')) {
+			drawDottedLines();
+		}
 	});
-
-	window.addEventListener('resize', drawDottedLines);
 	</script>
 </body>
 </html>

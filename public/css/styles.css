@@ -31,7 +31,7 @@ body::before {
   text-shadow: 0 0 10px rgba(227, 199, 122, 1);
 }
 #map-overlay {
-	position: fixed; /* <-- changed from absolute */
+	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -39,12 +39,16 @@ body::before {
 	z-index: 9999999999999;
 	background-image: url(img/paper-r.png);
 	background-size: cover;
-	transform: translateY(100vh); /* start fully below viewport */
+	transform: translateY(100vh); /* start off screen */
 	transition: transform 0.8s ease-in-out;
-	pointer-events: none; /* initially non-interactive */
+	overflow: hidden; /* prevent content "falling out" */
+	pointer-events: none;
+	opacity: 0; /* fully invisible initially */
 }
+
 #map-overlay.active {
-	transform: translateY(0); /* slide into view */
+	transform: translateY(0); /* bring into view */
+	opacity: 1; /* now visible */
 	pointer-events: auto;
 }
 .main h1 span.text {
