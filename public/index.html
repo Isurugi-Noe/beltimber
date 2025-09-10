@@ -28,7 +28,12 @@
 	<link href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:wght@200;300;400;500;600;700&family=PT+Sans+Narrow:wght@400;700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
 
 
-	<link rel="stylesheet" href="css/styles.css?v=21.0">
+	<link id="dynamic-css" rel="stylesheet" href="css/styles.css">
+	<script>
+	  const link = document.getElementById('dynamic-css');
+	  const timestamp = new Date().getTime();
+	  link.href = `css/styles.css?v=${timestamp}`;
+	</script>
 	<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -52,6 +57,12 @@
 </head>
 
 <body> <!-- debug 5 -->
+	<div id="map-overlay" class="parchment">
+	  <img class="sketch" src="img/bones.png" style="top: 10%; left: 20%;" />
+	  <img class="sketch" src="img/cards.png" style="top: 40%; left: 50%;" />
+	  <img class="sketch" src="img/dreamcatcher.png" style="top: 30%; left: 30%;" />
+	  <img class="sketch" src="img/paths.png" style="top: 30%; left: 30%;" />
+	</div>
 	<div id="firefly-container"></div>
 	<div class="container main">
 		<a href="https://michael-handt.com/work" target="_blank" class="credit">Oil paintings by Michael Handt</a>
