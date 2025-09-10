@@ -57,8 +57,65 @@ body::before {
 }
 
 .sketch {
-	position: absolute;
+  position: absolute;
+  transition: transform 0.3s ease;
 }
+
+/* Desktop layout (original) */
+.sketch.bones {
+  top: 4.8%;
+  left: 5.5%;
+  max-width: 15%;
+}
+
+.sketch.cards {
+  top: 27.5%;
+  left: 27.5%;
+  max-width: 18%;
+}
+
+.sketch.dreamcatcher {
+  top: 41.5%;
+  left: 5%;
+  max-width: 10%;
+}
+
+.sketch.paths {
+  top: 66%;
+  left: 33.5%;
+  max-width: 15%;
+}
+
+@media (max-width: 768px) {
+  /* New mobile positions and sizes */
+  .sketch.bones {
+    top: 7%;
+    left: 10%;
+    max-width: 60%;
+  }
+
+  .sketch.cards {
+    top: 30%;
+    left: 45%;
+    max-width: 45%;
+  }
+
+  .sketch.dreamcatcher {
+    top: 50%;
+    left: 7%;
+    max-width: 142px;
+  }
+
+  .sketch.paths {
+    top: 79%;
+    left: 52%;
+    max-width: 40%;
+  }
+  #map-overlay {
+  	background-size: 100%;
+  }
+}
+
 
 #map-lines circle {
   opacity: 0;
