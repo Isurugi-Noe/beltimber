@@ -351,7 +351,7 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30, text = '
 
     path.setAttribute("d", d);
     path.setAttribute("fill", "none");
-    path.setAttribute("stroke", "none"); // Hide actual path
+    path.setAttribute("stroke", "none");
     const pathId = `path-${Math.random().toString(36).substr(2, 9)}`;
     path.setAttribute("id", pathId);
     svg.appendChild(path);
@@ -373,22 +373,36 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30, text = '
     };
     drawNextDot();
 
-    // Add text along the path
+    // Add animated text along the path
     if (text) {
         const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
         textEl.setAttribute("fill", "#3a2f28");
         textEl.setAttribute("font-size", "18");
-        textEl.setAttribute("dominant-baseline", "hanging"); // above path
+        textEl.setAttribute("dominant-baseline", "middle"); 
+        textEl.setAttribute("text-anchor", "middle"); // center text on path
 
         const textPath = document.createElementNS("http://www.w3.org/2000/svg", "textPath");
-        textPath.setAttribute("href", `#${pathId}`); // modern browsers
-        textPath.setAttribute("startOffset", "0%");
-        textPath.textContent = text;
+        textPath.setAttribute("href", `#${pathId}`);
+        textPath.setAttribute("startOffset", "50%"); // center the text along the path
+
+        // Split text into tspans for animation
+        text.split('').forEach((letter, idx) => {
+            const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+            tspan.textContent = letter;
+            tspan.setAttribute("opacity", "0"); // initially invisible
+            textPath.appendChild(tspan);
+
+            // Animate letter appearance
+            setTimeout(() => {
+                tspan.setAttribute("opacity", "1");
+            }, idx * 100); // 100ms per letter
+        });
 
         textEl.appendChild(textPath);
         svg.appendChild(textEl);
     }
 }
+
 
 // Redraw lines on resize
 let resizeTimeout;
