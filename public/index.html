@@ -266,7 +266,12 @@
 		document.body.style.overflow = 'hidden';
 
 		// Wait for the animation to finish, then draw lines
-		setTimeout(drawDottedLines, 900);
+		setTimeout(drawDottedLines([
+  "First line text",
+  "Second line text",
+  "Third line text",
+  "Fourth line text"
+]), 900);
 	});
 
 	// Close the map
@@ -280,7 +285,7 @@
 		document.body.style.overflow = '';
 	});
 
-	function drawDottedLines() {
+	function drawDottedLines(lineTexts = []) {
 	  const sketches = document.querySelectorAll('#map-overlay .sketch');
 	  const svg = document.getElementById('map-lines');
 	  svg.innerHTML = ''; // Clear previous paths and dots
@@ -333,10 +338,12 @@
 	    }
 	    points.push(end);
 
-	    // Generate dot-by-dot animation on the curved path
-	    animateDotsOnCurve(svg, points);
+	    // Pass corresponding text if provided
+	    const lineText = lineTexts[i] || '';
+	    animateDotsOnCurve(svg, points, 30, 30, lineText);
 	  }
 	}
+
 
 	function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 	  // Build curve from points using quadratic segments
@@ -381,7 +388,11 @@
 	window.addEventListener('resize', () => {
 	  clearTimeout(resizeTimeout);
 	  resizeTimeout = setTimeout(() => {
-	    drawDottedLines();
+	    drawDottedLines([
+  "First line text",
+  "Second line text",
+  "Third line text",
+  "Fourth line text"]);
 	  }, 150); // delay in ms
 	});
 
