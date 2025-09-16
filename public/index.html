@@ -284,113 +284,109 @@
 		document.body.style.overflow = '';
 	});
 
-	document.addEventListener("DOMContentLoaded", () => {
-	  const linesSVG = document.getElementById("map-lines");
-	  const labelsSVG = document.getElementById("map-labels");
+	function drawDottedLines() {
+	  const sketches = document.querySelectorAll('#map-overlay .sketch');
+	  const svg = document.getElementById('map-lines');
+	  svg.innerHTML = ''; // Clear previous paths and dots
 
-	  function getOverlayRect() {
-	    return document.getElementById("map-overlay").getBoundingClientRect();
-	  }
+	  const parentRect = document.getElementById('map-overlay').getBoundingClientRect();
+	  const trimAmount = 40;
 
-	  function getCenter(el, overlayRect) {
-	    const rect = el.getBoundingClientRect();
+	  const positions = Array.from(sketches).map(img => {
+	    const rect = img.getBoundingClientRect();
 	    return {
-	      x: rect.left - overlayRect.left + rect.width / 2,
-	      y: rect.top - overlayRect.top + rect.height / 2
+	      x: rect.left + rect.width / 2 - parentRect.left,
+	      y: rect.top + rect.height / 2 - parentRect.top
 	    };
-	  }
-
-	  function drawCurvedLineWithLabel(id, x1, y1, x2, y2, label = "") {
-	    const midX = (x1 + x2) / 2;
-	    const midY = Math.min(y1, y2) - 80; // arc bow height
-	    const d = `M ${x1} ${y1} Q ${midX} ${midY} ${x2} ${y2}`;
-
-	    // --- Path (dotted, animated) ---
-	    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-	    path.setAttribute("id", `path-${id}`);
-	    path.setAttribute("d", d);
-	    path.setAttribute("fill", "none");
-	    path.setAttribute("stroke", "#3a2f28");
-	    path.setAttribute("stroke-width", "2");
-	    path.setAttribute("stroke-dasharray", "6 6");
-
-	    const length = path.getTotalLength();
-	    path.style.strokeDasharray = length;
-	    path.style.strokeDashoffset = length;
-	    linesSVG.appendChild(path);
-
-	    // animate the line
-	    path.getBoundingClientRect(); // force reflow
-	    path.style.transition = "stroke-dashoffset 2s ease-out";
-	    path.style.strokeDashoffset = "0";
-
-	    // --- Label (handwriting effect) ---
-	    if (label) {
-	      const textPath = document.createElementNS("http://www.w3.org/2000/svg", "textPath");
-	      textPath.setAttribute("href", `#path-${id}`);
-	      textPath.setAttribute("startOffset", "50%");
-	      textPath.textContent = label;
-
-	      const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
-	      textEl.setAttribute("font-family", "'Bad Script', cursive");
-	      textEl.setAttribute("font-size", "20");
-	      textEl.setAttribute("fill", "none");
-	      textEl.setAttribute("stroke", "#3a2f28");
-	      textEl.setAttribute("stroke-width", "1px");
-	      textEl.setAttribute("text-anchor", "middle");
-	      textEl.setAttribute("dy", "-5");
-
-	      textEl.appendChild(textPath);
-	      labelsSVG.appendChild(textEl);
-
-	      // handwriting animation
-	      const textLength = label.length * 12; // rough length
-	      textEl.style.strokeDasharray = textLength;
-	      textEl.style.strokeDashoffset = textLength;
-	      textEl.style.transition = "stroke-dashoffset 2s ease-out 0.3s";
-	      requestAnimationFrame(() => {
-	        textEl.style.strokeDashoffset = "0";
-	      });
-
-	      // fill in after handwriting finishes
-	      setTimeout(() => {
-	        textEl.setAttribute("fill", "#3a2f28");
-	      }, 2300);
-	    }
-	  }
-
-	  // ---- Hardcoded connections (like your original) ----
-	  const connections = [
-	    { id: "bones-to-cards", from: "bones", to: "cards", label: "The Crooked Path" },
-	    { id: "cards-to-dream", from: "cards", to: "dreamcatcher", label: "Dreamer’s Crossing" },
-	    { id: "dream-to-paths", from: "dreamcatcher", to: "paths", label: "The Winding Road" }
-	  ];
-
-	  function drawAllConnections() {
-	    linesSVG.innerHTML = "";
-	    labelsSVG.innerHTML = "";
-	    const overlayRect = getOverlayRect();
-
-	    connections.forEach(conn => {
-	      const fromEl = document.getElementById(conn.from);
-	      const toEl = document.getElementById(conn.to);
-	      if (fromEl && toEl) {
-	        const p1 = getCenter(fromEl, overlayRect);
-	        const p2 = getCenter(toEl, overlayRect);
-	        drawCurvedLineWithLabel(conn.id, p1.x, p1.y, p2.x, p2.y, conn.label);
-	      }
-	    });
-	  }
-
-	  // initial draw
-	  drawAllConnections();
-
-	  // redraw on resize (with debounce, like original)
-	  let resizeTimeout;
-	  window.addEventListener("resize", () => {
-	    clearTimeout(resizeTimeout);
-	    resizeTimeout = setTimeout(drawAllConnections, 300);
 	  });
+
+	  for (let i = 0; i < positions.length - 1; i++) {
+	    const p1 = positions[i];
+	    const p2 = positions[i + 1];
+
+	    const dx = p2.x - p1.x;
+	    const dy = p2.y - p1.y;
+	    const length = Math.hypot(dx, dy);
+	    const ux = dx / length;
+	    const uy = dy / length;
+
+	    const start = {
+	      x: p1.x + ux * trimAmount,
+	      y: p1.y + uy * trimAmount
+	    };
+	    const end = {
+	      x: p2.x - ux * trimAmount,
+	      y: p2.y - uy * trimAmount
+	    };
+
+	    const segments = 3;
+	    const points = [start];
+
+	    for (let j = 1; j < segments; j++) {
+	      const t = j / segments;
+	      const x = start.x + dx * t;
+	      const y = start.y + dy * t;
+
+	      const offsetX = (Math.random() - 0.5) * 120;
+	      const offsetY = (Math.random() - 0.5) * 120;
+
+	      points.push({
+	        x: x + offsetY,
+	        y: y + offsetX
+	      });
+	    }
+	    points.push(end);
+
+	    // Generate dot-by-dot animation on the curved path
+	    animateDotsOnCurve(svg, points);
+	  }
+	}
+
+	function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
+	  // Build curve from points using quadratic segments
+	  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+	  let d = `M ${points[0].x},${points[0].y}`;
+	  for (let j = 1; j < points.length; j++) {
+	    const cp = points[j - 1];
+	    const pt = points[j];
+	    const mx = (cp.x + pt.x) / 2;
+	    const my = (cp.y + pt.y) / 2;
+	    d += ` Q ${cp.x},${cp.y} ${mx},${my}`;
+	  }
+
+	  path.setAttribute("d", d);
+	  path.setAttribute("fill", "none");
+	  path.setAttribute("stroke", "none"); // Hide actual path
+	  svg.appendChild(path);
+
+	  // Get points along the path using getPointAtLength
+	  const pathLength = path.getTotalLength();
+
+	  let i = 0;
+	  const drawNextDot = () => {
+	    if (i >= totalDots) return;
+
+	    const point = path.getPointAtLength((i / totalDots) * pathLength);
+	    const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+	    dot.setAttribute("cx", point.x);
+	    dot.setAttribute("cy", point.y);
+	    dot.setAttribute("r", 2);
+	    dot.setAttribute("fill", "#3a2f28");
+	    svg.appendChild(dot);
+
+	    i++;
+	    setTimeout(drawNextDot, interval);
+	  };
+
+	  drawNextDot();
+	}
+
+	let resizeTimeout;
+	window.addEventListener('resize', () => {
+	  clearTimeout(resizeTimeout);
+	  resizeTimeout = setTimeout(() => {
+	    drawDottedLines();
+	  }, 150); // delay in ms
 	});
 
 	</script>
