@@ -28,6 +28,7 @@ body::before {
   max-width: 85%;
   margin: 0;
 	color: #fff3d5;
+	line-height: 1.5;
   text-shadow: 0 0 10px rgba(227, 199, 122, 1);
 }
 #map-overlay {
