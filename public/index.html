@@ -323,17 +323,27 @@
 	      const x = start.x + dx * t;
 	      const y = start.y + dy * t;
 
-	      const offsetX = (Math.random() - 0.5) * 120;
-	      const offsetY = (Math.random() - 0.5) * 120;
+	      // Instead of random offset in all directions, first move vertically above the target
+	      let offsetX = 0;
+	      let offsetY = 0;
+
+	      if (j === segments - 1) {
+	        // Last intermediate point: go above target
+	        offsetY = -100; // adjust vertical height above sketch
+	      } else {
+	        // Optional: small random wiggle for earlier points
+	        offsetX = (Math.random() - 0.5) * 50;
+	        offsetY = (Math.random() - 0.5) * 50;
+	      }
 
 	      points.push({
-	        x: x + offsetY,
-	        y: y + offsetX
+	        x: x + offsetX,
+	        y: y + offsetY
 	      });
 	    }
+
 	    points.push(end);
 
-	    // Generate dot-by-dot animation on the curved path
 	    animateDotsOnCurve(svg, points);
 	  }
 	}

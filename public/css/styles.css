@@ -90,10 +90,10 @@ body::before {
   .sketch {
   	max-width: 55% !important;
   }
-  
+
   .sketch.bones {
-    top: 7%;
-    left: 10%;
+    top: 5%;
+    left: 7%;
   }
 
   .sketch.cards {
@@ -103,12 +103,12 @@ body::before {
 
   .sketch.dreamcatcher {
     top: 50%;
-    left: 7%;
+    left: 3%;
   }
 
   .sketch.paths {
-    top: 79%;
-    left: 52%;
+    top: 72%;
+    left: 49%;
   }
   #map-overlay {
   	background-size: 100%;
