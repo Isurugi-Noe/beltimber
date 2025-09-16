@@ -254,148 +254,156 @@
 
 	  animateParallax();
 	</script>
-	<script>
-	// Show the map when button is clicked
-	document.getElementById('show-map-btn').addEventListener('click', function () {
-		const overlay = document.getElementById('map-overlay');
+<script>
+// Show the map when button is clicked
+document.getElementById('show-map-btn').addEventListener('click', function () {
+    const overlay = document.getElementById('map-overlay');
 
-		// Add active class to slide map into view
-		overlay.classList.add('active');
+    // Add active class to slide map into view
+    overlay.classList.add('active');
 
-		// Lock background scroll
-		document.body.style.overflow = 'hidden';
+    // Lock background scroll
+    document.body.style.overflow = 'hidden';
 
-		// Wait for the animation to finish, then draw lines
-		setTimeout(drawDottedLines([
-  "First line text",
-  "Second line text",
-  "Third line text",
-  "Fourth line text"
-]), 900);
-	});
+    // Wait for the animation to finish, then draw lines
+    setTimeout(() => {
+        drawDottedLines([
+            "First line text",
+            "Second line text",
+            "Third line text",
+            "Fourth line text"
+        ]);
+    }, 900);
+});
 
-	// Close the map
-	document.getElementById('close-map-btn').addEventListener('click', function () {
-		const overlay = document.getElementById('map-overlay');
+// Close the map
+document.getElementById('close-map-btn').addEventListener('click', function () {
+    const overlay = document.getElementById('map-overlay');
 
-		// Remove active class to slide map out
-		overlay.classList.remove('active');
+    // Remove active class to slide map out
+    overlay.classList.remove('active');
 
-		// Re-enable background scroll
-		document.body.style.overflow = '';
-	});
+    // Re-enable background scroll
+    document.body.style.overflow = '';
+});
 
-	function drawDottedLines(lineTexts = []) {
-	  const sketches = document.querySelectorAll('#map-overlay .sketch');
-	  const svg = document.getElementById('map-lines');
-	  svg.innerHTML = ''; // Clear previous paths and dots
+function drawDottedLines(lineTexts = []) {
+    const sketches = document.querySelectorAll('#map-overlay .sketch');
+    const svg = document.getElementById('map-lines');
+    svg.innerHTML = ''; // Clear previous paths and dots
 
-	  const parentRect = document.getElementById('map-overlay').getBoundingClientRect();
-	  const trimAmount = 40;
+    const parentRect = document.getElementById('map-overlay').getBoundingClientRect();
+    const trimAmount = 40;
 
-	  const positions = Array.from(sketches).map(img => {
-	    const rect = img.getBoundingClientRect();
-	    return {
-	      x: rect.left + rect.width / 2 - parentRect.left,
-	      y: rect.top + rect.height / 2 - parentRect.top
-	    };
-	  });
+    const positions = Array.from(sketches).map(img => {
+        const rect = img.getBoundingClientRect();
+        return {
+            x: rect.left + rect.width / 2 - parentRect.left,
+            y: rect.top + rect.height / 2 - parentRect.top
+        };
+    });
 
-	  for (let i = 0; i < positions.length - 1; i++) {
-	    const p1 = positions[i];
-	    const p2 = positions[i + 1];
+    for (let i = 0; i < positions.length - 1; i++) {
+        const p1 = positions[i];
+        const p2 = positions[i + 1];
 
-	    const dx = p2.x - p1.x;
-	    const dy = p2.y - p1.y;
-	    const length = Math.hypot(dx, dy);
-	    const ux = dx / length;
-	    const uy = dy / length;
+        const dx = p2.x - p1.x;
+        const dy = p2.y - p1.y;
+        const length = Math.hypot(dx, dy);
+        const ux = dx / length;
+        const uy = dy / length;
 
-	    const start = {
-	      x: p1.x + ux * trimAmount,
-	      y: p1.y + uy * trimAmount
-	    };
-	    const end = {
-	      x: p2.x - ux * trimAmount,
-	      y: p2.y - uy * trimAmount
-	    };
+        const start = { x: p1.x + ux * trimAmount, y: p1.y + uy * trimAmount };
+        const end = { x: p2.x - ux * trimAmount, y: p2.y - uy * trimAmount };
 
-	    const segments = 3;
-	    const points = [start];
+        const segments = 3;
+        const points = [start];
 
-	    for (let j = 1; j < segments; j++) {
-	      const t = j / segments;
-	      const x = start.x + dx * t;
-	      const y = start.y + dy * t;
+        for (let j = 1; j < segments; j++) {
+            const t = j / segments;
+            const x = start.x + dx * t;
+            const y = start.y + dy * t;
 
-	      const offsetX = (Math.random() - 0.5) * 120;
-	      const offsetY = (Math.random() - 0.5) * 120;
+            const offsetX = (Math.random() - 0.5) * 120;
+            const offsetY = (Math.random() - 0.5) * 120;
 
-	      points.push({
-	        x: x + offsetY,
-	        y: y + offsetX
-	      });
-	    }
-	    points.push(end);
+            points.push({ x: x + offsetY, y: y + offsetX });
+        }
+        points.push(end);
 
-	    // Pass corresponding text if provided
-	    const lineText = lineTexts[i] || '';
-	    animateDotsOnCurve(svg, points, 30, 30, lineText);
-	  }
-	}
+        // Pass corresponding text if provided
+        const lineText = lineTexts[i] || '';
+        animateDotsOnCurve(svg, points, 30, 30, lineText);
+    }
+}
 
+function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30, text = '') {
+    // Build curve from points using quadratic segments
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    let d = `M ${points[0].x},${points[0].y}`;
+    for (let j = 1; j < points.length; j++) {
+        const cp = points[j - 1];
+        const pt = points[j];
+        const mx = (cp.x + pt.x) / 2;
+        const my = (cp.y + pt.y) / 2;
+        d += ` Q ${cp.x},${cp.y} ${mx},${my}`;
+    }
 
-	function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
-	  // Build curve from points using quadratic segments
-	  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-	  let d = `M ${points[0].x},${points[0].y}`;
-	  for (let j = 1; j < points.length; j++) {
-	    const cp = points[j - 1];
-	    const pt = points[j];
-	    const mx = (cp.x + pt.x) / 2;
-	    const my = (cp.y + pt.y) / 2;
-	    d += ` Q ${cp.x},${cp.y} ${mx},${my}`;
-	  }
+    path.setAttribute("d", d);
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "none"); // Hide actual path
+    const pathId = `path-${Math.random().toString(36).substr(2, 9)}`;
+    path.setAttribute("id", pathId);
+    svg.appendChild(path);
 
-	  path.setAttribute("d", d);
-	  path.setAttribute("fill", "none");
-	  path.setAttribute("stroke", "none"); // Hide actual path
-	  svg.appendChild(path);
+    // Animate dots along the path
+    const pathLength = path.getTotalLength();
+    let i = 0;
+    const drawNextDot = () => {
+        if (i >= totalDots) return;
+        const point = path.getPointAtLength((i / totalDots) * pathLength);
+        const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        dot.setAttribute("cx", point.x);
+        dot.setAttribute("cy", point.y);
+        dot.setAttribute("r", 2);
+        dot.setAttribute("fill", "#3a2f28");
+        svg.appendChild(dot);
+        i++;
+        setTimeout(drawNextDot, interval);
+    };
+    drawNextDot();
 
-	  // Get points along the path using getPointAtLength
-	  const pathLength = path.getTotalLength();
+    // Add text along the path
+    if (text) {
+        const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        textEl.setAttribute("fill", "#3a2f28");
+        textEl.setAttribute("font-size", "18");
+        textEl.setAttribute("dominant-baseline", "hanging"); // above path
 
-	  let i = 0;
-	  const drawNextDot = () => {
-	    if (i >= totalDots) return;
+        const textPath = document.createElementNS("http://www.w3.org/2000/svg", "textPath");
+        textPath.setAttribute("href", `#${pathId}`); // modern browsers
+        textPath.setAttribute("startOffset", "0%");
+        textPath.textContent = text;
 
-	    const point = path.getPointAtLength((i / totalDots) * pathLength);
-	    const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-	    dot.setAttribute("cx", point.x);
-	    dot.setAttribute("cy", point.y);
-	    dot.setAttribute("r", 2);
-	    dot.setAttribute("fill", "#3a2f28");
-	    svg.appendChild(dot);
+        textEl.appendChild(textPath);
+        svg.appendChild(textEl);
+    }
+}
 
-	    i++;
-	    setTimeout(drawNextDot, interval);
-	  };
+// Redraw lines on resize
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        drawDottedLines([
+            "First line text",
+            "Second line text",
+            "Third line text",
+            "Fourth line text"
+        ]);
+    }, 150);
+});
+</script>
 
-	  drawNextDot();
-	}
-
-	let resizeTimeout;
-	window.addEventListener('resize', () => {
-	  clearTimeout(resizeTimeout);
-	  resizeTimeout = setTimeout(() => {
-	    drawDottedLines([
-  "First line text",
-  "Second line text",
-  "Third line text",
-  "Fourth line text"]);
-	  }, 150); // delay in ms
-	});
-
-	</script>
 </body>
 </html>
