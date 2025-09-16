@@ -338,7 +338,10 @@ function drawDottedLines(lineTexts = []) {
 }
 
 function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30, text = '') {
-    // Build curve from points using quadratic segments
+    // Ensure path goes left-to-right for text
+    if (points[points.length - 1].x < points[0].x) points = points.slice().reverse();
+
+    // Build curve from points
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     let d = `M ${points[0].x},${points[0].y}`;
     for (let j = 1; j < points.length; j++) {
@@ -348,7 +351,6 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30, text = '
         const my = (cp.y + pt.y) / 2;
         d += ` Q ${cp.x},${cp.y} ${mx},${my}`;
     }
-
     path.setAttribute("d", d);
     path.setAttribute("fill", "none");
     path.setAttribute("stroke", "none");
@@ -356,7 +358,7 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30, text = '
     path.setAttribute("id", pathId);
     svg.appendChild(path);
 
-    // Animate dots along the path
+    // Animate dots
     const pathLength = path.getTotalLength();
     let i = 0;
     const drawNextDot = () => {
@@ -373,29 +375,28 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30, text = '
     };
     drawNextDot();
 
-    // Add animated text along the path
+    // Animated text
     if (text) {
         const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
         textEl.setAttribute("fill", "#3a2f28");
         textEl.setAttribute("font-size", "18");
-        textEl.setAttribute("dominant-baseline", "middle"); 
-        textEl.setAttribute("text-anchor", "middle"); // center text on path
+        textEl.setAttribute("dominant-baseline", "middle");
+        textEl.setAttribute("text-anchor", "middle");
+        textEl.setAttribute("dy", "-10"); // move text above the line
 
         const textPath = document.createElementNS("http://www.w3.org/2000/svg", "textPath");
         textPath.setAttribute("href", `#${pathId}`);
-        textPath.setAttribute("startOffset", "50%"); // center the text along the path
+        textPath.setAttribute("startOffset", "50%"); // center
 
-        // Split text into tspans for animation
         text.split('').forEach((letter, idx) => {
             const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
             tspan.textContent = letter;
-            tspan.setAttribute("opacity", "0"); // initially invisible
+            tspan.setAttribute("opacity", "0");
             textPath.appendChild(tspan);
 
-            // Animate letter appearance
             setTimeout(() => {
                 tspan.setAttribute("opacity", "1");
-            }, idx * 100); // 100ms per letter
+            }, idx * 100);
         });
 
         textEl.appendChild(textPath);
