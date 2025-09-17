@@ -193,6 +193,18 @@ body::before {
 		transition: background-position 0.1s ease;
 }
 
+#bones {
+  width: 100%;
+  overflow: hidden; /* Prevent internal scrollbars */
+  position: relative;
+}
+
+#bones svg {
+  display: block;
+  width: 100%;
+  height: auto; /* Keep aspect ratio */
+}
+
 .row, .column {
 	display: flex;
 	flex-direction: column;
