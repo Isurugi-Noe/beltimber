@@ -76,17 +76,17 @@
 	</div>
 	<div class="container" id="bones">
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1500">
-		  <g id="Bg">
+		  <g id="Bg" class="svg-layer bg-layer">
 		    <image id="Bg-2" data-name="Bg" width="1920" height="1500" xlink:href="img/bg4.png"/>
 		  </g>
-		  <g id="Bones">
+		  <g id="Bones" class="svg-layer bones-layer">
 		    <image id="Jaw" width="78" height="49" transform="translate(1619 1117)" xlink:href="img/marrow1.png"/>
 		    <image id="arm" width="127" height="202" transform="translate(224 785)" xlink:href="img/marrow2.png"/>
 		    <image id="Femur" width="89" height="121" transform="translate(1141 717)" xlink:href="img/marrow3.png"/>
 		    <image id="Spine" width="71" height="116" transform="translate(456 605)" xlink:href="img/marrow4.png"/>
 		    <image id="Cranium" width="97" height="113" transform="translate(1508 905)" xlink:href="img/marrow5.png"/>
 		  </g>
-		  <g id="Dirt_overlay" data-name="Dirt overlay">
+		  <g id="Dirt_overlay" class="svg-layer dirt-layer" data-name="Dirt overlay">
 		    <image width="1920" height="1500" xlink:href="img/grass.png"/>
 		  </g>
 		</svg>
@@ -232,16 +232,24 @@
 	  const mainContainer = document.querySelector('.container.main');
 	  const fireflyContainer = document.getElementById('firefly-container');
 
+	  // SVG layers
+	  const bgLayer = document.querySelector('.bg-layer');
+	  const bonesLayer = document.querySelector('.bones-layer');
+	  const dirtLayer = document.querySelector('.dirt-layer');
+
 	  let targetX = 0;
 	  let targetY = 0;
-	  let bgX = 0;
-	  let bgY = 0;
-	  let ffX = 0;
-	  let ffY = 0;
+
+	  let bgX = 0, bgY = 0;
+	  let ffX = 0, ffY = 0;
+
+	  let svgBgX = 0, svgBgY = 0;
+	  let svgBonesX = 0, svgBonesY = 0;
+	  let svgDirtX = 0, svgDirtY = 0;
 
 	  document.addEventListener('mousemove', (e) => {
 	    const { innerWidth, innerHeight } = window;
-	    const x = (e.clientX / innerWidth - 0.5) * 2;
+	    const x = (e.clientX / innerWidth - 0.5) * 2; // range -1 to 1
 	    const y = (e.clientY / innerHeight - 0.5) * 2;
 
 	    targetX = x;
@@ -253,14 +261,34 @@
 	    bgX += (targetX * 10 - bgX) * 0.05;
 	    bgY += (targetY * 10 - bgY) * 0.05;
 
-	    ffX += (targetX * 4 - ffX) * 0.04; // smaller scale for fireflies
+	    ffX += (targetX * 4 - ffX) * 0.04;
 	    ffY += (targetY * 4 - ffY) * 0.04;
 
-	    // Apply to background
-	    mainContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
+	    svgBgX += (targetX * 10 - svgBgX) * 0.03;     // subtle movement
+	    svgBgY += (targetY * 10 - svgBgY) * 0.03;
 
-	    // Apply to firefly container using transform (better performance)
-	    fireflyContainer.style.transform = `translate(${ffX}px, ${ffY}px)`;
+	    svgBonesX += (targetX * 20 - svgBonesX) * 0.04; // mid-depth
+	    svgBonesY += (targetY * 20 - svgBonesY) * 0.04;
+
+	    svgDirtX += (targetX * 40 - svgDirtX) * 0.05;   // foreground
+	    svgDirtY += (targetY * 40 - svgDirtY) * 0.05;
+
+	    // Apply parallax to CSS elements
+	    if (mainContainer)
+	      mainContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
+
+	    if (fireflyContainer)
+	      fireflyContainer.style.transform = `translate(${ffX}px, ${ffY}px)`;
+
+	    // Apply parallax to SVG layers
+	    if (bgLayer)
+	      bgLayer.setAttribute('transform', `translate(${svgBgX}, ${svgBgY})`);
+
+	    if (bonesLayer)
+	      bonesLayer.setAttribute('transform', `translate(${svgBonesX}, ${svgBonesY})`);
+
+	    if (dirtLayer)
+	      dirtLayer.setAttribute('transform', `translate(${svgDirtX}, ${svgDirtY})`);
 
 	    requestAnimationFrame(animateParallax);
 	  }
