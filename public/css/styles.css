@@ -23,6 +23,10 @@ body::before {
   );
 }
 
+#bones, #cards, #dreamcatcher, #paths {
+	display: none;
+}
+
 .main h1 {
 	text-align: center;
   max-width: 85%;
