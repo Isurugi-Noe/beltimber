@@ -37,15 +37,19 @@
 	<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('.map-overlay .sketch').click(function(){
-				var classList = $(this).attr("class");
-				var classArr = classList.split(/\s+/);
-				$('.container#'+ classArr[1]).css('display', 'flex').addClass('active');
-				$('.container.main, .container.active').fadeOut(1000).promise().done(function(){
-					$('.container#'+ classArr[1]).fadeIn(1500);
-				});
-			});
+	$('.map-overlay .sketch').click(function(){
+		var classList = $(this).attr("class");
+		var classArr = classList.split(/\s+/);
+		var targetContainer = $('.container#' + classArr[1]);
+
+		// Fade out current containers
+		$('.container.main, .container.active').fadeOut(1000).promise().done(function(){
+			// Show the target container after fade out completes
+			targetContainer.css('display', 'flex').addClass('active').hide().fadeIn(1500);
 		});
+	});
+});
+
 	</script>
 </head>
 
