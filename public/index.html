@@ -439,13 +439,19 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 	  // Build curve from points using quadratic segments
 	const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
 	let d = `M ${points[0].x},${points[0].y}`;
-	for (let j = 1; j < points.length; j++) {
-		const cp = points[j - 1];
-		const pt = points[j];
-		const mx = (cp.x + pt.x) / 2;
-		const my = (cp.y + pt.y) / 2;
-		d += ` Q ${cp.x},${cp.y} ${mx},${my}`;
-	}
+for (let j = 1; j < points.length - 1; j++) {
+	const cp = points[j - 1];
+	const pt = points[j];
+	const mx = (cp.x + pt.x) / 2;
+	const my = (cp.y + pt.y) / 2;
+	d += ` Q ${cp.x},${cp.y} ${mx},${my}`;
+}
+
+// Final segment: go to actual last point
+const penultimate = points[points.length - 2];
+const last = points[points.length - 1];
+d += ` Q ${penultimate.x},${penultimate.y} ${last.x},${last.y}`;
+
 
 	path.setAttribute("d", d);
 	path.setAttribute("fill", "none");
