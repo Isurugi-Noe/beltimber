@@ -58,7 +58,6 @@ body::before {
   right: 0;
   margin: auto;
   transform: translateY(100vh);
-  transform: translateY(0);
   opacity: 1;
 
   /* TRANSITIONS APPLIED ONLY WHEN CLASS IS ADDED */
