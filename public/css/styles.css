@@ -356,8 +356,8 @@ body::before {
 	position: relative;
 	height: 100vh;
 	width: 100%;
-	background-image: url(../img/bg4.png?v=1.0);
-	display: flex;
+	background-image: url(../img/bg3.png?v=1.0);
+	display: none;
 	justify-content: center;
 	align-items: center;
 	background-size: cover;
