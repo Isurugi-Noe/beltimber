@@ -241,6 +241,8 @@
 	<script>
 	const mainContainer = document.querySelector('.container.main');
 	const fireflyContainer = document.getElementById('firefly-container');
+	const bgLayer = document.querySelector('#Bg');
+	const dirtLayer = document.querySelector('#Dirt_overlay');
 	const boneWrappers = document.querySelectorAll('.jitter-wrapper');
 	const bones = document.querySelectorAll('.bone');
 
@@ -281,7 +283,7 @@
 	let ffY = 0;
 
 	function animateParallax() {
-	  // Smooth interpolation for background
+	  // Smooth interpolation for background (CSS background of main container)
 	  bgX += (targetX * 10 - bgX) * 0.05;
 	  bgY += (targetY * 10 - bgY) * 0.05;
 
@@ -289,10 +291,27 @@
 	  ffX += (targetX * 4 - ffX) * 0.04;
 	  ffY += (targetY * 4 - ffY) * 0.04;
 
+	  // Apply background parallax (CSS background image)
 	  mainContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
+
+	  // Apply fireflies parallax
 	  fireflyContainer.style.transform = `translate(${ffX}px, ${ffY}px)`;
 
-	  // Animate bones individually based on their data-depth
+	  // Parallax for SVG background group (#Bg) — subtle movement
+	  if (bgLayer) {
+	    const bgOffsetX = targetX * 2;
+	    const bgOffsetY = targetY * 2;
+	    bgLayer.setAttribute('transform', `translate(${bgOffsetX}, ${bgOffsetY})`);
+	  }
+
+	  // Parallax for dirt overlay (#Dirt_overlay) — subtle movement, smaller than bones
+	  if (dirtLayer) {
+	    const dirtOffsetX = targetX * 1.5;
+	    const dirtOffsetY = targetY * 1.5;
+	    dirtLayer.setAttribute('transform', `translate(${dirtOffsetX}, ${dirtOffsetY})`);
+	  }
+
+	  // Parallax and jitter for bones wrappers
 	  boneWrappers.forEach(wrapper => {
 	    const depth = parseFloat(wrapper.dataset.depth) || 1;
 	    const offsetX = targetX * 10 * depth;
@@ -304,7 +323,6 @@
 	}
 
 	animateParallax();
-
 	</script>
 	<script>
 	// Show the map when button is clicked
