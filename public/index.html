@@ -437,5 +437,27 @@
 	});
 
 	</script>
+	<script>
+	  const bones = document.querySelectorAll('.bone');
+	  const radius = 100; // Distance (in px) for glow activation
+
+	  document.addEventListener('mousemove', (e) => {
+	    bones.forEach(bone => {
+	      const rect = bone.getBoundingClientRect();
+	      const boneX = rect.left + rect.width / 2;
+	      const boneY = rect.top + rect.height / 2;
+
+	      const dx = e.clientX - boneX;
+	      const dy = e.clientY - boneY;
+	      const distance = Math.sqrt(dx * dx + dy * dy);
+
+	      if (distance < radius) {
+	        bone.classList.add('glow');
+	      } else {
+	        bone.classList.remove('glow');
+	      }
+	    });
+	  });
+	</script>
 </body>
 </html>
