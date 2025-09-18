@@ -38,15 +38,18 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 
-			const overlay = document.getElementById('map-overlay');
-			requestAnimationFrame(() => {
-			  overlay.classList.add('animate');
+			  const $overlay = $('#map-overlay');
 
-			  setTimeout(() => {
-			    overlay.classList.remove('hidden');
-			  }, 50);
-			});
+			  // Step 1: Wait for next repaint so initial render is done
+			  requestAnimationFrame(() => {
+			    // Step 2: Add the transition class
+			    $overlay.addClass('animate');
 
+			    // Step 3: Trigger entrance animation by removing 'hidden'
+			    setTimeout(() => {
+			      $overlay.removeClass('hidden');
+			    }, 100); // Slight delay ensures no transition on first paint
+			  });
 
 			$('#map-overlay .sketch').click(function(){
 				var classList = $(this).attr("class");
