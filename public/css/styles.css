@@ -257,14 +257,56 @@ body::before {
 #bones h1 {
 	z-index: 99999999;
 	position: absolute;
+	color: #ffca98;
+	line-height: 1.5;
+	text-shadow: 0 0 10px rgba(227, 199, 122, 1);
+}
+
+#bones h1.topHeader {
 	left: 0;
 	right: 0;
 	margin: 0 auto;
 	text-align: center;
 	top: 10%;
-	color: #ffca98;
-	line-height: 1.5;
-	text-shadow: 0 0 10px rgba(227, 199, 122, 1);
+}
+
+/* Hide all quotes by default */
+.middleQuotes h1 {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff; /* or your preferred color */
+  font-size: 2rem;
+  text-align: center;
+  max-width: 80vw;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  user-select: none;
+  z-index: 10;
+}
+
+/* Show quote */
+.middleQuotes h1.active {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Selected glow style */
+.bone.glow.selected {
+  animation: pulseGlow2 2.5s infinite ease-in-out;
+}
+
+@keyframes pulseGlow2 {
+	0%, 100% {
+		filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 5px rgba(255, 190, 50, 0.7));
+	}
+	50% {
+		filter: drop-shadow(0 0 2px rgba(255, 255, 255, 1)) drop-shadow(0 0 10px rgba(255, 190, 50, 0.9));
+	}
 }
 
 .row, .column {

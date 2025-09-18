@@ -75,7 +75,14 @@
 		<button style="display: none;" id="close-map-btn">Test</button>
 	</div>
 	<div class="container" id="bones">
-		<h1>"Are you lost? The soil remembers your name."</h1>
+		<h1 class="topHeader">"Are you lost? The soil remembers your name."</h1>
+		<div class="middleQuotes">
+			<h1 id="craniumQuote">"The moors gorged on her body. He crawled from her mouth."</h1>
+			<h1 id="armQuote">"He sees where it clots. He pulls the sickness out like a thread."</h1>
+			<h1 id="jawQuote">"He laughs too loud. He does not look you in the eye."</h1>
+			<h1 id="femurQuote">"He carries her weight in silence. It bows him."</h1>
+			<h1 id="spineQuote">"He speaks softly to the dead. They're the only ones who listen."</h1>
+		</div>
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1500">
 			<g id="Bg" class="svg-layer bg-layer">
 				<image id="Bg-2" data-name="Bg" width="1920" height="1500" xlink:href="img/bg4.png"/>
@@ -494,6 +501,49 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 	  		}
 	  	});
 	  });
+		const quotes = document.querySelectorAll('.middleQuotes h1');
+
+		let selectedBone = null;
+
+		bones2.forEach(bone => {
+		  bone.addEventListener('click', () => {
+		    const boneId = bone.id.toLowerCase(); // Assuming id like 'Cranium' matches 'craniumQuote'
+		    const quoteId = `${boneId}Quote`;
+		    const quote = document.getElementById(quoteId);
+
+		    if (selectedBone === bone) {
+		      // Deselect current
+		      quote.classList.remove('active');
+		      bone.classList.remove('selected', 'glow');
+		      const wrapper = bone.parentElement;
+		      if (wrapper.classList.contains('jitter')) {
+		        wrapper.classList.remove('paused');
+		      }
+		      selectedBone = null;
+		    } else {
+		      // Deselect previous
+		      if (selectedBone) {
+		        const prevQuoteId = `${selectedBone.id.toLowerCase()}Quote`;
+		        const prevQuote = document.getElementById(prevQuoteId);
+		        prevQuote.classList.remove('active');
+		        selectedBone.classList.remove('selected', 'glow');
+		        const prevWrapper = selectedBone.parentElement;
+		        if (prevWrapper.classList.contains('jitter')) {
+		          prevWrapper.classList.remove('paused');
+		        }
+		      }
+
+		      // Select new
+		      quote.classList.add('active');
+		      bone.classList.add('selected', 'glow');
+		      const wrapper = bone.parentElement;
+		      if (wrapper.classList.contains('jitter')) {
+		        wrapper.classList.add('paused');
+		      }
+		      selectedBone = bone;
+		    }
+		  });
+		});
 	</script>
 </body>
 </html>
