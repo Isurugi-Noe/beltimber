@@ -507,6 +507,8 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 
 	  let selectedBone = null;
 
+	  const topHeader = document.querySelector('.topHeader');
+
 	  function closeQuote() {
 	  	if (selectedBone) {
 	  		const quoteId = `${selectedBone.id.toLowerCase()}Quote`;
@@ -519,6 +521,9 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 	  		}
 	  		selectedBone = null;
 	  		overlay.classList.remove('active');
+
+		    // Show top header again
+	  		topHeader.classList.remove('hidden');
 	  	}
 	  }
 
@@ -543,6 +548,9 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 	  			}
 	  			selectedBone = bone;
 	  			overlay.classList.add('active');
+
+		      // Hide top header when overlay opens
+	  			topHeader.classList.add('hidden');
 	  		}
 	  	});
 	  });
