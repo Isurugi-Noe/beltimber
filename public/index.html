@@ -30,9 +30,9 @@
 
 	<link id="dynamic-css" rel="stylesheet" href="css/styles.css">
 	<script>
-	  const link = document.getElementById('dynamic-css');
-	  const timestamp = new Date().getTime();
-	  link.href = `css/styles.css?v=${timestamp}`;
+		const link = document.getElementById('dynamic-css');
+		const timestamp = new Date().getTime();
+		link.href = `css/styles.css?v=${timestamp}`;
 	</script>
 	<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
@@ -75,30 +75,31 @@
 		<button style="display: none;" id="close-map-btn">Test</button>
 	</div>
 	<div class="container" id="bones">
+		<h1>"Are you lost? The soil remembers your name."</h1>
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1500">
-		  <g id="Bg" class="svg-layer bg-layer">
-		    <image id="Bg-2" data-name="Bg" width="1920" height="1500" xlink:href="img/bg4.png"/>
-		  </g>
-			<g id="Bones">
-			  <g class="jitter-wrapper" transform="translate(1619 1117)" data-depth="0.9">
-			    <image id="Jaw" class="bone" transform="translate(1619 1117)" width="78" height="49" xlink:href="img/marrow1.png" />
-			  </g>
-			  <g class="jitter-wrapper" transform="translate(224 785)" data-depth="1.2">
-			    <image id="arm" class="bone" transform="translate(224 785)" width="127" height="202" xlink:href="img/marrow2.png" />
-			  </g>
-			  <g class="jitter-wrapper" transform="translate(1141 717)" data-depth="0.8">
-			    <image id="Femur" class="bone" transform="translate(1141 717)" width="89" height="121" xlink:href="img/marrow3.png" />
-			  </g>
-			  <g class="jitter-wrapper" transform="translate(456 605)" data-depth="1.1">
-			    <image id="Spine" class="bone" transform="translate(456 605)" width="71" height="116" xlink:href="img/marrow4.png" />
-			  </g>
-			  <g class="jitter-wrapper" transform="translate(1508 905)" data-depth="1.0">
-			    <image id="Cranium" class="bone" transform="translate(1508 905)" width="97" height="113" xlink:href="img/marrow5.png" />
-			  </g>
+			<g id="Bg" class="svg-layer bg-layer">
+				<image id="Bg-2" data-name="Bg" width="1920" height="1500" xlink:href="img/bg4.png"/>
 			</g>
-		  <g id="Dirt_overlay" class="svg-layer dirt-layer" data-name="Dirt overlay">
-		    <image width="1920" height="1500" xlink:href="img/grass.png?rev=2"/>
-		  </g>
+			<g id="Bones">
+				<g class="jitter-wrapper" transform="translate(1619 1117)" data-depth="0.9">
+					<image id="Jaw" class="bone" transform="translate(1619 1117)" width="78" height="49" xlink:href="img/marrow1.png" />
+				</g>
+				<g class="jitter-wrapper" transform="translate(224 785)" data-depth="1.2">
+					<image id="arm" class="bone" transform="translate(224 785)" width="127" height="202" xlink:href="img/marrow2.png" />
+				</g>
+				<g class="jitter-wrapper" transform="translate(1141 717)" data-depth="0.8">
+					<image id="Femur" class="bone" transform="translate(1141 717)" width="89" height="121" xlink:href="img/marrow3.png" />
+				</g>
+				<g class="jitter-wrapper" transform="translate(456 605)" data-depth="1.1">
+					<image id="Spine" class="bone" transform="translate(456 605)" width="71" height="116" xlink:href="img/marrow4.png" />
+				</g>
+				<g class="jitter-wrapper" transform="translate(1508 905)" data-depth="1.0">
+					<image id="Cranium" class="bone" transform="translate(1508 905)" width="97" height="113" xlink:href="img/marrow5.png" />
+				</g>
+			</g>
+			<g id="Dirt_overlay" class="svg-layer dirt-layer" data-name="Dirt overlay">
+				<image width="1920" height="1500" xlink:href="img/grass.png?rev=2"/>
+			</g>
 		</svg>
 	</div>
 	<div class="container" id="cards">
@@ -168,7 +169,7 @@
 			'Scarred Wretch',
 			'Bleeds-the-Dusk',
 			'Grave-Licker',
-			]
+		]
 
 		const el = document.querySelector('.text')
 		const fx = new TextScramble(el)
@@ -184,254 +185,260 @@
 		next()
 	</script>
 	<script>
-	  const NUM_FIREFLIES = 30;
+		const NUM_FIREFLIES = 30;
 	  const MIN_DISTANCE = 50; // Minimum distance between fireflies
 
 	  const container = document.getElementById("firefly-container");
 	  const usedPositions = [];
 
 	  function getRandomPosition() {
-	    const maxWidth = window.innerWidth;
-	    const maxHeight = window.innerHeight;
-	    let x, y;
-	    let attempts = 0;
+	  	const maxWidth = window.innerWidth;
+	  	const maxHeight = window.innerHeight;
+	  	let x, y;
+	  	let attempts = 0;
 
-	    do {
-	      x = Math.random() * maxWidth;
-	      y = Math.random() * maxHeight;
-	      attempts++;
-	    } while (
-	      usedPositions.some(pos => {
-	        const dx = pos.x - x;
-	        const dy = pos.y - y;
-	        return Math.sqrt(dx * dx + dy * dy) < MIN_DISTANCE;
-	      }) && attempts < 50
-	    );
+	  	do {
+	  		x = Math.random() * maxWidth;
+	  		y = Math.random() * maxHeight;
+	  		attempts++;
+	  	} while (
+	  		usedPositions.some(pos => {
+	  			const dx = pos.x - x;
+	  			const dy = pos.y - y;
+	  			return Math.sqrt(dx * dx + dy * dy) < MIN_DISTANCE;
+	  		}) && attempts < 50
+	  		);
 
-	    usedPositions.push({ x, y });
-	    return { x, y };
+	  	usedPositions.push({ x, y });
+	  	return { x, y };
 	  }
 
 	  for (let i = 0; i < NUM_FIREFLIES; i++) {
-	    const firefly = document.createElement("div");
-	    firefly.classList.add("firefly");
+	  	const firefly = document.createElement("div");
+	  	firefly.classList.add("firefly");
 
-	    const { x, y } = getRandomPosition();
+	  	const { x, y } = getRandomPosition();
 
 	    // Random scale (size variation)
-	    const scale = 0.6 + Math.random() * 1.2;
+	  	const scale = 0.6 + Math.random() * 1.2;
 
 	    // Random durations and delays
-	    const flickerDuration = 1.5 + Math.random() * 1.5;
-	    const wanderDuration = 15 + Math.random() * 10;
-	    const delay = Math.random() * 5;
+	  	const flickerDuration = 1.5 + Math.random() * 1.5;
+	  	const wanderDuration = 15 + Math.random() * 10;
+	  	const delay = Math.random() * 5;
 
-	    firefly.style.top = `${y}px`;
-	    firefly.style.left = `${x}px`;
-	    firefly.style.transform = `scale(${scale})`;
+	  	firefly.style.top = `${y}px`;
+	  	firefly.style.left = `${x}px`;
+	  	firefly.style.transform = `scale(${scale})`;
 
-	    firefly.style.animation = `
+	  	firefly.style.animation = `
 	      flicker ${flickerDuration.toFixed(2)}s ease-in-out ${delay.toFixed(2)}s infinite,
 	      wander ${wanderDuration.toFixed(2)}s ease-in-out ${delay.toFixed(2)}s infinite
-	    `;
+	  	`;
 
-	    container.appendChild(firefly);
+	  	container.appendChild(firefly);
 	  }
 	</script>
 	<script>
-	const mainContainer = document.querySelector('.container.main');
-	const fireflyContainer = document.getElementById('firefly-container');
-	const bgLayer = document.querySelector('#Bg');
-	const dirtLayer = document.querySelector('#Dirt_overlay');
-	const boneWrappers = document.querySelectorAll('.jitter-wrapper');
-	const bones = document.querySelectorAll('.bone');
+		const mainContainer = document.querySelector('.container.main');
+		const fireflyContainer = document.getElementById('firefly-container');
+		const bgLayer = document.querySelector('#Bg');
+		const dirtLayer = document.querySelector('#Dirt_overlay');
+		const boneWrappers = document.querySelectorAll('.jitter-wrapper');
+		const bones = document.querySelectorAll('.bone');
 
-	let targetX = 0;
-	let targetY = 0;
+		let targetX = 0;
+		let targetY = 0;
 
-	document.addEventListener('mousemove', (e) => {
-	  const { innerWidth, innerHeight } = window;
-	  const x = (e.clientX / innerWidth - 0.5) * 2;
-	  const y = (e.clientY / innerHeight - 0.5) * 2;
+// Store original transforms so we preserve base positions
+		const bgOriginalTransform = bgLayer ? bgLayer.getAttribute('transform') || '' : '';
+		const dirtOriginalTransform = dirtLayer ? dirtLayer.getAttribute('transform') || '' : '';
+		const bonesOriginalTransforms = Array.from(boneWrappers).map(wrapper => wrapper.getAttribute('transform') || '');
 
-	  targetX = x;
-	  targetY = y;
+		document.addEventListener('mousemove', (e) => {
+			const { innerWidth, innerHeight } = window;
+			const x = (e.clientX / innerWidth - 0.5) * 2;
+			const y = (e.clientY / innerHeight - 0.5) * 2;
 
-	  // Glow proximity check for bones
-	  bones.forEach((bone) => {
-	    const rect = bone.getBoundingClientRect();
-	    const boneX = rect.left + rect.width / 2;
-	    const boneY = rect.top + rect.height / 2;
+			targetX = x;
+			targetY = y;
 
-	    const dx = e.clientX - boneX;
-	    const dy = e.clientY - boneY;
-	    const distance = Math.sqrt(dx * dx + dy * dy);
+  // Glow proximity check for bones
+			bones.forEach((bone) => {
+				const rect = bone.getBoundingClientRect();
+				const boneX = rect.left + rect.width / 2;
+				const boneY = rect.top + rect.height / 2;
 
-	    if (distance < 100) {
-	      bone.classList.add('glow');
-	      bone.parentElement.classList.add('jitter'); // add jitter class on wrapper
-	    } else {
-	      bone.classList.remove('glow');
-	      bone.parentElement.classList.remove('jitter');
-	    }
-	  });
-	});
+				const dx = e.clientX - boneX;
+				const dy = e.clientY - boneY;
+				const distance = Math.sqrt(dx * dx + dy * dy);
 
-	let bgX = 0;
-	let bgY = 0;
-	let ffX = 0;
-	let ffY = 0;
+				if (distance < 100) {
+					bone.classList.add('glow');
+      bone.parentElement.classList.add('jitter'); // add jitter class on wrapper
+  } else {
+  	bone.classList.remove('glow');
+  	bone.parentElement.classList.remove('jitter');
+  }
+});
+		});
 
-	function animateParallax() {
-	  // Smooth interpolation for background (CSS background of main container)
-	  bgX += (targetX * 10 - bgX) * 0.05;
-	  bgY += (targetY * 10 - bgY) * 0.05;
+		let bgX = 0;
+		let bgY = 0;
+		let ffX = 0;
+		let ffY = 0;
 
-	  // Smooth interpolation for fireflies
-	  ffX += (targetX * 4 - ffX) * 0.04;
-	  ffY += (targetY * 4 - ffY) * 0.04;
+		function animateParallax() {
+  // Smooth interpolation for background (CSS background of main container)
+			bgX += (targetX * 10 - bgX) * 0.05;
+			bgY += (targetY * 10 - bgY) * 0.05;
 
-	  // Apply background parallax (CSS background image)
-	  mainContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
+  // Smooth interpolation for fireflies
+			ffX += (targetX * 4 - ffX) * 0.04;
+			ffY += (targetY * 4 - ffY) * 0.04;
 
-	  // Apply fireflies parallax
-	  fireflyContainer.style.transform = `translate(${ffX}px, ${ffY}px)`;
+  // Apply background parallax (CSS background image)
+			mainContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
 
-	  // Parallax for SVG background group (#Bg) — subtle movement
-	  if (bgLayer) {
-	    const bgOffsetX = targetX * 2;
-	    const bgOffsetY = targetY * 2;
-	    bgLayer.setAttribute('transform', `translate(${bgOffsetX}, ${bgOffsetY})`);
-	  }
+  // Apply fireflies parallax
+			fireflyContainer.style.transform = `translate(${ffX}px, ${ffY}px)`;
 
-	  // Parallax for dirt overlay (#Dirt_overlay) — subtle movement, smaller than bones
-	  if (dirtLayer) {
-	    const dirtOffsetX = targetX * 1.5;
-	    const dirtOffsetY = targetY * 1.5;
-	    dirtLayer.setAttribute('transform', `translate(${dirtOffsetX}, ${dirtOffsetY})`);
-	  }
+  // Parallax for SVG background group (#Bg) — preserve original transform
+			if (bgLayer) {
+				const bgOffsetX = targetX * 2;
+				const bgOffsetY = targetY * 2;
+				bgLayer.setAttribute('transform', `${bgOriginalTransform} translate(${bgOffsetX}, ${bgOffsetY})`);
+			}
 
-	  // Parallax and jitter for bones wrappers
-	  boneWrappers.forEach(wrapper => {
-	    const depth = parseFloat(wrapper.dataset.depth) || 1;
-	    const offsetX = targetX * 10 * depth;
-	    const offsetY = targetY * 10 * depth;
-	    wrapper.setAttribute('transform', `translate(${offsetX}, ${offsetY})`);
-	  });
+  // Parallax for dirt overlay (#Dirt_overlay) — preserve original transform
+			if (dirtLayer) {
+				const dirtOffsetX = targetX * 1.5;
+				const dirtOffsetY = targetY * 1.5;
+				dirtLayer.setAttribute('transform', `${dirtOriginalTransform} translate(${dirtOffsetX}, ${dirtOffsetY})`);
+			}
 
-	  requestAnimationFrame(animateParallax);
-	}
+  // Parallax and jitter for bones wrappers — preserve original transform
+			boneWrappers.forEach((wrapper, i) => {
+				const depth = parseFloat(wrapper.dataset.depth) || 1;
+				const offsetX = targetX * 10 * depth;
+				const offsetY = targetY * 10 * depth;
+				const original = bonesOriginalTransforms[i];
+				wrapper.setAttribute('transform', `${original} translate(${offsetX}, ${offsetY})`);
+			});
 
-	animateParallax();
+			requestAnimationFrame(animateParallax);
+		}
+
+		animateParallax();
 	</script>
 	<script>
 	// Show the map when button is clicked
-	document.getElementById('show-map-btn').addEventListener('click', function () {
-		const overlay = document.getElementById('map-overlay');
+		document.getElementById('show-map-btn').addEventListener('click', function () {
+			const overlay = document.getElementById('map-overlay');
 
 		// Add active class to slide map into view
-		overlay.classList.add('active');
+			overlay.classList.add('active');
 
 		// Lock background scroll
-		document.body.style.overflow = 'hidden';
+			document.body.style.overflow = 'hidden';
 
 		// Wait for the animation to finish, then draw lines
-		setTimeout(drawDottedLines, 900);
-	});
+			setTimeout(drawDottedLines, 900);
+		});
 
 	// Close the map
-	document.getElementById('close-map-btn').addEventListener('click', function () {
-		const overlay = document.getElementById('map-overlay');
+		document.getElementById('close-map-btn').addEventListener('click', function () {
+			const overlay = document.getElementById('map-overlay');
 
 		// Remove active class to slide map out
-		overlay.classList.remove('active');
+			overlay.classList.remove('active');
 
 		// Re-enable background scroll
-		document.body.style.overflow = '';
-	});
+			document.body.style.overflow = '';
+		});
 
-	function drawDottedLines() {
-	  const sketches = document.querySelectorAll('#map-overlay .sketch');
-	  const svg = document.getElementById('map-lines');
+		function drawDottedLines() {
+			const sketches = document.querySelectorAll('#map-overlay .sketch');
+			const svg = document.getElementById('map-lines');
 	  svg.innerHTML = ''; // Clear previous paths and dots
 
 	  const parentRect = document.getElementById('map-overlay').getBoundingClientRect();
 	  const trimAmount = 40;
 
 	  const positions = Array.from(sketches).map(img => {
-	    const rect = img.getBoundingClientRect();
-	    return {
-	      x: rect.left + rect.width / 2 - parentRect.left,
-	      y: rect.top + rect.height / 2 - parentRect.top
-	    };
+	  	const rect = img.getBoundingClientRect();
+	  	return {
+	  		x: rect.left + rect.width / 2 - parentRect.left,
+	  		y: rect.top + rect.height / 2 - parentRect.top
+	  	};
 	  });
 
 	  for (let i = 0; i < positions.length - 1; i++) {
-	    const p1 = positions[i];
-	    const p2 = positions[i + 1];
+	  	const p1 = positions[i];
+	  	const p2 = positions[i + 1];
 
-	    const dx = p2.x - p1.x;
-	    const dy = p2.y - p1.y;
-	    const length = Math.hypot(dx, dy);
-	    const ux = dx / length;
-	    const uy = dy / length;
+	  	const dx = p2.x - p1.x;
+	  	const dy = p2.y - p1.y;
+	  	const length = Math.hypot(dx, dy);
+	  	const ux = dx / length;
+	  	const uy = dy / length;
 
-	    const start = {
-	      x: p1.x + ux * trimAmount,
-	      y: p1.y + uy * trimAmount
-	    };
-	    const end = {
-	      x: p2.x - ux * trimAmount,
-	      y: p2.y - uy * trimAmount
-	    };
+	  	const start = {
+	  		x: p1.x + ux * trimAmount,
+	  		y: p1.y + uy * trimAmount
+	  	};
+	  	const end = {
+	  		x: p2.x - ux * trimAmount,
+	  		y: p2.y - uy * trimAmount
+	  	};
 
-	    const segments = 3;
-	    const points = [start];
+	  	const segments = 3;
+	  	const points = [start];
 
-	    for (let j = 1; j < segments; j++) {
-	      const t = j / segments;
-	      const x = start.x + dx * t;
-	      const y = start.y + dy * t;
+	  	for (let j = 1; j < segments; j++) {
+	  		const t = j / segments;
+	  		const x = start.x + dx * t;
+	  		const y = start.y + dy * t;
 
 	      // Instead of random offset in all directions, first move vertically above the target
-	      let offsetX = 0;
-	      let offsetY = 0;
+	  		let offsetX = 0;
+	  		let offsetY = 0;
 
-	      if (j === segments - 1) {
+	  		if (j === segments - 1) {
 	        // Last intermediate point: go above target
 	        offsetY = -100; // adjust vertical height above sketch
-	      } else {
+	    } else {
 	        // Optional: small random wiggle for earlier points
-	        offsetX = (Math.random() - 0.5) * 50;
-	        offsetY = (Math.random() - 0.5) * 50;
-	      }
-
-	      points.push({
-	        x: x + offsetX,
-	        y: y + offsetY
-	      });
+	    	offsetX = (Math.random() - 0.5) * 50;
+	    	offsetY = (Math.random() - 0.5) * 50;
 	    }
 
-	    points.push(end);
-
-	    animateDotsOnCurve(svg, points);
-	  }
+	    points.push({
+	    	x: x + offsetX,
+	    	y: y + offsetY
+	    });
 	}
 
-	function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
-	  // Build curve from points using quadratic segments
-	  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-	  let d = `M ${points[0].x},${points[0].y}`;
-	  for (let j = 1; j < points.length; j++) {
-	    const cp = points[j - 1];
-	    const pt = points[j];
-	    const mx = (cp.x + pt.x) / 2;
-	    const my = (cp.y + pt.y) / 2;
-	    d += ` Q ${cp.x},${cp.y} ${mx},${my}`;
-	  }
+	points.push(end);
 
-	  path.setAttribute("d", d);
-	  path.setAttribute("fill", "none");
+	animateDotsOnCurve(svg, points);
+}
+}
+
+function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
+	  // Build curve from points using quadratic segments
+	const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+	let d = `M ${points[0].x},${points[0].y}`;
+	for (let j = 1; j < points.length; j++) {
+		const cp = points[j - 1];
+		const pt = points[j];
+		const mx = (cp.x + pt.x) / 2;
+		const my = (cp.y + pt.y) / 2;
+		d += ` Q ${cp.x},${cp.y} ${mx},${my}`;
+	}
+
+	path.setAttribute("d", d);
+	path.setAttribute("fill", "none");
 	  path.setAttribute("stroke", "none"); // Hide actual path
 	  svg.appendChild(path);
 
@@ -440,18 +447,18 @@
 
 	  let i = 0;
 	  const drawNextDot = () => {
-	    if (i >= totalDots) return;
+	  	if (i >= totalDots) return;
 
-	    const point = path.getPointAtLength((i / totalDots) * pathLength);
-	    const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-	    dot.setAttribute("cx", point.x);
-	    dot.setAttribute("cy", point.y);
-	    dot.setAttribute("r", 2);
-	    dot.setAttribute("fill", "#3a2f28");
-	    svg.appendChild(dot);
+	  	const point = path.getPointAtLength((i / totalDots) * pathLength);
+	  	const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+	  	dot.setAttribute("cx", point.x);
+	  	dot.setAttribute("cy", point.y);
+	  	dot.setAttribute("r", 2);
+	  	dot.setAttribute("fill", "#3a2f28");
+	  	svg.appendChild(dot);
 
-	    i++;
-	    setTimeout(drawNextDot, interval);
+	  	i++;
+	  	setTimeout(drawNextDot, interval);
 	  };
 
 	  drawNextDot();
@@ -459,33 +466,33 @@
 
 	let resizeTimeout;
 	window.addEventListener('resize', () => {
-	  clearTimeout(resizeTimeout);
-	  resizeTimeout = setTimeout(() => {
-	    drawDottedLines();
+		clearTimeout(resizeTimeout);
+		resizeTimeout = setTimeout(() => {
+			drawDottedLines();
 	  }, 150); // delay in ms
 	});
 
-	</script>
-	<script>
-	  const bones2 = document.querySelectorAll('.bone');
+</script>
+<script>
+	const bones2 = document.querySelectorAll('.bone');
 	  const radius = 100; // Distance (in px) for glow activation
 
 	  document.addEventListener('mousemove', (e) => {
-	    bones2.forEach(bone => {
-	      const rect = bone.getBoundingClientRect();
-	      const boneX = rect.left + rect.width / 2;
-	      const boneY = rect.top + rect.height / 2;
+	  	bones2.forEach(bone => {
+	  		const rect = bone.getBoundingClientRect();
+	  		const boneX = rect.left + rect.width / 2;
+	  		const boneY = rect.top + rect.height / 2;
 
-	      const dx = e.clientX - boneX;
-	      const dy = e.clientY - boneY;
-	      const distance = Math.sqrt(dx * dx + dy * dy);
+	  		const dx = e.clientX - boneX;
+	  		const dy = e.clientY - boneY;
+	  		const distance = Math.sqrt(dx * dx + dy * dy);
 
-	      if (distance < radius) {
-	        bone.classList.add('glow');
-	      } else {
-	        bone.classList.remove('glow');
-	      }
-	    });
+	  		if (distance < radius) {
+	  			bone.classList.add('glow');
+	  		} else {
+	  			bone.classList.remove('glow');
+	  		}
+	  	});
 	  });
 	</script>
 </body>
