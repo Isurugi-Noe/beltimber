@@ -260,6 +260,7 @@ body::before {
 	color: #ffca98;
 	line-height: 1.5;
 	text-shadow: 0 0 10px rgba(227, 199, 122, 1);
+	width: 100%;
 }
 
 #bones h1.topHeader {
@@ -328,6 +329,18 @@ body::before {
 	}
 	50% {
 		filter: drop-shadow(0 0 2px rgba(255, 255, 255, 1)) drop-shadow(0 0 10px rgba(136, 255, 212, 0.9));
+	}
+}
+
+@media (max-width: 768px) {
+	#bones {
+		overflow-x: scroll;
+	}
+	#bones svg {
+		bottom: 0;
+	}
+	#bones h1.topHeader, #bones h1 {
+		position: fixed;
 	}
 }
 
