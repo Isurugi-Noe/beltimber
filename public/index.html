@@ -128,7 +128,7 @@
 		<div>
 			<img src="img/l-1.png?rev=2" />
 			<h1>Hello, I am <i>Phosphorus</i> or <i>Rue</i>.</h1>
-			<h2>Thank you for viewing my character profile, I promise I'm plenty approachable. 21+ only please, let's avoid drama and simply enjoy writing with one another. For any queries feel free to contact me in-game via /tell, otherwise feel free to continue exploring the site.</h2>
+			<h2>Thank you for viewing my character profile - despite the vibe - I promise I'm plenty approachable. 21+ only please, let's avoid drama and simply enjoy writing with one another. For any queries feel free to contact me in-game via /tell, otherwise feel free to continue exploring the site.</h2>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -345,8 +345,8 @@
   // Parallax and jitter for bones wrappers — preserve original transform
 			boneWrappers.forEach((wrapper, i) => {
 				const depth = parseFloat(wrapper.dataset.depth) || 1;
-				const offsetX = targetX * 10 * depth;
-				const offsetY = targetY * 10 * depth;
+				const offsetX = targetX * 6 * depth;
+				const offsetY = targetY * 5 * depth;
 				const original = bonesOriginalTransforms[i];
 				wrapper.setAttribute('transform', `${original} translate(${offsetX}, ${offsetY})`);
 			});
