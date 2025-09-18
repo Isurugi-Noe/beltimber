@@ -243,10 +243,10 @@ body::before {
 
 @keyframes pulseGlow {
   0%, 100% {
-    filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.6)) drop-shadow(0 0 10px rgba(255, 204, 51, 0.5));
+    filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 5px rgba(255, 190, 50, 0.7));
   }
   50% {
-    filter: drop-shadow(0 0 12px rgba(255, 255, 204, 1)) drop-shadow(0 0 20px rgba(255, 255, 204, 0.9));
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 1)) drop-shadow(0 0 10px rgba(255, 190, 50, 0.9));
   }
 }
 
