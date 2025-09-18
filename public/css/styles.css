@@ -231,7 +231,9 @@ body::before {
 .bone.glow:hover, #map-overlay .sketch {
 	cursor: pointer;
 }
-
+#map-lines{
+	pointer-events: none;
+}
 .jitter {
 	animation: jitter 1.5s infinite ease-in-out;
 	transform-origin: center center;
