@@ -225,7 +225,7 @@ body::before {
 }
 
 .bone.glow {
-	animation: pulseGlow 2.5s infinite ease-in-out, jitter 1.5s infinite ease-in-out
+	animation: pulseGlow 2.5s infinite ease-in-out, jitter 1.5s infinite steps(1, end);
 }
 
 .jitter {
@@ -234,11 +234,11 @@ body::before {
 }
 
 @keyframes jitter {
-	0%   { transform: translate(0, 0) rotate(0deg); }
-	25%  { transform: translate(-0.2px, 0.15px) rotate(-0.2deg); }
-	50%  { transform: translate(0.15px, -0.15px) rotate(0.2deg); }
-	75%  { transform: translate(-0.15px, 0) rotate(-0.1deg); }
-	100% { transform: translate(0, 0) rotate(0deg); }
+  0%   { transform: translate(0px, 0px) rotate(0deg); }
+  25%  { transform: translate(-1px, 1px) rotate(-1deg); }
+  50%  { transform: translate(1px, -0.5px) rotate(1deg); }
+  75%  { transform: translate(-0.5px, -1px) rotate(-0.5deg); }
+  100% { transform: translate(0.5px, 0.5px) rotate(0.5deg); }
 }
 
 @keyframes pulseGlow {
@@ -258,7 +258,7 @@ body::before {
 	margin: 0 auto;
 	text-align: center;
 	top: 10%;
-	color: #fff3d5;
+	color: #ffca98;
 	line-height: 1.5;
 	text-shadow: 0 0 10px rgba(227, 199, 122, 1);
 }
