@@ -356,7 +356,7 @@ body::before {
 	position: relative;
 	height: 100vh;
 	width: 100%;
-	background-image: url(../img/bg3.png?v=1.0);
+	background-image: url(../img/bg2.png?v=1.0);
 	display: none;
 	justify-content: center;
 	align-items: center;
@@ -382,6 +382,20 @@ body::before {
 
 #paths h2 {
 	color: #fff;
+}
+
+#dreamcatcher {
+	position: relative;
+	height: 100vh;
+	width: 100%;
+	background-image: url(../img/bg3.png?v=1.0);
+	display: none;
+	justify-content: center;
+	align-items: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	transition: background-position 0.1s ease;
 }
 
 .row, .column {
