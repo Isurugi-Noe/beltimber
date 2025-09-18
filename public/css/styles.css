@@ -193,6 +193,10 @@ body::before {
 		transition: background-position 0.1s ease;
 }
 
+.dirt-layer {
+		pointer-events: none;
+}
+
 #bones {
     position: fixed;
     bottom: 0;
