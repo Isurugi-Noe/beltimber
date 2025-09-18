@@ -76,15 +76,6 @@
 	</div>
 	<div class="container" id="bones">
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 1500">
-			<defs>
-			  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-			    <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
-			    <feMerge>
-			      <feMergeNode in="blur"/>
-			      <feMergeNode in="SourceGraphic"/>
-			    </feMerge>
-			  </filter>
-			</defs>
 		  <g id="Bg" class="svg-layer bg-layer">
 		    <image id="Bg-2" data-name="Bg" width="1920" height="1500" xlink:href="img/bg4.png"/>
 		  </g>
@@ -447,28 +438,26 @@
 
 	</script>
 	<script>
-	const bones = document.querySelectorAll('.bone');
-	const radius = 100;
+	  const bones = document.querySelectorAll('.bone');
+	  const radius = 100; // Distance (in px) for glow activation
 
-	document.addEventListener('mousemove', (e) => {
-	  bones.forEach(bone => {
-	    const rect = bone.getBoundingClientRect();
-	    const boneX = rect.left + rect.width / 2;
-	    const boneY = rect.top + rect.height / 2;
+	  document.addEventListener('mousemove', (e) => {
+	    bones.forEach(bone => {
+	      const rect = bone.getBoundingClientRect();
+	      const boneX = rect.left + rect.width / 2;
+	      const boneY = rect.top + rect.height / 2;
 
-	    const dx = e.clientX - boneX;
-	    const dy = e.clientY - boneY;
-	    const distance = Math.sqrt(dx * dx + dy * dy);
+	      const dx = e.clientX - boneX;
+	      const dy = e.clientY - boneY;
+	      const distance = Math.sqrt(dx * dx + dy * dy);
 
-	    if (distance < radius) {
-	      bone.setAttribute('filter', 'url(#glow)');
-	      bone.classList.add('jitter'); // only animation
-	    } else {
-	      bone.removeAttribute('filter');
-	      bone.classList.remove('jitter');
-	    }
+	      if (distance < radius) {
+	        bone.classList.add('glow');
+	      } else {
+	        bone.classList.remove('glow');
+	      }
+	    });
 	  });
-	});
 	</script>
 </body>
 </html>
