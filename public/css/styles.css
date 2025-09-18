@@ -281,7 +281,6 @@ body::before {
   pointer-events: none; /* disable interaction when hidden */
 }
 
-/* Overlay */
 .quote-overlay {
 	position: fixed;
 	top: 0; left: 0;
@@ -298,7 +297,6 @@ body::before {
 	pointer-events: auto;
 }
 
-/* Quotes */
 .middleQuotes h1 {
 	position: fixed;
 	top: 50%; left: 50%;
@@ -312,7 +310,7 @@ body::before {
 	user-select: none;
 	z-index: 10;
 	transition: opacity 0.4s ease;
-	/* Remove display:none */
+	text-shadow: 0 0 10px rgba(136, 255, 212, 1);
 }
 
 .middleQuotes h1.active {
@@ -320,17 +318,16 @@ body::before {
 	pointer-events: auto;
 }
 
-/* Selected glow style */
 .bone.selected {
 	animation: pulseGlow2 2.5s infinite ease-in-out;
 }
 
 @keyframes pulseGlow2 {
 	0%, 100% {
-		filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 5px rgba(255, 190, 50, 0.7));
+		filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 5px rgba(136, 255, 212, 0.7));
 	}
 	50% {
-		filter: drop-shadow(0 0 2px rgba(255, 255, 255, 1)) drop-shadow(0 0 10px rgba(255, 190, 50, 0.9));
+		filter: drop-shadow(0 0 2px rgba(255, 255, 255, 1)) drop-shadow(0 0 10px rgba(136, 255, 212, 0.9));
 	}
 }
 
