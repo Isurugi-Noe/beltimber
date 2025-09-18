@@ -79,13 +79,23 @@
 		  <g id="Bg" class="svg-layer bg-layer">
 		    <image id="Bg-2" data-name="Bg" width="1920" height="1500" xlink:href="img/bg4.png"/>
 		  </g>
-		  <g id="Bones" class="svg-layer">
-		    <image id="Jaw" class="bone" data-depth="0.9" width="78" height="49" transform="translate(1619 1117)" xlink:href="img/marrow1.png"/>
-		    <image id="arm" class="bone" data-depth="1.2" width="127" height="202" transform="translate(224 785)" xlink:href="img/marrow2.png"/>
-		    <image id="Femur" class="bone" data-depth="1.0" width="89" height="121" transform="translate(1141 717)" xlink:href="img/marrow3.png"/>
-		    <image id="Spine" class="bone" data-depth="1.1" width="71" height="116" transform="translate(456 605)" xlink:href="img/marrow4.png"/>
-		    <image id="Cranium" class="bone" data-depth="0.8" width="97" height="113" transform="translate(1508 905)" xlink:href="img/marrow5.png"/>
-		  </g>
+			<g id="Bones">
+			  <g class="jitter-wrapper" data-depth="0.9">
+			    <image id="Jaw" class="bone" width="78" height="49" xlink:href="img/marrow1.png" />
+			  </g>
+			  <g class="jitter-wrapper" data-depth="1.2">
+			    <image id="arm" class="bone" width="127" height="202" xlink:href="img/marrow2.png" />
+			  </g>
+			  <g class="jitter-wrapper" data-depth="0.8">
+			    <image id="Femur" class="bone" width="89" height="121" xlink:href="img/marrow3.png" />
+			  </g>
+			  <g class="jitter-wrapper" data-depth="1.1">
+			    <image id="Spine" class="bone" width="71" height="116" xlink:href="img/marrow4.png" />
+			  </g>
+			  <g class="jitter-wrapper" data-depth="1.0">
+			    <image id="Cranium" class="bone" width="97" height="113" xlink:href="img/marrow5.png" />
+			  </g>
+			</g>
 		  <g id="Dirt_overlay" class="svg-layer dirt-layer" data-name="Dirt overlay">
 		    <image width="1920" height="1500" xlink:href="img/grass.png?rev=2"/>
 		  </g>
@@ -229,63 +239,72 @@
 	  }
 	</script>
 	<script>
-	  const mainContainer = document.querySelector('.container.main');
-	  const fireflyContainer = document.getElementById('firefly-container');
+	const mainContainer = document.querySelector('.container.main');
+	const fireflyContainer = document.getElementById('firefly-container');
+	const boneWrappers = document.querySelectorAll('.jitter-wrapper');
+	const bones = document.querySelectorAll('.bone');
 
-	  // SVG layers
-	  const bgLayer = document.querySelector('.bg-layer');
-	  const dirtLayer = document.querySelector('.dirt-layer');
+	let targetX = 0;
+	let targetY = 0;
 
-	  let targetX = 0;
-	  let targetY = 0;
+	document.addEventListener('mousemove', (e) => {
+	  const { innerWidth, innerHeight } = window;
+	  const x = (e.clientX / innerWidth - 0.5) * 2;
+	  const y = (e.clientY / innerHeight - 0.5) * 2;
 
-	  let bgX = 0, bgY = 0;
-	  let ffX = 0, ffY = 0;
+	  targetX = x;
+	  targetY = y;
 
-	  let svgBgX = 0, svgBgY = 0;
-	  let svgDirtX = 0, svgDirtY = 0;
+	  // Glow proximity check for bones
+	  bones.forEach((bone) => {
+	    const rect = bone.getBoundingClientRect();
+	    const boneX = rect.left + rect.width / 2;
+	    const boneY = rect.top + rect.height / 2;
 
-	  document.addEventListener('mousemove', (e) => {
-	    const { innerWidth, innerHeight } = window;
-	    const x = (e.clientX / innerWidth - 0.5) * 2; // range -1 to 1
-	    const y = (e.clientY / innerHeight - 0.5) * 2;
+	    const dx = e.clientX - boneX;
+	    const dy = e.clientY - boneY;
+	    const distance = Math.sqrt(dx * dx + dy * dy);
 
-	    targetX = x;
-	    targetY = y;
+	    if (distance < 100) {
+	      bone.classList.add('glow');
+	      bone.parentElement.classList.add('jitter'); // add jitter class on wrapper
+	    } else {
+	      bone.classList.remove('glow');
+	      bone.parentElement.classList.remove('jitter');
+	    }
+	  });
+	});
+
+	let bgX = 0;
+	let bgY = 0;
+	let ffX = 0;
+	let ffY = 0;
+
+	function animateParallax() {
+	  // Smooth interpolation for background
+	  bgX += (targetX * 10 - bgX) * 0.05;
+	  bgY += (targetY * 10 - bgY) * 0.05;
+
+	  // Smooth interpolation for fireflies
+	  ffX += (targetX * 4 - ffX) * 0.04;
+	  ffY += (targetY * 4 - ffY) * 0.04;
+
+	  mainContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
+	  fireflyContainer.style.transform = `translate(${ffX}px, ${ffY}px)`;
+
+	  // Animate bones individually based on their data-depth
+	  boneWrappers.forEach(wrapper => {
+	    const depth = parseFloat(wrapper.dataset.depth) || 1;
+	    const offsetX = targetX * 10 * depth;
+	    const offsetY = targetY * 10 * depth;
+	    wrapper.setAttribute('transform', `translate(${offsetX}, ${offsetY})`);
 	  });
 
-	  function animateParallax() {
-	    // Smooth interpolation
-	    bgX += (targetX * 10 - bgX) * 0.05;
-	    bgY += (targetY * 10 - bgY) * 0.05;
+	  requestAnimationFrame(animateParallax);
+	}
 
-	    ffX += (targetX * 4 - ffX) * 0.04;
-	    ffY += (targetY * 4 - ffY) * 0.04;
+	animateParallax();
 
-	    svgBgX += (targetX * 10 - svgBgX) * 0.03;     // subtle movement
-	    svgBgY += (targetY * 10 - svgBgY) * 0.03;
-
-		svgDirtX += (targetX * 5 - svgDirtX) * 0.05;
-		svgDirtY += (targetY * 5 - svgDirtY) * 0.05;
-
-	    // Apply parallax to CSS elements
-	    if (mainContainer)
-	      mainContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
-
-	    if (fireflyContainer)
-	      fireflyContainer.style.transform = `translate(${ffX}px, ${ffY}px)`;
-
-	    // Apply parallax to SVG layers
-	    if (bgLayer)
-	      bgLayer.setAttribute('transform', `translate(${svgBgX}, ${svgBgY})`);
-
-	    if (dirtLayer)
-	      dirtLayer.setAttribute('transform', `translate(${svgDirtX}, ${svgDirtY})`);
-
-	    requestAnimationFrame(animateParallax);
-	  }
-
-	  animateParallax();
 	</script>
 	<script>
 	// Show the map when button is clicked
@@ -431,20 +450,9 @@
 	</script>
 	<script>
 	  const bones = document.querySelectorAll('.bone');
-	  const radius = 100; // distance from cursor to trigger glow
-	  let targetX = 0;
-	  let targetY = 0;
+	  const radius = 100; // Distance (in px) for glow activation
 
-	  // Update target mouse position
 	  document.addEventListener('mousemove', (e) => {
-	    const { innerWidth, innerHeight } = window;
-	    const x = (e.clientX / innerWidth - 0.5) * 2;
-	    const y = (e.clientY / innerHeight - 0.5) * 2;
-
-	    targetX = x;
-	    targetY = y;
-
-	    // Glow proximity check
 	    bones.forEach(bone => {
 	      const rect = bone.getBoundingClientRect();
 	      const boneX = rect.left + rect.width / 2;
@@ -461,23 +469,6 @@
 	      }
 	    });
 	  });
-
-	  // 🆕 Different name to avoid conflict
-	  function animateBoneParallax() {
-	    bones.forEach(bone => {
-	      const depth = parseFloat(bone.dataset.depth) || 1;
-	      const offsetX = targetX * 10 * depth;
-	      const offsetY = targetY * 10 * depth;
-
-	      bone.setAttribute('transform', `translate(${offsetX}, ${offsetY})`);
-	    });
-
-	    requestAnimationFrame(animateBoneParallax);
-	  }
-
-	  animateBoneParallax();
-	</script
-
-
+	</script>
 </body>
 </html>
