@@ -38,17 +38,12 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 
-			  const $overlay = $('#map-overlay');
-
-			  // Step 1: Wait for next repaint so initial render is done
-			  requestAnimationFrame(() => {
-			    
-
-			    // Step 3: Trigger entrance animation by removing 'hidden'
-			    setTimeout(() => {
-			    	$overlay.addClass('animate');
-			    }, 1000); // Slight delay ensures no transition on first paint
-			  });
+			const $overlay = $('#map-overlay');
+			requestAnimationFrame(() => {
+				setTimeout(() => {
+					$overlay.addClass('animate');
+				}, 1000); 
+			});
 
 			$('#map-overlay .sketch').click(function(){
 				var classList = $(this).attr("class");
@@ -129,6 +124,7 @@
 	<div class="container" id="dreamcatcher">
 	</div>
 	<div class="container" id="paths">
+		<img src="img/l-1.png?rev=2" />
 	</div>
 	<script type="text/javascript">
 		class TextScramble {

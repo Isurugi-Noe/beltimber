@@ -352,6 +352,20 @@ body::before {
 	}
 }
 
+#paths {
+	position: relative;
+	height: 100vh;
+	width: 100%;
+	background-image: url(../img/bg4.png?v=1.0);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	transition: background-position 0.1s ease;
+}
+
 .row, .column {
 	display: flex;
 	flex-direction: column;
