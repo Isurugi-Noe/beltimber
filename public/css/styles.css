@@ -314,7 +314,7 @@ body::before {
 	text-shadow: 0 0 10px rgba(136, 255, 212, 1);
 }
 
-.middleQuotes h1.active {
+#bones .middleQuotes h1.active {
 	opacity: 1;
 	pointer-events: auto;
 }
