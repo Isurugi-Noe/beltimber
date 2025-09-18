@@ -297,7 +297,7 @@ body::before {
 	pointer-events: auto;
 }
 
-.middleQuotes h1 {
+#bones .middleQuotes h1 {
 	position: fixed;
 	top: 50%; left: 50%;
 	transform: translate(-50%, -50%);
