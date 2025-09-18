@@ -42,12 +42,13 @@
 
 			  // Step 1: Wait for next repaint so initial render is done
 			  requestAnimationFrame(() => {
-			    // Step 2: Add the transition class
-			    $overlay.addClass('animate');
+			    
 
 			    // Step 3: Trigger entrance animation by removing 'hidden'
 			    setTimeout(() => {
 			      $overlay.removeClass('hidden');
+			      // Step 2: Add the transition class
+			    $overlay.addClass('animate');
 			    }, 1000); // Slight delay ensures no transition on first paint
 			  });
 
