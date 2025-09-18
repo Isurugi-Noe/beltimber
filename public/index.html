@@ -37,19 +37,12 @@
 	<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('.main .column').click(function(){
+			$('.map-overlay .sketch').click(function(){
 				var classList = $(this).attr("class");
 				var classArr = classList.split(/\s+/);
-				$('.other .row').hide();
-				$('.row.'+ classArr[1]).css('display', 'flex');
-				$('.container.main').fadeOut(1000).promise().done(function(){
-					$('.container.other').fadeIn(1500);
-				});
-			});
-			$('.returnBtn').click(function(){
-				$('.other .row').fadeOut(1000).promise().done(function(){
-					$('.container.other').hide();
-					$('.container.main').fadeIn(1500);
+				$('.container#'+ classArr[1]).css('display', 'flex').addClass('active');
+				$('.container.main, .container.active').fadeOut(1000).promise().done(function(){
+					$('.container#'+ classArr[1]).fadeIn(1500);
 				});
 			});
 		});
@@ -391,16 +384,16 @@
 	  	const ux = dx / length;
 	  	const uy = dy / length;
 
-		const trimAmount = length * trimFraction;
+	  	const trimAmount = length * trimFraction;
 
-		const start = {
-			x: p1.x + ux * trimAmount,
-			y: p1.y + uy * trimAmount
-		};
-		const end = {
-			x: p2.x - ux * trimAmount,
-			y: p2.y - uy * trimAmount
-		};
+	  	const start = {
+	  		x: p1.x + ux * trimAmount,
+	  		y: p1.y + uy * trimAmount
+	  	};
+	  	const end = {
+	  		x: p2.x - ux * trimAmount,
+	  		y: p2.y - uy * trimAmount
+	  	};
 
 	  	const segments = 3;
 	  	const points = [start];
@@ -439,18 +432,18 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 	  // Build curve from points using quadratic segments
 	const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
 	let d = `M ${points[0].x},${points[0].y}`;
-for (let j = 1; j < points.length - 1; j++) {
-	const cp = points[j - 1];
-	const pt = points[j];
-	const mx = (cp.x + pt.x) / 2;
-	const my = (cp.y + pt.y) / 2;
-	d += ` Q ${cp.x},${cp.y} ${mx},${my}`;
-}
+	for (let j = 1; j < points.length - 1; j++) {
+		const cp = points[j - 1];
+		const pt = points[j];
+		const mx = (cp.x + pt.x) / 2;
+		const my = (cp.y + pt.y) / 2;
+		d += ` Q ${cp.x},${cp.y} ${mx},${my}`;
+	}
 
 // Final segment: go to actual last point
-const penultimate = points[points.length - 2];
-const last = points[points.length - 1];
-d += ` Q ${penultimate.x},${penultimate.y} ${last.x},${last.y}`;
+	const penultimate = points[points.length - 2];
+	const last = points[points.length - 1];
+	d += ` Q ${penultimate.x},${penultimate.y} ${last.x},${last.y}`;
 
 
 	path.setAttribute("d", d);
