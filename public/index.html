@@ -320,7 +320,10 @@
 			ffY += (targetY * 4 - ffY) * 0.04;
 
   // Apply background parallax (CSS background image)
-			mainContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
+			mainContainers.forEach(container => {
+			  container.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
+			});
+
 
   // Apply fireflies parallax
 			fireflyContainer.style.transform = `translate(${ffX}px, ${ffY}px)`;
