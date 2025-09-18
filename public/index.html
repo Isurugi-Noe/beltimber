@@ -371,7 +371,7 @@
 	  svg.innerHTML = ''; // Clear previous paths and dots
 
 	  const parentRect = document.getElementById('map-overlay').getBoundingClientRect();
-	  const trimFraction = 0.1; // Trim 10% from each end
+	  const trimFraction = 0.01; // Trim 10% from each end
 
 	  const positions = Array.from(sketches).map(img => {
 	  	const rect = img.getBoundingClientRect();
