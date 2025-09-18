@@ -75,6 +75,7 @@
 		<button style="display: none;" id="close-map-btn">Test</button>
 	</div>
 	<div class="container" id="bones">
+		<div class="quote-overlay"></div>
 		<h1 class="topHeader">"Are you lost? The soil remembers your name."</h1>
 		<div class="middleQuotes">
 			<h1 id="craniumQuote">"The moors gorged on her body. He crawled from her mouth."</h1>
@@ -501,49 +502,60 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 	  		}
 	  	});
 	  });
-		const quotes = document.querySelectorAll('.middleQuotes h1');
+	  const quotes = document.querySelectorAll('.middleQuotes h1');
+	  const overlay = document.querySelector('.quote-overlay');
 
-		let selectedBone = null;
+	  let selectedBone = null;
 
-		bones2.forEach(bone => {
-		  bone.addEventListener('click', () => {
-		    const boneId = bone.id.toLowerCase(); // Assuming id like 'Cranium' matches 'craniumQuote'
-		    const quoteId = `${boneId}Quote`;
-		    const quote = document.getElementById(quoteId);
+	  function closeQuote() {
+	  	if (selectedBone) {
+	  		const quoteId = `${selectedBone.id.toLowerCase()}Quote`;
+	  		const quote = document.getElementById(quoteId);
+	  		quote.classList.remove('active');
+	  		selectedBone.classList.remove('selected', 'glow');
+	  		const wrapper = selectedBone.parentElement;
+	  		if (wrapper.classList.contains('jitter')) {
+	  			wrapper.classList.remove('paused');
+	  		}
+	  		selectedBone = null;
+	  		overlay.classList.remove('active');
+	  	}
+	  }
 
-		    if (selectedBone === bone) {
-		      // Deselect current
-		      quote.classList.remove('active');
-		      bone.classList.remove('selected', 'glow');
-		      const wrapper = bone.parentElement;
-		      if (wrapper.classList.contains('jitter')) {
-		        wrapper.classList.remove('paused');
-		      }
-		      selectedBone = null;
-		    } else {
-		      // Deselect previous
-		      if (selectedBone) {
-		        const prevQuoteId = `${selectedBone.id.toLowerCase()}Quote`;
-		        const prevQuote = document.getElementById(prevQuoteId);
-		        prevQuote.classList.remove('active');
-		        selectedBone.classList.remove('selected', 'glow');
-		        const prevWrapper = selectedBone.parentElement;
-		        if (prevWrapper.classList.contains('jitter')) {
-		          prevWrapper.classList.remove('paused');
-		        }
-		      }
+	  bones2.forEach(bone => {
+	  	bone.addEventListener('click', (e) => {
+	  		e.stopPropagation();
 
-		      // Select new
-		      quote.classList.add('active');
-		      bone.classList.add('selected', 'glow');
-		      const wrapper = bone.parentElement;
-		      if (wrapper.classList.contains('jitter')) {
-		        wrapper.classList.add('paused');
-		      }
-		      selectedBone = bone;
-		    }
-		  });
-		});
+	  		const boneId = bone.id.toLowerCase();
+	  		const quoteId = `${boneId}Quote`;
+	  		const quote = document.getElementById(quoteId);
+
+	  		if (selectedBone === bone) {
+	  			closeQuote();
+	  		} else {
+	  			closeQuote();
+
+	  			quote.classList.add('active');
+	  			bone.classList.add('selected', 'glow');
+	  			const wrapper = bone.parentElement;
+	  			if (wrapper.classList.contains('jitter')) {
+	  				wrapper.classList.add('paused');
+	  			}
+	  			selectedBone = bone;
+	  			overlay.classList.add('active');
+	  		}
+	  	});
+	  });
+
+	  overlay.addEventListener('click', () => {
+	  	closeQuote();
+	  });
+
+	  document.addEventListener('click', (e) => {
+	  	if (!e.target.closest('.bone') && !e.target.closest('.quote-overlay')) {
+	  		closeQuote();
+	  	}
+	  });
 	</script>
 </body>
 </html>

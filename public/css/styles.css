@@ -238,11 +238,11 @@ body::before {
 }
 
 @keyframes jitter {
-  0%   { transform: translate(0px, 0px); }
-  25%  { transform: translate(0.5px, -0.5px); }
-  50%  { transform: translate(-0.5px, 0.5px); }
-  75%  { transform: translate(0.4px, 0.4px); }
-  100% { transform: translate(0px, 0px); }
+	0%   { transform: translate(0px, 0px); }
+	25%  { transform: translate(0.5px, -0.5px); }
+	50%  { transform: translate(-0.5px, 0.5px); }
+	75%  { transform: translate(0.4px, 0.4px); }
+	100% { transform: translate(0px, 0px); }
 }
 
 @keyframes pulseGlow {
@@ -270,34 +270,48 @@ body::before {
 	top: 10%;
 }
 
-/* Hide all quotes by default */
-.middleQuotes h1 {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff; /* or your preferred color */
-  font-size: 2rem;
-  text-align: center;
-  max-width: 80vw;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  user-select: none;
-  z-index: 10;
+/* Overlay */
+.quote-overlay {
+	position: fixed;
+	top: 0; left: 0;
+	width: 100vw; height: 100vh;
+	background: rgba(0,0,0,0.7);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.4s ease;
+	z-index: 9;
 }
 
-/* Show quote */
+.quote-overlay.active {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+/* Quotes */
+.middleQuotes h1 {
+	position: fixed;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+	color: #fff;
+	font-size: 2rem;
+	max-width: 80vw;
+	text-align: center;
+	opacity: 0;
+	pointer-events: none;
+	user-select: none;
+	z-index: 10;
+	transition: opacity 0.4s ease;
+	/* Remove display:none */
+}
+
 .middleQuotes h1.active {
-  display: block;
-  opacity: 1;
-  pointer-events: auto;
+	opacity: 1;
+	pointer-events: auto;
 }
 
 /* Selected glow style */
-.bone.glow.selected {
-  animation: pulseGlow2 2.5s infinite ease-in-out;
+.bone.selected {
+	animation: pulseGlow2 2.5s infinite ease-in-out;
 }
 
 @keyframes pulseGlow2 {
