@@ -45,7 +45,9 @@ body::before {
 	background-image: url(../img/paper-r.png);
 	background-size: cover;
 	transform: translateY(100vh); /* start off screen */
-	transition: transform 0.8s ease-in-out;
+  transition:
+  transform 0.8s ease-in-out,
+  opacity 0.1s ease-in-out 0.8s; /* delay opacity until transform ends */
 	overflow: hidden; /* prevent content "falling out" */
 	pointer-events: none;
 	opacity: 0; /* fully invisible initially */
