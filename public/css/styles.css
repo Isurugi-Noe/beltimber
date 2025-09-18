@@ -225,20 +225,29 @@ body::before {
 }
 
 .bone.glow {
-  filter: drop-shadow(0 0 0px #fff) drop-shadow(0 0 7px #ab7e29);
+  animation: pulseGlow 2.5s infinite ease-in-out;
 }
 
 .jitter {
-  animation: jitter 0.3s infinite;
+  animation: jitter 1.5s infinite ease-in-out;
   transform-origin: center center;
 }
 
 @keyframes jitter {
   0%   { transform: translate(0, 0) rotate(0deg); }
-  25%  { transform: translate(-0.5px, 0.5px) rotate(-0.5deg); }
-  50%  { transform: translate(0.5px, -0.5px) rotate(0.5deg); }
-  75%  { transform: translate(-0.5px, 0) rotate(-0.25deg); }
+  25%  { transform: translate(-0.2px, 0.15px) rotate(-0.2deg); }
+  50%  { transform: translate(0.15px, -0.15px) rotate(0.2deg); }
+  75%  { transform: translate(-0.15px, 0) rotate(-0.1deg); }
   100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.6)) drop-shadow(0 0 10px rgba(255, 204, 51, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(255, 255, 204, 1)) drop-shadow(0 0 20px rgba(255, 255, 204, 0.9));
+  }
 }
 
 .row, .column {
