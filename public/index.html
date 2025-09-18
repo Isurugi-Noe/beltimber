@@ -76,7 +76,7 @@
 		</div>
 	</div>
 	<div id="firefly-container"></div>
-	<div class="container main">
+	<div class="container parallax main">
 		<a href="https://michael-handt.com/work" target="_blank" class="credit">Oil paintings by Michael Handt</a>
 		<h1><span class="text"></span>
 		"This place hasn't been silent since he learned to listen."</h1>
@@ -119,11 +119,11 @@
 			</g>
 		</svg>
 	</div>
-	<div class="container" id="cards">
+	<div class="container parallax" id="cards">
 	</div>
-	<div class="container" id="dreamcatcher">
+	<div class="container parallax" id="dreamcatcher">
 	</div>
-	<div class="container" id="paths">
+	<div class="container parallax" id="paths">
 		<div>
 			<img src="img/l-1.png?rev=2" />
 			<h1>Hello, I am Phosphorus or Rue.</h1>
@@ -262,7 +262,7 @@
 	  }
 	</script>
 	<script>
-		const mainContainer = document.querySelectorAll('.container.main, #paths');
+		const mainContainer = document.querySelector('.container.parallax');
 		const fireflyContainer = document.getElementById('firefly-container');
 		const bgLayer = document.querySelector('#Bg');
 		const dirtLayer = document.querySelector('#Dirt_overlay');
@@ -320,10 +320,7 @@
 			ffY += (targetY * 4 - ffY) * 0.04;
 
   // Apply background parallax (CSS background image)
-			mainContainers.forEach(container => {
-			  container.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
-			});
-
+			mainContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
 
   // Apply fireflies parallax
 			fireflyContainer.style.transform = `translate(${ffX}px, ${ffY}px)`;
