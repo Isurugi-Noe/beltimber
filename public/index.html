@@ -38,9 +38,15 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 
-			setTimeout(() => {
-			  document.getElementById('#map-overlay').classList.remove('hidden');
-			}, 100); // Small delay lets layout settle before transition kicks in
+			const overlay = document.getElementById('paperOverlay');
+			requestAnimationFrame(() => {
+			  overlay.classList.add('animate');
+
+			  setTimeout(() => {
+			    overlay.classList.remove('hidden');
+			  }, 50);
+			});
+
 
 			$('#map-overlay .sketch').click(function(){
 				var classList = $(this).attr("class");

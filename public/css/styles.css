@@ -58,21 +58,23 @@ body::before {
   right: 0;
   margin: auto;
 
-  /* Final visible state */
   transform: translateY(0);
   opacity: 1;
 
+  /* TRANSITIONS APPLIED ONLY WHEN CLASS IS ADDED */
+}
+
+#map-overlay.hidden {
+  transform: translateY(100vh);
+  opacity: 0;
+}
+
+#map-overlay.animate {
   transition:
     transform 0.8s ease-in-out,
     opacity 0.1s ease-in-out 0.8s;
 }
 
-
-#map-overlay.active {
-	transform: translateY(0); /* bring into view */
-	opacity: 1; /* now visible */
-	pointer-events: auto;
-}
 
 .sketch {
 	position: absolute;
