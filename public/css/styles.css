@@ -220,7 +220,7 @@ body::before {
 }
 
 .bone:hover {
-  filter: drop-shadow(0 0 8px #fff8cc) drop-shadow(0 0 12px #ffcc33);
+  filter: drop-shadow(0 0 0px #fff) drop-shadow(0 0 7px #ab7e29);
   animation: jitter 0.3s infinite;
 }
 
