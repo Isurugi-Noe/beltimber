@@ -220,10 +220,12 @@ body::before {
 }
 
 .bone {
-  transition: filter 0.2s ease;
+  transition: filter 0.3s ease;
+  will-change: filter, transform;
 }
 
 .bone.glow:hover {
+	  animation: jitter 0.3s infinite;
   filter: drop-shadow(0 0 0px #fff) drop-shadow(0 0 7px #ab7e29);
 }
 

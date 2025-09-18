@@ -79,12 +79,12 @@
 		  <g id="Bg" class="svg-layer bg-layer">
 		    <image id="Bg-2" data-name="Bg" width="1920" height="1500" xlink:href="img/bg4.png"/>
 		  </g>
-		  <g id="Bones" class="svg-layer bones-layer">
-		    <image id="Jaw" class="bone" width="78" height="49" transform="translate(1619 1117)" xlink:href="img/marrow1.png"/>
-		    <image id="arm" class="bone" width="127" height="202" transform="translate(224 785)" xlink:href="img/marrow2.png"/>
-		    <image id="Femur" class="bone" width="89" height="121" transform="translate(1141 717)" xlink:href="img/marrow3.png"/>
-		    <image id="Spine" class="bone" width="71" height="116" transform="translate(456 605)" xlink:href="img/marrow4.png"/>
-		    <image id="Cranium" class="bone" width="97" height="113" transform="translate(1508 905)" xlink:href="img/marrow5.png"/>
+		  <g id="Bones" class="svg-layer">
+		    <image id="Jaw" class="bone" data-depth="0.9" width="78" height="49" transform="translate(1619 1117)" xlink:href="img/marrow1.png"/>
+		    <image id="arm" class="bone" data-depth="1.2" width="127" height="202" transform="translate(224 785)" xlink:href="img/marrow2.png"/>
+		    <image id="Femur" class="bone" data-depth="1.0" width="89" height="121" transform="translate(1141 717)" xlink:href="img/marrow3.png"/>
+		    <image id="Spine" class="bone" data-depth="1.1" width="71" height="116" transform="translate(456 605)" xlink:href="img/marrow4.png"/>
+		    <image id="Cranium" class="bone" data-depth="0.8" width="97" height="113" transform="translate(1508 905)" xlink:href="img/marrow5.png"/>
 		  </g>
 		  <g id="Dirt_overlay" class="svg-layer dirt-layer" data-name="Dirt overlay">
 		    <image width="1920" height="1500" xlink:href="img/grass.png?rev=2"/>
@@ -234,7 +234,6 @@
 
 	  // SVG layers
 	  const bgLayer = document.querySelector('.bg-layer');
-	  const bonesLayer = document.querySelector('.bones-layer');
 	  const dirtLayer = document.querySelector('.dirt-layer');
 
 	  let targetX = 0;
@@ -244,7 +243,6 @@
 	  let ffX = 0, ffY = 0;
 
 	  let svgBgX = 0, svgBgY = 0;
-	  let svgBonesX = 0, svgBonesY = 0;
 	  let svgDirtX = 0, svgDirtY = 0;
 
 	  document.addEventListener('mousemove', (e) => {
@@ -267,9 +265,6 @@
 	    svgBgX += (targetX * 10 - svgBgX) * 0.03;     // subtle movement
 	    svgBgY += (targetY * 10 - svgBgY) * 0.03;
 
-	    svgBonesX += (targetX * 20 - svgBonesX) * 0.04; // mid-depth
-	    svgBonesY += (targetY * 5 - svgBonesY) * 0.04;
-
 		svgDirtX += (targetX * 5 - svgDirtX) * 0.05;
 		svgDirtY += (targetY * 5 - svgDirtY) * 0.05;
 
@@ -283,9 +278,6 @@
 	    // Apply parallax to SVG layers
 	    if (bgLayer)
 	      bgLayer.setAttribute('transform', `translate(${svgBgX}, ${svgBgY})`);
-
-	    if (bonesLayer)
-	      bonesLayer.setAttribute('transform', `translate(${svgBonesX}, ${svgBonesY})`);
 
 	    if (dirtLayer)
 	      dirtLayer.setAttribute('transform', `translate(${svgDirtX}, ${svgDirtY})`);
@@ -439,9 +431,20 @@
 	</script>
 	<script>
 	  const bones = document.querySelectorAll('.bone');
-	  const radius = 100; // Distance (in px) for glow activation
+	  const radius = 100; // distance from cursor to trigger glow
+	  let targetX = 0;
+	  let targetY = 0;
 
+	  // Update target mouse position
 	  document.addEventListener('mousemove', (e) => {
+	    const { innerWidth, innerHeight } = window;
+	    const x = (e.clientX / innerWidth - 0.5) * 2;
+	    const y = (e.clientY / innerHeight - 0.5) * 2;
+
+	    targetX = x;
+	    targetY = y;
+
+	    // Glow proximity check
 	    bones.forEach(bone => {
 	      const rect = bone.getBoundingClientRect();
 	      const boneX = rect.left + rect.width / 2;
@@ -458,6 +461,23 @@
 	      }
 	    });
 	  });
-	</script>
+
+	  // 🆕 Different name to avoid conflict
+	  function animateBoneParallax() {
+	    bones.forEach(bone => {
+	      const depth = parseFloat(bone.dataset.depth) || 1;
+	      const offsetX = targetX * 10 * depth;
+	      const offsetY = targetY * 10 * depth;
+
+	      bone.setAttribute('transform', `translate(${offsetX}, ${offsetY})`);
+	    });
+
+	    requestAnimationFrame(animateBoneParallax);
+	  }
+
+	  animateBoneParallax();
+	</script
+
+
 </body>
 </html>
