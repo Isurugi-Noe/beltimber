@@ -36,12 +36,6 @@ body::before {
 	text-shadow: 0 0 10px rgba(227, 199, 122, 1);
 }
 
-/* Initial hidden state */
-#map-overlay.hidden {
-  transform: translateY(100vh) !important;
-  opacity: 0 !important;
-}
-
 #map-overlay {
   position: fixed;
   top: 0;
@@ -58,10 +52,6 @@ body::before {
   right: 0;
   margin: auto;
   transform: translateY(100vh);
-  opacity: 1;
-}
-
-#map-overlay.hidden {
   opacity: 0;
 }
 
@@ -69,6 +59,12 @@ body::before {
   transition:
     transform 0.8s ease-in-out,
     opacity 0.1s ease-in-out 0.8s;
+}
+
+#map-overlay.active {
+	transform: translateY(0); /* bring into view */
+	opacity: 1; /* now visible */
+	pointer-events: auto;
 }
 
 .sketch {
