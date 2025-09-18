@@ -225,7 +225,7 @@ body::before {
 }
 
 .bone.glow {
-	animation: pulseGlow 2.5s infinite ease-in-out;
+	animation: pulseGlow 2.5s infinite ease-in-out, jitter 1.5s infinite ease-in-out
 }
 
 .jitter {
