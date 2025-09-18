@@ -863,6 +863,12 @@ div.hr {
 		bottom: initial;
 		right: initial;
 	}
+	.rightCredit {
+		top: 5px;
+		right: 10px;
+		bottom: initial;
+		left: initial;
+	}
 	.column.page {
 		background-size: cover;
 	}
@@ -930,6 +936,12 @@ div.hr {
 		left: 10px;
 		bottom: initial;
 		right: initial;
+	}
+	.rightCredit {
+		top: 5px;
+		right: 10px;
+		bottom: initial;
+		left: initial;
 	}
 	.column.page {
 		background-size: cover;
@@ -1017,6 +1029,12 @@ div.hr {
 		left: 10px;
 		bottom: initial;
 		right: initial;
+	}
+	.rightCredit {
+		top: 5px;
+		right: 10px;
+		bottom: initial;
+		left: initial;
 	}
 	.column.page {
 		background-size: cover;
