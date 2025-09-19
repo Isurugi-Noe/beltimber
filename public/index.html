@@ -264,6 +264,8 @@
 	<script>
 		const mainContainer = document.querySelector('.container.main');
 		const pathsContainer = document.querySelector('#paths');
+		const cardsContainer = document.querySelector('#cards');
+		const dreamcatcherContainer = document.querySelector('#dreamcatcher');
 		const fireflyContainer = document.getElementById('firefly-container');
 		const bgLayer = document.querySelector('#Bg');
 		const dirtLayer = document.querySelector('#Dirt_overlay');
@@ -323,6 +325,8 @@
   // Apply background parallax (CSS background image)
 			mainContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
 			pathsContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
+			cardsContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
+			dreamcatcherContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
 
   // Apply fireflies parallax
 			fireflyContainer.style.transform = `translate(${ffX}px, ${ffY}px)`;
