@@ -489,6 +489,17 @@ body::before {
   display: block;
 }
 
+#show-map-btn {
+    width: 200px;
+    max-width: 100%;
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 1000;
+}
+
 @media (max-width: 768px) {
   .cards-grid {
     gap: 8px;
