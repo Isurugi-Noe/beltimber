@@ -519,6 +519,10 @@ body::before {
   	grid-template-columns: repeat(2, 1fr);
   }
 
+  #cards {
+  	overflow: hidden;
+  }
+
   .card-wrapper {
     max-width: 180px;
   }
@@ -607,11 +611,15 @@ div.hr {
 	position: absolute;
 	z-index: 999999;
 	font-size: small;
-	right: 10px;
+	left: 10px;
 	bottom: 5px;
 	opacity: 0.5;
 	color: #fff;
 	text-decoration: none;
+}
+
+.rightCredit {
+	right: 10px;
 }
 
 .credit:hover {
