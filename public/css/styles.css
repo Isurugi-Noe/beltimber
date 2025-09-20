@@ -412,6 +412,63 @@ body::before {
 	transition: background-position 0.1s ease;
 }
 
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+  justify-items: center;
+  align-items: center;
+  padding: 40px;
+  box-sizing: border-box;
+  perspective: 1500px;
+}
+
+.card-wrapper {
+  width: 200px;
+  height: 330px;
+  position: relative;
+  transform-origin: center center;
+  cursor: pointer;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card-wrapper.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+}
+
+.card-front {
+  z-index: 2;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.card-back img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .row, .column {
 	display: flex;
 	flex-direction: column;

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">
+	<!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/">
+	<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">
+	<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">
+	<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">
+	<!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/">
+	<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">
+	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
+]>
+<svg version="1.1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 522.2 865.91"
+	 style="enable-background:new 0 0 522.2 865.91;" xml:space="preserve">
+<metadata>
+	<sfw  xmlns="&ns_sfw;">
+		<slices></slices>
+		<sliceSourceBounds  bottomLeftOrigin="true" height="938" width="596.15" x="31.85" y="-969"></sliceSourceBounds>
+		<optimizationSettings>
+			<targetSettings  fileFormat="PNG24Format" targetSettingsID="0">
+				<PNG24Format  filtered="false" interlaced="false" matteColor="#FFFFFF" noMatteColor="true" transparency="true">
+					</PNG24Format>
+			</targetSettings>
+		</optimizationSettings>
+	</sfw>
+</metadata>
+<g id="imageLayer">
+	<g>
+		<defs>
+			<path id="SVGID_1_" d="M522.16,794.17c0-0.13,0-0.26,0-0.39c-0.65-0.41-0.39-1.48-0.4-2.14c-1.26-101.84,0.02-203.86,0.02-306.12
+				c0.01-137.52-1.46-274.69-0.02-411.33c0.01-0.66-0.25-1.74,0.4-2.14v-0.39c-0.11-10.91,0.35-23.84-0.39-34.6
+				c-1.09-15.82-13.11-33.29-29.43-35.52c-19.37-2.64-39.84-1.11-59.47-1.03c-53.34,0.22-106.95-1.12-159.85-0.09
+				c-12,0.23-24.01,0.04-36.04,0C188.15,0.27,138.8,0.73,89.63,0.52C70,0.44,49.53-1.1,30.16,1.55C13.85,3.77,1.81,21.25,0.73,37.06
+				c-0.9,13.16,0.03,27.1,0.03,40.26C0.73,169,1.21,260.76,1.13,352.94c-0.04,41.43-0.66,83.11-0.39,124.77
+				C1.4,581.23,0.75,684.96,0.77,788.11c0,13.2-0.89,27.08-0.06,40.29c1.01,15.97,12.94,33.63,29.45,35.89
+				c16.49,2.25,34.8,1.53,51.69,1.46c117.57-0.51,233.44-0.92,351.02-0.43c19.63,0.08,40.1,1.62,59.47-1.03
+				c16.32-2.23,28.34-19.7,29.43-35.52C522.51,818.02,522.05,805.08,522.16,794.17z"/>
+		</defs>
+		<clipPath id="SVGID_2_">
+			<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+		</clipPath>
+		<g style="clip-path:url(#SVGID_2_);">
+			
+				<image style="overflow:visible;" width="800" height="1177" xlink:href="../b2.png"  transform="matrix(0.7404 0 0 0.7196 -37.9904 17.9565)">
+			</image>
+		</g>
+	</g>
+</g>
+<g id="cardLayer_1_">
+	
+		<image style="overflow:visible;" width="595" height="938" xlink:href="607438B4.png"  transform="matrix(1 0 0 1 -36.8365 -36.0435)">
+	</image>
+</g>
+</svg>
