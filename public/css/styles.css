@@ -499,6 +499,7 @@ body::before {
     margin: 0 auto;
     z-index: 1000;
     filter: drop-shadow(0 0 10px rgba(227, 199, 122, 1));
+    cursor: pointer;
 }
 
 #close-map-btn {
@@ -511,6 +512,7 @@ body::before {
     margin: 0 auto;
     z-index: 1000;
     transform: rotate(180deg);
+    cursor: pointer;
 }
 
 @media (max-width: 768px) {
