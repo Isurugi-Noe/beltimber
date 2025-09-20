@@ -155,7 +155,7 @@
 								<clipPath id="SVGID_2_">
 									<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
 								</clipPath>
-								<g style="clip-path:url(#SVGID_2_);">
+								<g class="parallax-card-img" style="clip-path:url(#SVGID_2_);">
 
 									<image style="overflow:visible;" width="800" height="1177" xlink:href="img/cards/b1.png"  transform="matrix(0.75 0 0 0.75 -18.8365 1.9565)">
 									</image>
@@ -232,7 +232,7 @@
 							<clipPath id="SVGID_2_">
 								<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
 							</clipPath>
-							<g style="clip-path:url(#SVGID_2_);">
+							<g class="parallax-card-img" style="clip-path:url(#SVGID_2_);">
 
 								<image style="overflow:visible;" width="800" height="1178" xlink:href="img/cards/1FFFBE9A.png"  transform="matrix(0.75 0 0 0.75 -51.8365 -21.2935)">
 								</image>
@@ -308,7 +308,7 @@
 					<clipPath id="SVGID_2_">
 						<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
 					</clipPath>
-					<g style="clip-path:url(#SVGID_2_);">
+					<g class="parallax-card-img" style="clip-path:url(#SVGID_2_);">
 
 						<image style="overflow:visible;" width="800" height="1177" xlink:href="img/cards/b3.png"  transform="matrix(0.75 0 0 0.75 -36.8365 -2.0435)">
 						</image>
@@ -383,7 +383,7 @@
 					<clipPath id="SVGID_2_">
 						<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
 					</clipPath>
-					<g style="clip-path:url(#SVGID_2_);">
+					<g class="parallax-card-img" style="clip-path:url(#SVGID_2_);">
 
 						<image style="overflow:visible;" width="800" height="1177" xlink:href="img/cards/b2.png"  transform="matrix(0.7404 0 0 0.7196 -37.9904 17.9565)">
 						</image>
@@ -461,7 +461,7 @@
 					<clipPath id="SVGID_2_">
 						<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
 					</clipPath>
-					<g class="st0">
+					<g class="parallax-card-img" class="st0">
 
 						<image style="overflow:visible;" width="1374" height="1198" xlink:href="img/cards/1A828CFF.png"  transform="matrix(0.75 0 0 0.75 -245.3365 16.9565)">
 						</image>
@@ -536,7 +536,7 @@
 					<clipPath id="SVGID_2_">
 						<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
 					</clipPath>
-					<g style="clip-path:url(#SVGID_2_);">
+					<g class="parallax-card-img" style="clip-path:url(#SVGID_2_);">
 
 						<image style="overflow:visible;" width="800" height="1177" xlink:href="img/cards/b6.png"  transform="matrix(0.75 0 0 0.75 -42.8365 -8.0435)">
 						</image>
@@ -728,6 +728,10 @@
 		const dirtLayer = document.querySelector('#Dirt_overlay');
 		const boneWrappers = document.querySelectorAll('.jitter-wrapper');
 		const bones = document.querySelectorAll('.bone');
+		const cardImageGroups = document.querySelectorAll('.parallax-card-img');
+		const cardImageGroupOriginalTransforms = Array.from(cardImageGroups).map(g =>
+		  g.getAttribute('transform') || ''
+		);
 
 		let targetX = 0;
 		let targetY = 0;
@@ -809,6 +813,14 @@
 				const offsetY = targetY * 5 * depth;
 				const original = bonesOriginalTransforms[i];
 				wrapper.setAttribute('transform', `${original} translate(${offsetX}, ${offsetY})`);
+			});
+
+			cardImageGroups.forEach((group, i) => {
+			  const depth = parseFloat(group.dataset.depth) || 1.2;
+			  const offsetX = targetX * 5 * depth;
+			  const offsetY = targetY * 4 * depth;
+			  const original = cardImageGroupOriginalTransforms[i];
+			  group.setAttribute('transform', `${original} translate(${offsetX}, ${offsetY})`);
 			});
 
 			requestAnimationFrame(animateParallax);
