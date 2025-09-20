@@ -931,36 +931,39 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 	  });
 	</script>
 	<script>
-	document.addEventListener('DOMContentLoaded', () => {
-	  const cardWrappers = Array.from(document.querySelectorAll('.card-wrapper'));
+		document.addEventListener('DOMContentLoaded', () => {
+			const grid = document.querySelector('.cards-grid');
+			const cards = Array.from(grid.querySelectorAll('.card-wrapper'));
 
-	  cardWrappers.forEach(wrapper => {
-	    // Decide if upside down (20% chance)
-	    const upsideDown = Math.random() < 0.2;
+	  // Shuffle
+			function shuffle(array) {
+				for (let i = array.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[array[i], array[j]] = [array[j], array[i]];
+				}
+			}
 
-	    // Base rotation between -15 and +15 degrees
-	    const baseRotation = Math.random() * 30 - 15;
+			shuffle(cards);
+			cards.forEach(card => grid.appendChild(card));
 
-	    // Total rotation: add 180 if upside down
-	    const totalRotation = upsideDown ? baseRotation + 180 : baseRotation;
+	  // Random rotation and mirror
+		cards.forEach(card => {
+		  const angle = Math.random() * 30 - 15;
+		  card.style.transform = `rotate(${angle}deg)`;  // only rotation, no flipX
+		});
 
-	    // Apply rotation to wrapper (around Z axis)
-	    wrapper.style.transform = `rotate(${totalRotation}deg)`;
-
-	    // Find the .card inside
-	    const card = wrapper.querySelector('.card');
-
-	    // Make sure .card has flipped class if wrapper starts flipped
-	    if (wrapper.classList.contains('flipped')) {
-	      card.classList.add('flipped');
-	    }
-
-	    // Click toggles the flipped state of the .card (front/back)
-	    wrapper.addEventListener('click', () => {
-	      card.classList.toggle('flipped');
-	    });
-	  });
-	});
+	  // Flip on click
+			cards.forEach(card => {
+				card.addEventListener('click', () => {
+					card.classList.toggle('flipped');
+				});
+			});
+		});
+		document.querySelectorAll('.card').forEach(card => {
+		  if (Math.random() < 0.2) {  // 20% chance
+		    card.classList.add('upside-down');
+		  }
+		});
 	</script>
 
 </body>
