@@ -954,10 +954,6 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 
 	    wrapper.style.transform = `rotate(${totalRotation}deg)`;
 
-	    // Start all flipped (back showing)
-	    const card = wrapper.querySelector('.card');
-	    card.classList.add('flipped');
-
 	    // Flip on click toggles flipped class on the card
 	    wrapper.addEventListener('click', () => {
 	      card.classList.toggle('flipped');
