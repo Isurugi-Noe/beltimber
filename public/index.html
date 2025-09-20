@@ -121,7 +121,7 @@
 	</div>
 	<div class="container" id="cards">
 		<div class="cards-grid">
-			<div class="card-wrapper">
+			<div class="card-wrapper flipped">
 				<div class="card-inner">
 					<div class="card-face card-front">
 						<?xml version="1.0" encoding="utf-8"?>
@@ -171,12 +171,12 @@
 
 				</div>
 				<div class="card-face card-back">
-					<img src="img/cards/cardback.svg" alt="Card Back">
+					<img src="img/cards/5EFAA00B.png" alt="Card Back">
 				</div>
 			</div>
 		</div>
 
-		<div class="card-wrapper">
+		<div class="card-wrapper flipped">
 			<div class="card-inner">
 				<div class="card-face card-front">
 					<?xml version="1.0" encoding="utf-8"?>
@@ -229,12 +229,12 @@
 
 				</div>
 				<div class="card-face card-back">
-					<img src="img/cards/cardback.svg" alt="Card Back">
+					<img src="img/cards/5EFAA00B.png" alt="Card Back">
 				</div>
 			</div>
 		</div>
 
-		<div class="card-wrapper">
+		<div class="card-wrapper flipped">
 			<div class="card-inner">
 				<div class="card-face card-front">
 					<?xml version="1.0" encoding="utf-8"?>
@@ -284,12 +284,12 @@
 
 				</div>
 				<div class="card-face card-back">
-					<img src="img/cards/cardback.svg" alt="Card Back">
+					<img src="img/cards/5EFAA00B.png" alt="Card Back">
 				</div>
 			</div>
 		</div>
 
-		<div class="card-wrapper">
+		<div class="card-wrapper flipped">
 			<div class="card-inner">
 				<div class="card-face card-front">
 					<?xml version="1.0" encoding="utf-8"?>
@@ -339,12 +339,12 @@
 
 				</div>
 				<div class="card-face card-back">
-					<img src="img/cards/cardback.svg" alt="Card Back">
+					<img src="img/cards/5EFAA00B.png" alt="Card Back">
 				</div>
 			</div>
 		</div>
 
-		<div class="card-wrapper">
+		<div class="card-wrapper flipped">
 			<div class="card-inner">
 				<div class="card-face card-front">
 					<?xml version="1.0" encoding="utf-8"?>
@@ -397,12 +397,12 @@
 
 				</div>
 				<div class="card-face card-back">
-					<img src="img/cards/cardback.svg" alt="Card Back">
+					<img src="img/cards/5EFAA00B.png" alt="Card Back">
 				</div>
 			</div>
 		</div>
 
-		<div class="card-wrapper">
+		<div class="card-wrapper flipped">
 			<div class="card-inner">
 				<div class="card-face card-front">
 					<?xml version="1.0" encoding="utf-8"?>
@@ -452,7 +452,7 @@
 
 				</div>
 				<div class="card-face card-back">
-					<img src="img/cards/cardback.svg" alt="Card Back">
+					<img src="img/cards/5EFAA00B.png" alt="Card Back">
 				</div>
 			</div>
 		</div>
@@ -933,7 +933,7 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
 			const grid = document.querySelector('.cards-grid');
-			const cards = Array.from(grid.querySelectorAll('.card-wrapper'));
+			const cards = Array.from(grid.querySelectorAll('.card-wrapper flipped'));
 
 	  // Shuffle
 			function shuffle(array) {
@@ -959,6 +959,11 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 					card.classList.toggle('flipped');
 				});
 			});
+		});
+		document.querySelectorAll('.card').forEach(card => {
+		  if (Math.random() < 0.2) {  // 20% chance
+		    card.classList.add('upside-down');
+		  }
 		});
 	</script>
 
