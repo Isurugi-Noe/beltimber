@@ -947,11 +947,10 @@ function animateDotsOnCurve(svg, points, totalDots = 30, interval = 30) {
 			cards.forEach(card => grid.appendChild(card));
 
 	  // Random rotation and mirror
-			cards.forEach(card => {
-				const angle = Math.random() * 30 - 15;
-				const flipX = Math.random() > 0.5 ? -1 : 1;
-				card.style.transform = `rotate(${angle}deg) scaleX(${flipX})`;
-			});
+		cards.forEach(card => {
+		  const angle = Math.random() * 30 - 15;
+		  card.style.transform = `rotate(${angle}deg)`;  // only rotation, no flipX
+		});
 
 	  // Flip on click
 			cards.forEach(card => {
