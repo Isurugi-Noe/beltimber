@@ -455,6 +455,10 @@ body::before {
   filter: drop-shadow(2px 4px 6px black);
 }
 
+.card-wrapper svg {
+	border-radius: 15px;
+}
+
 .card-inner {
   width: 100%;
   height: 100%;
