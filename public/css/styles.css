@@ -413,60 +413,63 @@ body::before {
 }
 
 .cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, auto);
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
-  width: 100%;
-  height: 100%;
-  justify-items: center;
-  align-items: center;
-  padding: 40px;
-  box-sizing: border-box;
-  perspective: 1500px;
+  justify-content: center;
+  padding: 20px;
 }
 
 .card-wrapper {
-  width: 200px;
-  height: 330px;
-  position: relative;
-  transform-origin: center center;
+  width: 150px;
+  height: 200px;
+  perspective: 1000px;
   cursor: pointer;
+  /* rotation transform set by JS */
+  transition: transform 0.5s ease;
+  position: relative;
 }
 
-.card-inner {
+.card {
   width: 100%;
   height: 100%;
   position: relative;
-  transition: transform 0.8s;
+  transition: transform 0.6s ease;
   transform-style: preserve-3d;
 }
 
-.card-wrapper.flipped .card-inner {
+.card.flipped {
   transform: rotateY(180deg);
 }
 
-.card-face {
+/* Front and back faces */
+.front, .back {
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
   backface-visibility: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: white;
+  user-select: none;
 }
 
-.card-front {
-  z-index: 2;
+.front {
+  background-color: #2979ff;
 }
 
-.card-back {
+.back {
+  background-color: #ff5252;
   transform: rotateY(180deg);
 }
 
-.card-back img {
-  width: 100%;
-  height: 100%;
-  display: block;
+/* Upside down class (rotates wrapper 180deg around Z) */
+.upside-down {
+  /* We add 180deg on top of existing rotation in JS, so no CSS needed here */
 }
 
 .row, .column {
