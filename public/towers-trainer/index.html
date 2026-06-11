@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tower Mechanic — Position Trainer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Tower Mechanic Trainer</h1>
+      <p class="subtitle">8 towers · T1 9s · others 10.5s · odd towers after evens: 6s bait + 4.5s move</p>
+    </header>
+
+    <section class="controls">
+      <div class="control-row">
+        <div class="control-group">
+          <label for="role-select">Role slot</label>
+          <select id="role-select">
+            <option value="H1">Healer 1</option>
+            <option value="H2">Healer 2</option>
+            <option value="T1">Tank 1</option>
+            <option value="T2" selected>Tank 2</option>
+            <option value="R1">Ranged 1</option>
+            <option value="R2">Ranged 2</option>
+            <option value="M1">Melee 1</option>
+            <option value="M2">Melee 2</option>
+          </select>
+        </div>
+
+        <div class="control-group group-start-group">
+          <label>Start</label>
+          <div class="group-start-row">
+            <button type="button" id="start-group-a" class="btn group-start-btn group-a" title="Group A — different debuffs">A</button>
+            <button type="button" id="start-group-b" class="btn group-start-btn group-b" title="Group B — same debuffs">B</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="control-row actions">
+        <p id="timeline-status" class="timeline-status"></p>
+        <div class="run-controls">
+          <div id="group-b-debuff-wrap" class="debuff-picker hidden">
+            <span class="picker-tag group-b">T4</span>
+            <button type="button" id="group-b-cone" class="btn debuff-btn cone active">Cone</button>
+            <button type="button" id="group-b-circle" class="btn debuff-btn circle">Circle</button>
+          </div>
+          <div id="group-a-debuff-wrap" class="debuff-picker hidden">
+            <span class="picker-tag group-a">T8</span>
+            <button type="button" id="group-a-cone" class="btn debuff-btn cone active">Cone</button>
+            <button type="button" id="group-a-circle" class="btn debuff-btn circle">Circle</button>
+            <label class="same-partner-check">
+              <input type="checkbox" id="group-a-same-partner" />
+              Same as partner
+            </label>
+          </div>
+          <button id="next-step-btn" class="btn" disabled>Next step</button>
+          <button id="reset-btn" class="btn" disabled>Reset</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="timeline-bar">
+      <div class="sequence-label">Timeline</div>
+      <div id="stage-pills" class="stage-pills"></div>
+      <div class="timer-display">
+        <span id="stage-label">Tower —</span>
+        <span id="phase-label" class="phase-label"></span>
+        <span id="countdown">—</span>
+      </div>
+    </section>
+
+    <section class="arena-section">
+      <div class="arena-wrap">
+        <div id="tower-type-badge" class="tower-badge odd">Odd Towers</div>
+        <svg id="arena" viewBox="0 0 400 400" aria-label="Arena map">
+          <defs>
+            <radialGradient id="arenaGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#2a2d35" />
+              <stop offset="100%" stop-color="#1a1c22" />
+            </radialGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          <circle cx="200" cy="200" r="185" fill="url(#arenaGrad)" stroke="#5a6070" stroke-width="2" />
+
+          <g class="grid" stroke="#3d4250" stroke-width="0.5" opacity="0.6">
+            <line x1="200" y1="15" x2="200" y2="385" />
+            <line x1="15" y1="200" x2="385" y2="200" />
+            <line x1="60" y1="60" x2="340" y2="340" />
+            <line x1="340" y1="60" x2="60" y2="340" />
+            <circle cx="200" cy="200" r="138" fill="none" />
+          </g>
+
+          <!-- Boss hitbox ring (overlaps towers) -->
+          <circle id="boss-ring" cx="200" cy="200" r="86" fill="rgba(232,160,48,0.04)" stroke="#e8a030" stroke-width="2" opacity="0.75" />
+          <circle cx="200" cy="200" r="8" fill="#e8a030" opacity="0.9" filter="url(#glow)" />
+          <text x="200" y="106" text-anchor="middle" class="arena-label">N</text>
+
+          <!-- Bait / clone reference (on boss ring) -->
+          <g id="past-future-markers" class="bait-markers">
+            <g class="bait-ref future">
+              <circle class="bait-ref-ring" cx="200" cy="114" r="10" fill="none" stroke="#5b8def" stroke-width="1.5" stroke-dasharray="4 3" />
+              <text x="214" y="118" class="bait-label">Future</text>
+            </g>
+            <g class="bait-ref past">
+              <circle class="bait-ref-ring" cx="200" cy="286" r="10" fill="none" stroke="#e8a030" stroke-width="1.5" stroke-dasharray="4 3" />
+              <text x="214" y="290" class="bait-label">Past</text>
+            </g>
+          </g>
+          <g id="clone-markers" class="bait-markers" opacity="0.45">
+            <circle cx="148" cy="114" r="8" fill="none" stroke="#c8ccd4" stroke-width="1.5" stroke-dasharray="3 2" />
+            <text x="112" y="118" class="bait-label">Clone L</text>
+            <circle cx="252" cy="114" r="8" fill="none" stroke="#c8ccd4" stroke-width="1.5" stroke-dasharray="3 2" />
+            <text x="260" y="118" class="bait-label">Clone R</text>
+            <line x1="148" y1="114" x2="148" y2="286" stroke="#c8ccd4" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.35" />
+            <line x1="252" y1="114" x2="252" y2="286" stroke="#c8ccd4" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.35" />
+          </g>
+
+          <!-- Odd tower layout -->
+          <g id="arena-odd">
+            <circle cx="148" cy="278" r="34" fill="none" stroke="#c8ccd4" stroke-width="2" />
+            <circle cx="252" cy="278" r="34" fill="none" stroke="#c8ccd4" stroke-width="2" />
+            <line x1="148" y1="278" x2="200" y2="200" stroke="#c8ccd4" stroke-width="1" stroke-dasharray="3 3" opacity="0.45" />
+            <text x="155" y="238" text-anchor="middle" class="tower-label">Boss-relative</text>
+            <text x="252" y="228" text-anchor="middle" class="tower-label">N/S aligned</text>
+          </g>
+
+          <!-- Even tower layout -->
+          <g id="arena-even" class="hidden">
+            <circle cx="148" cy="278" r="34" fill="none" stroke="#7eb8da" stroke-width="2" />
+            <circle cx="252" cy="278" r="34" fill="none" stroke="#7eb8da" stroke-width="2" />
+          </g>
+
+          <g id="cone-bait-guides"></g>
+          <g id="position-markers"></g>
+        </svg>
+      </div>
+
+      <aside class="legend">
+        <h2>Current step</h2>
+        <div id="step-detail" class="step-detail">Select options and press Start.</div>
+        <hr />
+        <p id="stage-hint" class="stage-hint"></p>
+        <div class="marker-legend">
+          <span class="legend-item"><span class="swatch stack"></span> Stack</span>
+          <span class="legend-item"><span class="swatch cone"></span> Cone</span>
+          <span class="legend-item"><span class="swatch circle"></span> Circle</span>
+          <span class="legend-item"><span class="swatch past"></span> Past</span>
+          <span class="legend-item"><span class="swatch future"></span> Future</span>
+          <span class="legend-item"><span class="swatch outside"></span> Outside of tower</span>
+          <span class="legend-item dashed">dashed = alt tower (partner clash)</span>
+        </div>
+        <ul class="notes">
+          <li><strong>HTMR</strong> — Healer &gt; Tank &gt; Melee &gt; Ranged. If you and your partner get the same debuff, lower priority takes the <em>other</em> tower (dashed markers).</li>
+          <li><strong>Bait steps</strong> — tower spots fade in during 6s bait, full opacity for last 4.5s.</li>
+        </ul>
+      </aside>
+    </section>
+  </div>
+
+  <script src="positions.js"></script>
+  <script src="sequences.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
