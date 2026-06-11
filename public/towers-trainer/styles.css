@@ -814,7 +814,71 @@ select {
     grid-template-columns: 1fr;
   }
 
+  .timeline-bar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 0.4rem 0.75rem;
+    align-items: center;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .sequence-label {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
   .timer-display {
-    align-items: flex-start;
+    grid-column: 2;
+    grid-row: 1;
+    align-items: flex-end;
+    min-width: 0;
+  }
+
+  .stage-pills {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    flex-wrap: nowrap;
+    gap: 0.2rem;
+  }
+
+  .pill {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    min-height: 2.1rem;
+    padding: 0.12rem 0.05rem 0.18rem;
+    gap: 0.08rem;
+  }
+
+  .pill-group {
+    font-size: 0.5rem;
+  }
+
+  .pill-tower {
+    font-size: 0.6rem;
+  }
+
+  .pill.bait {
+    min-height: 2.1rem;
+    padding: 0.12rem 0.05rem 0.18rem;
+  }
+
+  .pill.bait .pill-tower {
+    font-size: 0.58rem;
+  }
+
+  .pill.active {
+    transform: none;
+  }
+
+  #stage-label {
+    font-size: 0.78rem;
+  }
+
+  #countdown {
+    font-size: 1.2rem;
+    line-height: 1.1;
   }
 }
