@@ -1,0 +1,220 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --border: #2e3344;
+  --text: #e8eaef;
+  --muted: #8b92a8;
+  --group-a: #4caf82;
+  --group-b: #a86bd4;
+  --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+}
+
+.app {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+}
+
+.nav {
+  margin: 0 0 0.75rem;
+  font-size: 0.88rem;
+}
+
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.nav a:hover {
+  color: var(--text);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.group-panel {
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.group-panel.group-a {
+  border-color: rgba(76, 175, 130, 0.35);
+}
+
+.group-panel.group-b {
+  border-color: rgba(168, 107, 212, 0.35);
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.group-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.badge.a {
+  background: rgba(76, 175, 130, 0.2);
+  color: var(--group-a);
+}
+
+.badge.b {
+  background: rgba(168, 107, 212, 0.2);
+  color: var(--group-b);
+}
+
+.debuff-picker {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn {
+  padding: 0.55rem 1.25rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn:hover {
+  background: #252836;
+}
+
+.debuff-btn {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  font-size: 1rem;
+  border-width: 2px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
+}
+
+.debuff-btn.cone {
+  border-color: rgba(232, 200, 64, 0.45);
+  color: rgba(232, 200, 64, 0.55);
+}
+
+.debuff-btn.cone:hover:not(.active) {
+  border-color: rgba(232, 200, 64, 0.7);
+  color: #e8c840;
+  background: #252836;
+}
+
+.debuff-btn.cone.active {
+  background: rgba(232, 200, 64, 0.35);
+  border-color: #e8c840;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 0 1px rgba(232, 200, 64, 0.5), 0 0 14px rgba(232, 200, 64, 0.35);
+}
+
+.debuff-btn.cone.active:hover {
+  background: rgba(232, 200, 64, 0.45);
+}
+
+.debuff-btn.circle {
+  border-color: rgba(168, 107, 212, 0.45);
+  color: rgba(168, 107, 212, 0.55);
+}
+
+.debuff-btn.circle:hover:not(.active) {
+  border-color: rgba(168, 107, 212, 0.7);
+  color: #a86bd4;
+  background: #252836;
+}
+
+.debuff-btn.circle.active {
+  background: rgba(168, 107, 212, 0.35);
+  border-color: #a86bd4;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 0 1px rgba(168, 107, 212, 0.5), 0 0 14px rgba(168, 107, 212, 0.35);
+}
+
+.debuff-btn.circle.active:hover {
+  background: rgba(168, 107, 212, 0.45);
+}
+
+.same-partner-btn {
+  width: 100%;
+  margin-top: 0.65rem;
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-width: 2px;
+  border-color: var(--border);
+  color: var(--muted);
+  background: var(--bg);
+  transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
+}
+
+.same-partner-btn:hover:not(.active) {
+  border-color: rgba(76, 175, 130, 0.45);
+  color: var(--text);
+  background: #252836;
+}
+
+.same-partner-btn.active {
+  background: rgba(76, 175, 130, 0.35);
+  border-color: var(--group-a);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 0 1px rgba(76, 175, 130, 0.5), 0 0 14px rgba(76, 175, 130, 0.35);
+}
+
+.same-partner-btn.active:hover {
+  background: rgba(76, 175, 130, 0.45);
+}

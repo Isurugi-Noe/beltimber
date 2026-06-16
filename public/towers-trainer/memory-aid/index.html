@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tower Mechanic — Memory Aid</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <p class="nav"><a href="..">← Position Trainer</a></p>
+      <h1>Memory Aid</h1>
+      <p class="subtitle">Track your Cone / Circle picks for Group A and Group B</p>
+    </header>
+
+    <section class="groups">
+      <div class="group-panel group-a">
+        <div class="group-header">
+          <span class="badge a">A</span>
+          <h2>Group A</h2>
+        </div>
+        <div class="debuff-picker">
+          <button type="button" id="group-a-cone" class="btn debuff-btn cone active">Cone</button>
+          <button type="button" id="group-a-circle" class="btn debuff-btn circle">Circle</button>
+        </div>
+        <button type="button" id="group-a-same-partner" class="btn same-partner-btn">Same as partner</button>
+      </div>
+
+      <div class="group-panel group-b">
+        <div class="group-header">
+          <span class="badge b">B</span>
+          <h2>Group B</h2>
+        </div>
+        <div class="debuff-picker">
+          <button type="button" id="group-b-cone" class="btn debuff-btn cone active">Cone</button>
+          <button type="button" id="group-b-circle" class="btn debuff-btn circle">Circle</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
