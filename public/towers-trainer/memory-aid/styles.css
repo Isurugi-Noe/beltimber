@@ -69,6 +69,37 @@ header h1 {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    filter 0.25s ease;
+}
+
+.group-panel.dimmed {
+  opacity: 0.42;
+  filter: saturate(0.45);
+  transform: scale(0.985);
+}
+
+.group-panel.focused.group-a {
+  border-color: var(--group-a);
+  background: rgba(76, 175, 130, 0.08);
+  box-shadow:
+    0 0 0 1px rgba(76, 175, 130, 0.45),
+    0 0 24px rgba(76, 175, 130, 0.22);
+  transform: scale(1);
+}
+
+.group-panel.focused.group-b {
+  border-color: var(--group-b);
+  background: rgba(168, 107, 212, 0.08);
+  box-shadow:
+    0 0 0 1px rgba(168, 107, 212, 0.45),
+    0 0 24px rgba(168, 107, 212, 0.22);
+  transform: scale(1);
 }
 
 .group-panel.group-a {

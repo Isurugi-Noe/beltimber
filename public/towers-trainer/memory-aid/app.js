@@ -11,6 +11,9 @@ const groupB = {
   circle: document.getElementById("group-b-circle"),
 };
 
+const panelA = document.getElementById("group-a-panel");
+const panelB = document.getElementById("group-b-panel");
+
 let selections = loadSelections();
 
 function loadSelections() {
@@ -34,6 +37,7 @@ function setSelection(group, value) {
   selections[group] = value;
   saveSelections();
   updateButtons(group);
+  setFocusedGroup(group);
 }
 
 function updateButtons(group) {
@@ -47,6 +51,14 @@ function toggleSameAsPartner() {
   selections.sameAsPartner = !selections.sameAsPartner;
   saveSelections();
   updateSamePartnerButton();
+  setFocusedGroup("A");
+}
+
+function setFocusedGroup(group) {
+  panelA.classList.toggle("focused", group === "A");
+  panelA.classList.toggle("dimmed", group === "B");
+  panelB.classList.toggle("focused", group === "B");
+  panelB.classList.toggle("dimmed", group === "A");
 }
 
 function updateSamePartnerButton() {
