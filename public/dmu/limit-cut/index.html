@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Limit Cut Position Guide</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <p class="nav"><a href="..">← Position Trainer</a></p>
+      <h1>Limit Cut Position Guide</h1>
+      <p class="subtitle">Spread to the edge — use True or Relative north on the map</p>
+    </header>
+
+    <section class="controls">
+      <div class="control-row control-row--paired control-row--toolbar">
+        <div class="control-group">
+          <label>Highlight player</label>
+          <div class="player-picker" id="player-picker"></div>
+        </div>
+        <div class="control-group control-group--compact">
+          <label>Map north</label>
+          <div class="rotation-picker">
+            <button type="button" id="north-true" class="btn rotation-btn active" data-north="true">True North</button>
+            <button type="button" id="north-relative" class="btn rotation-btn rotation-btn--position" data-north="relative">Relative North</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-row control-row--paired">
+        <div class="control-group">
+          <label>AoE origin</label>
+          <div class="waymark-picker" id="waymark-picker">
+            <button type="button" class="btn waymark-btn cardinal a active" data-waymark="A">A</button>
+            <button type="button" class="btn waymark-btn inter" data-waymark="2">2</button>
+            <button type="button" class="btn waymark-btn cardinal b" data-waymark="B">B</button>
+            <button type="button" class="btn waymark-btn inter" data-waymark="3">3</button>
+            <button type="button" class="btn waymark-btn cardinal c" data-waymark="C">C</button>
+            <button type="button" class="btn waymark-btn inter" data-waymark="4">4</button>
+            <button type="button" class="btn waymark-btn cardinal d" data-waymark="D">D</button>
+            <button type="button" class="btn waymark-btn inter" data-waymark="1">1</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label>AoE destination</label>
+          <div class="waymark-picker" id="destination-picker">
+            <button type="button" class="btn waymark-btn cardinal a" data-waymark="A">A</button>
+            <button type="button" class="btn waymark-btn inter" data-waymark="2">2</button>
+            <button type="button" class="btn waymark-btn cardinal b" data-waymark="B">B</button>
+            <button type="button" class="btn waymark-btn inter" data-waymark="3">3</button>
+            <button type="button" class="btn waymark-btn cardinal c active" data-waymark="C">C</button>
+            <button type="button" class="btn waymark-btn inter" data-waymark="4">4</button>
+            <button type="button" class="btn waymark-btn cardinal d" data-waymark="D">D</button>
+            <button type="button" class="btn waymark-btn inter" data-waymark="1">1</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-row control-row--paired">
+        <div class="control-group">
+          <label>Dash rotation</label>
+          <div class="rotation-picker">
+            <button type="button" id="rot-cw" class="btn rotation-btn active" data-rotation="cw">Clockwise</button>
+            <button type="button" id="rot-ccw" class="btn rotation-btn" data-rotation="ccw">Counter-clockwise</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label>Position rotation</label>
+          <div class="rotation-picker">
+            <button type="button" id="pos-rot-ccw" class="btn rotation-btn rotation-btn--position active" data-rotation="ccw">Counter-clockwise</button>
+            <button type="button" id="pos-rot-cw" class="btn rotation-btn rotation-btn--position" data-rotation="cw">Clockwise</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="arena-section">
+      <div class="arena-wrap">
+        <div class="arena-badge" id="arena-badge">True North</div>
+        <svg id="arena" viewBox="0 0 400 400" aria-label="Arena with waymarkers and player positions">
+          <defs>
+            <radialGradient id="arenaGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#2a2d35" />
+              <stop offset="100%" stop-color="#1a1c22" />
+            </radialGradient>
+            <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#e8c840" />
+            </marker>
+            <filter id="playerGlow" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          <g id="arena-content">
+            <circle cx="200" cy="200" r="185" fill="url(#arenaGrad)" stroke="#5a6070" stroke-width="2" />
+
+            <g class="grid" stroke="#3d4250" stroke-width="0.5" opacity="0.6">
+              <line x1="200" y1="15" x2="200" y2="385" />
+              <line x1="15" y1="200" x2="385" y2="200" />
+              <line x1="60" y1="60" x2="340" y2="340" />
+              <line x1="340" y1="60" x2="60" y2="340" />
+              <circle cx="200" cy="200" r="138" fill="none" />
+            </g>
+
+            <text x="200" y="28" text-anchor="middle" class="arena-label">N</text>
+
+            <g id="corner-guides"></g>
+            <g id="dash-arc"></g>
+            <g id="waymarkers"></g>
+            <g id="player-markers"></g>
+          </g>
+        </svg>
+      </div>
+
+      <aside class="legend">
+        <p id="summary" class="summary"></p>
+        <ul class="notes">
+          <li><strong>A–D</strong> = circle waymarks (diamond). <strong>1–4</strong> = square waymarks (inner square).</li>
+          <li>Players stand on the <strong>arena wall</strong>, aligned from the outer edge of each square marker.</li>
+          <li>Start at the waymark <strong>opposite</strong> the AoE origin.</li>
+          <li>Assign 1→8 around the wall in the direction <strong>opposite</strong> the dash rotation.</li>
+          <li>Adjacent pairs (1+2, 3+4, …) share a square marker edge.</li>
+          <li><strong>Relative north</strong> rotates the map so the AoE destination (opposite origin) is at the top.</li>
+        </ul>
+      </aside>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
