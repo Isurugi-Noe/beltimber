@@ -47,13 +47,13 @@ const WAYMARK_POS = {
  */
 const SPOT_PROJECTION = {
   A1: { square: "1", wall: "north", edgeX: "left" },
-  "4A": { square: "1", wall: "west", edgeY: "bottom" },
+  "4A": { square: "1", wall: "west", edgeY: "top" },
   "1B": { square: "2", wall: "north", edgeX: "right" },
-  B2: { square: "2", wall: "east", edgeY: "bottom" },
-  "2C": { square: "3", wall: "east", edgeY: "top" },
+  B2: { square: "2", wall: "east", edgeY: "top" },
+  "2C": { square: "3", wall: "east", edgeY: "bottom" },
   C3: { square: "3", wall: "south", edgeX: "right" },
   "3D": { square: "4", wall: "south", edgeX: "left" },
-  D4: { square: "4", wall: "west", edgeY: "top" },
+  D4: { square: "4", wall: "west", edgeY: "bottom" },
 };
 
 const PLAYER_ODD_COLOR = "#7eb8da";
