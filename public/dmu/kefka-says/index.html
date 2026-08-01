@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kefka Says — Debuff Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <p class="nav">
+        <a href="..">← Trainer</a>
+        ·
+        <a href="../memory-aid/index.html">Memory</a>
+        ·
+        <a href="../kefka-dash/index.html">Limit Cut</a>
+      </p>
+      <h1>Kefka Says</h1>
+      <button type="button" id="reset-btn" class="btn reset-btn">Reset</button>
+    </header>
+
+    <div class="workspace">
+      <aside class="prompt-panel">
+        <h2 class="panel-title">Resolve order</h2>
+        <ol class="prompt-list" id="prompt-list"></ol>
+      </aside>
+
+      <main class="selectors">
+        <section class="debuff-section">
+          <h2 class="section-title">Neo Exdeath</h2>
+          <div class="duration-block duration-block--short">
+            <h3 class="duration-block-title">Short debuffs</h3>
+            <div class="neo-grid" id="neo-short-list"></div>
+          </div>
+          <div class="duration-block duration-block--long">
+            <h3 class="duration-block-title">Long debuffs</h3>
+            <div class="neo-grid" id="neo-long-list"></div>
+          </div>
+        </section>
+
+        <section class="debuff-section">
+          <h2 class="section-title">Chaos</h2>
+          <div class="chaos-grid" id="chaos-list"></div>
+        </section>
+
+        <section class="debuff-section">
+          <h2 class="section-title">Kefka — Mana Release</h2>
+          <div class="kefka-grid" id="kefka-list"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
