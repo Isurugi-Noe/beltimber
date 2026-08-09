@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kefka Says — You</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <p class="nav">
+        <a href="..">← Trainer</a>
+        ·
+        <a href="../kefka-says/index.html">Full tracker</a>
+      </p>
+      <h1>Kefka Says — You</h1>
+      <button type="button" id="reset-btn" class="btn reset-btn">Reset</button>
+    </header>
+
+    <section class="prompt-panel" id="prompt-panel">
+      <p class="prompt-line" id="prompt-line">First set <span class="stack">stack on A and C</span>, second set <span class="stack">stack on A and C</span></p>
+      <p class="prompt-line prompt-line--gaze" id="gaze-line">First gaze <span class="look-away">look away</span>, second gaze <span class="look-away">look away</span></p>
+    </section>
+
+    <main class="pickers">
+      <section class="duration-block duration-block--short">
+        <h2 class="duration-block-title">Short</h2>
+        <div class="icon-picker" id="short-icons"></div>
+      </section>
+      <section class="duration-block duration-block--long">
+        <h2 class="duration-block-title">Long</h2>
+        <div class="icon-picker" id="long-icons"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
