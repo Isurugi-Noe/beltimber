@@ -112,7 +112,8 @@ body {
   letter-spacing: 0.01em;
 }
 
-.prompt-line--gaze {
+.prompt-line--gaze,
+.prompt-line--mana {
   margin-top: 0.45rem;
   padding-top: 0.45rem;
   border-top: 1px solid var(--border);
@@ -137,17 +138,18 @@ body {
   color: #7ea5ef;
 }
 
-.prompt-line .look-away {
+.prompt-line .look-away,
+.prompt-line .real {
   color: var(--real);
 }
 
-.prompt-line .look-towards {
+.prompt-line .look-towards,
+.prompt-line .fake {
   color: var(--fake);
 }
 
 .pickers {
-  flex: 1;
-  min-height: 0;
+  flex: 0 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.55rem;
@@ -193,7 +195,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  flex: 1;
 }
 
 .debuff-card {
@@ -286,6 +287,76 @@ body {
   box-shadow: 0 0 0 1px rgba(168, 107, 212, 0.45);
 }
 
+.mana-block {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.7rem;
+  background: var(--surface);
+  border: 1px solid rgba(232, 92, 92, 0.35);
+  border-radius: 10px;
+}
+
+.mana-block .duration-block-title {
+  color: #e85c5c;
+}
+
+.mana-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.mana-row {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(6rem, 1fr) minmax(8.2rem, auto) minmax(8.2rem, auto);
+  gap: 0.45rem 0.75rem;
+  align-items: center;
+  padding: 0.45rem 0.5rem;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  background: var(--bg);
+}
+
+.mana-row > .debuff-icon,
+.mana-row > .icon-label {
+  align-self: center;
+}
+
+.cast-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.4rem 0.45rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(15, 17, 23, 0.85);
+}
+
+.cast-group.is-real {
+  border-color: rgba(76, 175, 130, 0.5);
+  background: rgba(76, 175, 130, 0.08);
+}
+
+.cast-group.is-fake {
+  border-color: rgba(168, 107, 212, 0.5);
+  background: rgba(168, 107, 212, 0.08);
+}
+
+.cast-label {
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.cast-group .debuff-toggles {
+  width: 100%;
+}
+
 @media (max-width: 560px) {
   html,
   body {
@@ -304,5 +375,22 @@ body {
 
   .prompt-line {
     font-size: 1.2rem;
+  }
+
+  .mana-row {
+    grid-template-columns: 2.2rem minmax(0, 1fr);
+  }
+
+  .mana-row > .debuff-icon,
+  .mana-row > .icon-label {
+    grid-row: 1;
+  }
+
+  .cast-group {
+    grid-column: 1 / -1;
+  }
+
+  .cast-group .debuff-toggles {
+    width: 100%;
   }
 }
