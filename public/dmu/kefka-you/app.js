@@ -151,10 +151,29 @@ function markedGaze(gaze) {
   return `<span class="${gaze.kind}">${gaze.text}</span>`;
 }
 
-function markedMana(value) {
-  if (value === "real") return '<span class="real">real</span>';
-  if (value === "fake") return '<span class="fake">fake</span>';
-  return '<span class="unset">—</span>';
+function resolveManaStand() {
+  const thunder = resolveMana("thunder");
+  const ice = resolveMana("blizzard");
+
+  if (!thunder || !ice) {
+    return { text: "—", kind: "unset" };
+  }
+
+  if (thunder === "real" && ice === "real") {
+    return { text: "Out of both", kind: "out-both" };
+  }
+  if (thunder === "fake" && ice === "fake") {
+    return { text: "Stand in both", kind: "stand-both" };
+  }
+  if (thunder === "real" && ice === "fake") {
+    return { text: "Stand in Ice", kind: "stand-ice" };
+  }
+  return { text: "Stand in Thunder", kind: "stand-thunder" };
+}
+
+function markedManaStand(stand) {
+  if (stand.kind === "unset") return '<span class="unset">—</span>';
+  return `<span class="${stand.kind}">${stand.text}</span>`;
 }
 
 function renderPrompt() {
@@ -163,7 +182,7 @@ function renderPrompt() {
   document.getElementById("gaze-line").innerHTML =
     `First gaze ${markedGaze(resolveGaze("short"))}, second gaze ${markedGaze(resolveGaze("long"))}`;
   document.getElementById("mana-line").innerHTML =
-    `Lightning ${markedMana(resolveMana("thunder"))}, Ice ${markedMana(resolveMana("blizzard"))}`;
+    `${markedManaStand(resolveManaStand())}`;
 }
 
 function setValue(duration, id, value) {

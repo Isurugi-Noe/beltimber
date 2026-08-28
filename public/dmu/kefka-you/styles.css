@@ -148,6 +148,16 @@ body {
   color: var(--fake);
 }
 
+.prompt-line .stand-thunder,
+.prompt-line .stand-ice,
+.prompt-line .stand-both {
+  color: var(--fake);
+}
+
+.prompt-line .out-both {
+  color: var(--real);
+}
+
 .pickers {
   flex: 0 0 auto;
   display: grid;
