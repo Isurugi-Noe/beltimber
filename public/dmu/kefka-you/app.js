@@ -1,4 +1,4 @@
-const STORAGE_KEY = "kefka-you-v3";
+const STORAGE_KEY = "kefka-you-v5";
 const ICON_BASE = "../kefka-says/icons";
 
 const DEBUFFS = [
@@ -21,6 +21,21 @@ const DEBUFFS = [
     id: "cursed-shriek",
     label: "Gaze",
     icon: `${ICON_BASE}/cursed-shriek.png`,
+  },
+];
+
+const CHAOS_DEBUFFS = [
+  {
+    id: "entropy",
+    label: "Entropy",
+    cast: "Inferno",
+    icon: `${ICON_BASE}/entropy.png`,
+  },
+  {
+    id: "dynamic-fluid",
+    label: "Fluid",
+    cast: "Tsunami",
+    icon: `${ICON_BASE}/dynamic-fluid.png`,
   },
 ];
 
@@ -47,6 +62,10 @@ function emptySelections() {
   return {
     short: {},
     long: {},
+    chaos: {
+      entropy: null,
+      "dynamic-fluid": null,
+    },
     mana: {
       thunder: { recorded: null, release: null },
       blizzard: { recorded: null, release: null },
@@ -68,6 +87,23 @@ function loadSelections() {
       for (const debuff of DEBUFFS) {
         const value = normalizeValue(entry[debuff.id]);
         if (value) result[duration][debuff.id] = value;
+      }
+    }
+
+    const chaos = saved.chaos && typeof saved.chaos === "object" ? saved.chaos : {};
+    for (const debuff of CHAOS_DEBUFFS) {
+      const value = normalizeValue(chaos[debuff.id]);
+      if (value) result.chaos[debuff.id] = value;
+    }
+
+    // Migrate older first/second layout if present.
+    if (!result.chaos.entropy && !result.chaos["dynamic-fluid"] && (chaos.first || chaos.second)) {
+      for (const phase of ["first", "second"]) {
+        const entry = chaos[phase] && typeof chaos[phase] === "object" ? chaos[phase] : {};
+        for (const debuff of CHAOS_DEBUFFS) {
+          const value = normalizeValue(entry[debuff.id]);
+          if (value && !result.chaos[debuff.id]) result.chaos[debuff.id] = value;
+        }
       }
     }
 
@@ -132,6 +168,24 @@ function resolveGaze(duration) {
   return { text: "look away", kind: "look-away" };
 }
 
+function resolveChaosMove(id, value) {
+  if (id === "entropy") {
+    return value === "real"
+      ? { shape: "twister", action: "MOVE", kind: "move" }
+      : { shape: "donut", action: "STAY", kind: "stay" };
+  }
+  return value === "real"
+    ? { shape: "donut", action: "STAY", kind: "stay" }
+    : { shape: "twister", action: "MOVE", kind: "move" };
+}
+
+function markedChaos(debuffId) {
+  const value = selections.chaos[debuffId];
+  if (!value) return '<span class="unset">—</span>';
+  const move = resolveChaosMove(debuffId, value);
+  return `${move.shape} <span class="${move.kind}">${move.action}</span>`;
+}
+
 function resolveMana(mechanicId) {
   const entry = selections.mana[mechanicId];
   if (!entry.recorded || !entry.release) return null;
@@ -181,6 +235,9 @@ function renderPrompt() {
     `First set ${markedParts(resolveSet("short"))}, second set ${markedParts(resolveSet("long"))}`;
   document.getElementById("gaze-line").innerHTML =
     `First gaze ${markedGaze(resolveGaze("short"))}, second gaze ${markedGaze(resolveGaze("long"))}`;
+  document.getElementById("chaos-line").innerHTML = CHAOS_DEBUFFS.map(
+    (debuff) => `${debuff.label}: ${markedChaos(debuff.id)}`
+  ).join(", ");
   document.getElementById("mana-line").innerHTML =
     `${markedManaStand(resolveManaStand())}`;
 }
@@ -191,6 +248,12 @@ function setValue(duration, id, value) {
   } else {
     selections[duration][id] = value;
   }
+  saveSelections();
+  render();
+}
+
+function setChaosValue(id, value) {
+  selections.chaos[id] = selections.chaos[id] === value ? null : value;
   saveSelections();
   render();
 }
@@ -239,6 +302,29 @@ function buildIconPicker(duration) {
   }
 }
 
+function buildChaosPicker() {
+  const wrap = document.getElementById("chaos-list");
+  wrap.innerHTML = "";
+
+  for (const debuff of CHAOS_DEBUFFS) {
+    const value = selections.chaos[debuff.id] || null;
+
+    const card = document.createElement("div");
+    card.className = "debuff-card";
+    if (value === "real") card.classList.add("is-real");
+    if (value === "fake") card.classList.add("is-fake");
+
+    card.innerHTML = `
+      <img class="debuff-icon" src="${debuff.icon}" alt="" width="42" height="42" />
+      <span class="icon-label">${debuff.label} <span class="cast-name">(${debuff.cast})</span></span>
+    `;
+    card.appendChild(
+      buildToggles(value, (option) => setChaosValue(debuff.id, option))
+    );
+    wrap.appendChild(card);
+  }
+}
+
 function buildManaPicker() {
   const wrap = document.getElementById("mana-list");
   wrap.innerHTML = "";
@@ -280,6 +366,7 @@ function render() {
   for (const duration of DURATIONS) {
     buildIconPicker(duration);
   }
+  buildChaosPicker();
   buildManaPicker();
   renderPrompt();
 }
