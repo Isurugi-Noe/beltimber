@@ -34,7 +34,7 @@
 	<style>#map-overlay{transform:translateY(100vh);opacity:0}</style>
 	<link id="dynamic-css" rel="stylesheet" href="css/styles.css?rev=37">
 	<script>
-		const ASSET_REV = '77';
+		const ASSET_REV = '81';
 		const link = document.getElementById('dynamic-css');
 		link.href = `css/styles.css?rev=${ASSET_REV}`;
 	</script>
@@ -654,6 +654,7 @@
 				<button type="button" class="web-knot" data-knot="4" aria-label="Web knot"></button>
 				<button type="button" class="web-knot" data-knot="5" aria-label="Web knot"></button>
 				<button type="button" class="web-knot" data-knot="6" aria-label="Web knot"></button>
+				<button type="button" class="web-knot is-golden" id="dream-golden-knot" hidden aria-label="Caught dream"></button>
 				<div class="dream-thread" id="dream-thread" hidden aria-hidden="true">
 					<p class="dream-thread-text" id="dream-thread-text"></p>
 				</div>
@@ -1224,7 +1225,8 @@
 	<script>
 		(function () {
 			const hang = document.getElementById('dreamcatcher-hang');
-			const knots = document.querySelectorAll('#dreamcatcher .web-knot');
+			const knots = document.querySelectorAll('#dreamcatcher .web-knot:not(.is-golden)');
+			const goldenKnot = document.getElementById('dream-golden-knot');
 			const branchImg = document.querySelector('#dreamcatcher .dreamcatcher-branch');
 			const stage = document.querySelector('#dreamcatcher .dreamcatcher-stage');
 			const wrap = document.querySelector('#dreamcatcher .dreamcatcher-branch-wrap');
@@ -1394,17 +1396,39 @@
 				"You left a footprint in his circle last time. He kept the mud.",
 				"The frogs went quiet around your camp. He sent for you. Come alone."
 			];
+			const GOLDEN_HOOK = "You took every dream. Leave him one of yours.";
 
 			const thread = document.getElementById('dream-thread');
 			const threadText = document.getElementById('dream-thread-text');
 			const fireflies = document.getElementById('firefly-container');
 			let openKnot = null;
+			const openedKnots = new Set();
 			const THREAD_GAP = 48;
 			const SCRAMBLE_CHARS = '\u16A0\u16A2\u16A6\u16A8\u16B1\u16C9\u16DF\u16DE\u16CA\u16C7\u16B9\u16D2\u16CF';
 			let scrambleToken = 0;
 			let scrambleRaf = 0;
 			let veilRaf = 0;
 			let reviveTimer = 0;
+			let goldenRevealTimer = 0;
+
+			function revealGoldenKnot() {
+				if (!goldenKnot || goldenKnot.classList.contains('is-revealed')) return;
+				goldenKnot.hidden = false;
+				requestAnimationFrame(() => {
+					requestAnimationFrame(() => {
+						goldenKnot.classList.add('is-revealed');
+					});
+				});
+			}
+
+			function noteKnotOpened(index) {
+				if (index < 0 || index >= HOOKS.length) return;
+				openedKnots.add(index);
+				if (openedKnots.size >= HOOKS.length) {
+					clearTimeout(goldenRevealTimer);
+					goldenRevealTimer = setTimeout(revealGoldenKnot, 480);
+				}
+			}
 
 			function setDreamVeil(amount) {
 				if (!dreamcatcherContainer) return;
@@ -1477,7 +1501,10 @@
 					thread.setAttribute('hidden', '');
 					thread.setAttribute('aria-hidden', 'true');
 				}
-				if (threadText) threadText.textContent = '';
+				if (threadText) {
+					threadText.textContent = '';
+					threadText.classList.remove('is-golden');
+				}
 				if (openKnot) {
 					openKnot.classList.remove('is-open');
 					openKnot = null;
@@ -1544,16 +1571,16 @@
 				knot.classList.add('is-open');
 			}
 
-			function openHook(knot, index) {
+			function openHook(knot, text, isGolden) {
 				if (!thread || !threadText) return;
 				if (openKnot && openKnot !== knot) {
 					openKnot.classList.remove('is-open');
 				}
-				const text = HOOKS[index % HOOKS.length];
 				scrambleToken++;
 				cancelAnimationFrame(scrambleRaf);
 				cancelAnimationFrame(veilRaf);
 				threadText.textContent = '';
+				threadText.classList.toggle('is-golden', !!isGolden);
 				thread.removeAttribute('hidden');
 				thread.setAttribute('aria-hidden', 'false');
 				sparkSkitter(knot);
@@ -1577,9 +1604,22 @@
 						closeHook();
 						return;
 					}
-					openHook(knot, index);
+					noteKnotOpened(index);
+					openHook(knot, HOOKS[index % HOOKS.length], false);
 				});
 			});
+
+			if (goldenKnot) {
+				goldenKnot.addEventListener('click', (e) => {
+					e.stopPropagation();
+					if (!goldenKnot.classList.contains('is-revealed')) return;
+					if (openKnot === goldenKnot && thread && thread.classList.contains('is-open')) {
+						closeHook();
+						return;
+					}
+					openHook(goldenKnot, GOLDEN_HOOK, true);
+				});
+			}
 
 			if (dreamcatcherContainer) {
 				dreamcatcherContainer.addEventListener('click', () => {
