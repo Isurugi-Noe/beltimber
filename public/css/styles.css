@@ -56,7 +56,6 @@ body::before {
   opacity: 0;
 }
 
-/* Transitions only after first paint — avoids fall-from-top on hard refresh */
 #map-overlay.ready {
   transition:
     transform 0.8s ease-in-out,
@@ -211,7 +210,6 @@ body::before {
 	100% { transform: translate(0px, 0px) rotate(0deg); }
 }
 
-/* Loom catch — fireflies panic, then go dark (per-fly vars set in JS) */
 @keyframes firefly-panic {
 	0%   { transform: translate(0, 0); }
 	20%  { transform: translate(calc(2px * var(--panic-amp, 1)), calc(-2px * var(--panic-amp, 1))); }
@@ -635,7 +633,6 @@ body::before {
 .web-knot.is-open:focus-visible {
 	opacity: 1;
 	outline: none;
-	/* Burst, then a light pinned tremor */
 	animation:
 		knot-catch 0.38s steps(2, end),
 		knot-skitter 1.15s linear 0.38s infinite;
@@ -662,7 +659,6 @@ body::before {
 	50% { opacity: 0.95; transform: translate(-50%, -50%) scale(1.08); }
 }
 
-/* Immediate catch thrash */
 @keyframes knot-catch {
 	0%   { transform: translate(calc(-50% + 0px), calc(-50% + 0px)) scale(1.55); }
 	25%  { transform: translate(calc(-50% + 2px), calc(-50% - 1px)) scale(1.95); }
@@ -671,7 +667,6 @@ body::before {
 	100% { transform: translate(calc(-50% + 0px), calc(-50% + 0px)) scale(1.85); }
 }
 
-/* Soft pinned tremor */
 @keyframes knot-skitter {
 	0%, 100% { transform: translate(calc(-50% + 0px), calc(-50% + 0px)) scale(1.85); }
 	20%      { transform: translate(calc(-50% + 1px), calc(-50% - 0.5px)) scale(1.87); }
@@ -713,7 +708,6 @@ body::before {
 	font-family: 'EB Garamond', serif;
 	font-size: clamp(1rem, 1.85vw, 1.25rem);
 	line-height: 1.45;
-	/* On the right of the orb → right-align; left side overrides below */
 	text-align: right;
 	letter-spacing: 0.01em;
 	text-shadow:

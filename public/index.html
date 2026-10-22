@@ -34,7 +34,7 @@
 	<style>#map-overlay{transform:translateY(100vh);opacity:0}</style>
 	<link id="dynamic-css" rel="stylesheet" href="css/styles.css?rev=37">
 	<script>
-		const ASSET_REV = '75';
+		const ASSET_REV = '76';
 		const link = document.getElementById('dynamic-css');
 		link.href = `css/styles.css?rev=${ASSET_REV}`;
 	</script>
@@ -1435,7 +1435,6 @@
 				fireflies.classList.remove('dream-revive');
 				fireflies.querySelectorAll('.firefly').forEach((ff) => {
 					const panicDur = (0.16 + Math.random() * 0.32).toFixed(2);
-					// Negative delay = start mid-cycle so they aren't in phase
 					const panicDelay = (-Math.random() * Number(panicDur)).toFixed(2);
 					const outDelay = (Math.random() * 0.4).toFixed(2);
 					const outDur = (0.65 + Math.random() * 0.7).toFixed(2);
@@ -1541,7 +1540,6 @@
 					}
 					threadText.innerHTML = output;
 					const progress = Math.min(1, frame / maxEnd);
-					// Dim follows the settle — catch/skitter already started
 					setDreamVeil(progress * 0.68);
 					if (complete === queue.length) {
 						setDreamVeil(0.68);
@@ -1571,7 +1569,6 @@
 				threadText.textContent = '';
 				thread.removeAttribute('hidden');
 				thread.setAttribute('aria-hidden', 'false');
-				// Catch first — before dim / scramble
 				sparkSkitter(knot);
 				hang.classList.add('is-reading');
 				hushFireflies();
