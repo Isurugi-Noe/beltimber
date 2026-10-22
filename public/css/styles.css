@@ -216,15 +216,16 @@ body::before {
 }
 
 @keyframes firefly-out {
-	0%   { opacity: 1; filter: brightness(1); }
-	35%  { opacity: 0.55; filter: brightness(0.7); }
+	0%   { opacity: var(--start-opacity, 1); filter: brightness(1); }
+	35%  { opacity: calc(var(--start-opacity, 1) * 0.55); filter: brightness(0.7); }
 	100% { opacity: 0; filter: brightness(0.15); box-shadow: none; }
 }
 
 #firefly-container.dream-hush .firefly {
+	opacity: var(--start-opacity, 1);
 	animation:
 		firefly-panic var(--panic-dur, 0.28s) linear var(--panic-delay, 0s) infinite,
-		firefly-out var(--out-dur, 0.95s) ease-in var(--out-delay, 0s) forwards !important;
+		firefly-out var(--out-dur, 0.95s) ease-in var(--out-delay, 0s) both !important;
 }
 
 #firefly-container.dream-revive .firefly {

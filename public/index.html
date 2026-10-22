@@ -34,7 +34,7 @@
 	<style>#map-overlay{transform:translateY(100vh);opacity:0}</style>
 	<link id="dynamic-css" rel="stylesheet" href="css/styles.css?rev=37">
 	<script>
-		const ASSET_REV = '76';
+		const ASSET_REV = '77';
 		const link = document.getElementById('dynamic-css');
 		link.href = `css/styles.css?rev=${ASSET_REV}`;
 	</script>
@@ -1416,6 +1416,9 @@
 				clearTimeout(reviveTimer);
 				fireflies.classList.remove('dream-revive');
 				fireflies.querySelectorAll('.firefly').forEach((ff) => {
+					const startOp = getComputedStyle(ff).opacity || '1';
+					ff.style.setProperty('--start-opacity', startOp);
+					ff.style.opacity = startOp;
 					const panicDur = (0.16 + Math.random() * 0.32).toFixed(2);
 					const panicDelay = (-Math.random() * Number(panicDur)).toFixed(2);
 					const outDelay = (Math.random() * 0.4).toFixed(2);
@@ -1437,6 +1440,8 @@
 				fireflies.querySelectorAll('.firefly').forEach((ff) => {
 					const anim = ff.dataset.baseAnim || ff.style.animation;
 					if (!ff.dataset.baseAnim && anim) ff.dataset.baseAnim = anim;
+					ff.style.opacity = '';
+					ff.style.removeProperty('--start-opacity');
 					ff.style.animation = 'none';
 					void ff.offsetWidth;
 					ff.style.animation = ff.dataset.baseAnim || '';
