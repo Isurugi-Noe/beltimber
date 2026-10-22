@@ -746,7 +746,7 @@
 </script>
 <script>
 	const NUM_FIREFLIES = 30;
-	  const MIN_DISTANCE = 50; // Minimum distance between fireflies
+	  const MIN_DISTANCE = 50;
 
 	  const container = document.getElementById("firefly-container");
 	  const usedPositions = [];
@@ -779,10 +779,8 @@
 
 	  	const { x, y } = getRandomPosition();
 
-	    // Random scale (size variation)
 	  	const scale = 0.6 + Math.random() * 1.2;
 
-	    // Random durations and delays
 	  	const flickerDuration = 1.5 + Math.random() * 1.5;
 	  	const wanderDuration = 15 + Math.random() * 10;
 	  	const delay = Math.random() * 5;
@@ -819,7 +817,6 @@
 		let targetX = 0;
 		let targetY = 0;
 
-// Store original transforms so we preserve base positions
 		const bgOriginalTransform = bgLayer ? bgLayer.getAttribute('transform') || '' : '';
 		const dirtOriginalTransform = dirtLayer ? dirtLayer.getAttribute('transform') || '' : '';
 		const bonesOriginalTransforms = Array.from(boneWrappers).map(wrapper => wrapper.getAttribute('transform') || '');
@@ -832,7 +829,6 @@
 			targetX = x;
 			targetY = y;
 
-  // Glow proximity check for bones
 			bones.forEach((bone) => {
 				const rect = bone.getBoundingClientRect();
 				const boneX = rect.left + rect.width / 2;
@@ -844,12 +840,12 @@
 
 				if (distance < 100) {
 					bone.classList.add('glow');
-      bone.classList.add('jitter'); // add jitter class on wrapper
-  } else {
-  	bone.classList.remove('glow');
-  	bone.classList.remove('jitter');
-  }
-});
+					bone.classList.add('jitter');
+				} else {
+					bone.classList.remove('glow');
+					bone.classList.remove('jitter');
+				}
+			});
 		});
 
 		let bgX = 0;
@@ -858,38 +854,31 @@
 		let ffY = 0;
 
 		function animateParallax() {
-  // Smooth interpolation for background (CSS background of main container)
 			bgX += (targetX * 10 - bgX) * 0.05;
 			bgY += (targetY * 10 - bgY) * 0.05;
 
-  // Smooth interpolation for fireflies
 			ffX += (targetX * 4 - ffX) * 0.04;
 			ffY += (targetY * 4 - ffY) * 0.04;
 
-  // Apply background parallax (CSS background image)
 			mainContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
 			pathsContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
 			cardsContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
 			dreamcatcherContainer.style.backgroundPosition = `${50 + bgX}% ${50 + bgY}%`;
 
-  // Apply fireflies parallax
 			fireflyContainer.style.transform = `translate(${ffX}px, ${ffY}px)`;
 
-  // Parallax for SVG background group (#Bg) — preserve original transform
 			if (bgLayer) {
 				const bgOffsetX = targetX * 2;
 				const bgOffsetY = targetY * 2;
 				bgLayer.setAttribute('transform', `${bgOriginalTransform} translate(${bgOffsetX}, ${bgOffsetY})`);
 			}
 
-  // Parallax for dirt overlay (#Dirt_overlay) — preserve original transform
 			if (dirtLayer) {
 				const dirtOffsetX = targetX * 1.5;
 				const dirtOffsetY = targetY * 1.5;
 				dirtLayer.setAttribute('transform', `${dirtOriginalTransform} translate(${dirtOffsetX}, ${dirtOffsetY})`);
 			}
 
-  // Parallax and jitter for bones wrappers — preserve original transform
 			boneWrappers.forEach((wrapper, i) => {
 				const depth = parseFloat(wrapper.dataset.depth) || 1;
 				const offsetX = targetX * 6 * depth;
@@ -1087,7 +1076,7 @@
 </script>
 <script>
 	const bones2 = document.querySelectorAll('.bone');
-	  const radius = 100; // Distance (in px) for glow activation
+	  const radius = 100;
 	  const bonesScene = document.getElementById('bones');
 	  const bonesScrollLeftBtn = document.getElementById('bones-scroll-left');
 	  const bonesScrollRightBtn = document.getElementById('bones-scroll-right');
@@ -1164,8 +1153,6 @@
 	  		}
 	  		selectedBone = null;
 	  		overlay.classList.remove('active');
-
-		    // Show top header again
 	  		topHeader.classList.remove('hidden');
 	  	}
 	  }
@@ -1191,8 +1178,6 @@
 	  			}
 	  			selectedBone = bone;
 	  			overlay.classList.add('active');
-
-		      // Hide top header when overlay opens
 	  			topHeader.classList.add('hidden');
 	  		}
 	  	});
@@ -1213,7 +1198,6 @@
 			const grid = document.querySelector('.cards-grid');
 			const cardWrappers = Array.from(grid.querySelectorAll('.card-wrapper'));
 
-	  // Shuffle the card wrappers
 			function shuffle(array) {
 				for (let i = array.length - 1; i > 0; i--) {
 					const j = Math.floor(Math.random() * (i + 1));
@@ -1224,19 +1208,17 @@
 			shuffle(cardWrappers);
 			cardWrappers.forEach(card => grid.appendChild(card));
 
-	  // Assign random rotation and 20% upside-down chance
 			cardWrappers.forEach(wrapper => {
 				const isUpsideDown = Math.random() < 0.2;
-	    const baseRotation = Math.random() * 30 - 15; // -15 to +15 deg
-	    const totalRotation = isUpsideDown ? baseRotation + 180 : baseRotation;
+				const baseRotation = Math.random() * 30 - 15;
+				const totalRotation = isUpsideDown ? baseRotation + 180 : baseRotation;
 
-	    wrapper.style.transform = `rotate(${totalRotation}deg)`;
+				wrapper.style.transform = `rotate(${totalRotation}deg)`;
 
-	    // Flip on click toggles flipped class on the card
-	    wrapper.addEventListener('click', () => {
-	    	wrapper.classList.toggle('flipped');
-	    });
-	});
+				wrapper.addEventListener('click', () => {
+					wrapper.classList.toggle('flipped');
+				});
+			});
 		});
 	</script>
 	<script>
@@ -1393,7 +1375,7 @@
 					return;
 				}
 				const x = (e.clientX / window.innerWidth - 0.5) * 2;
-				swayTarget = x * 2.4; // degrees
+				swayTarget = x * 2.4;
 			});
 
 			function tickSway() {

@@ -115,7 +115,6 @@ body::before {
 }
 
 @media (max-width: 768px) {
-	/* New mobile positions and sizes */
 	.sketch {
 		max-width: 55% !important;
 	}
@@ -179,7 +178,6 @@ body::before {
 	overflow: hidden;
 }
 
-/* Base firefly style */
 .firefly {
 	position: absolute;
 	width: 4px;
@@ -195,13 +193,11 @@ body::before {
 	opacity: 0;
 }
 
-/* Flicker animation */
 @keyframes flicker {
 	0%, 100% { opacity: 0.2; }
 	50% { opacity: 1; }
 }
 
-/* Float animation (looping gently) */
 @keyframes wander {
 	0%   { transform: translate(0px, 0px) rotate(0deg); }
 	25%  { transform: translate(6px, -10px) rotate(1deg); }
@@ -341,12 +337,12 @@ body::before {
 .topHeader {
   transition: opacity 0.4s ease;
   opacity: 1;
-  pointer-events: auto; /* allow interaction when visible */
+  pointer-events: auto;
 }
 
 .topHeader.hidden {
   opacity: 0;
-  pointer-events: none; /* disable interaction when hidden */
+  pointer-events: none;
 }
 
 .quote-overlay {
@@ -785,7 +781,6 @@ body::before {
 
 .card-wrapper {
   transition: transform 0.3s ease;
-  /* rotation will be applied here by JS */
 }
 
 .card {
@@ -801,7 +796,7 @@ body::before {
 .card-wrapper {
   width: 100%;
   max-width: 220px;
-  aspect-ratio: 2 / 3; /* Maintains 220x330 proportion */
+  aspect-ratio: 2 / 3;
   position: relative;
   transform-origin: center center;
   cursor: pointer;
