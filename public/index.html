@@ -34,7 +34,7 @@
 	<style>#map-overlay{transform:translateY(100vh);opacity:0}</style>
 	<link id="dynamic-css" rel="stylesheet" href="css/styles.css?rev=37">
 	<script>
-		const ASSET_REV = '69';
+		const ASSET_REV = '75';
 		const link = document.getElementById('dynamic-css');
 		link.href = `css/styles.css?rev=${ASSET_REV}`;
 	</script>
@@ -641,6 +641,7 @@
 </div>
 </div>
 <div class="container" id="dreamcatcher">
+	<div class="dream-read-veil" aria-hidden="true"></div>
 	<div class="dreamcatcher-branch-wrap">
 		<img class="dreamcatcher-branch" src="img/dreamcatcher-branch.png?rev=69" alt="" draggable="false" aria-hidden="true">
 		<div class="dreamcatcher-stage">
@@ -653,11 +654,11 @@
 				<button type="button" class="web-knot" data-knot="4" aria-label="Web knot"></button>
 				<button type="button" class="web-knot" data-knot="5" aria-label="Web knot"></button>
 				<button type="button" class="web-knot" data-knot="6" aria-label="Web knot"></button>
+				<div class="dream-thread" id="dream-thread" hidden aria-hidden="true">
+					<p class="dream-thread-text" id="dream-thread-text"></p>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="dream-hook-overlay" id="dream-hook-overlay" aria-hidden="true">
-		<p class="dream-hook-text" id="dream-hook-text"></p>
 	</div>
 </div>
 <div class="container" id="paths">
@@ -790,10 +791,12 @@
 	  	firefly.style.left = `${x}px`;
 	  	firefly.style.transform = `scale(${scale})`;
 
-	  	firefly.style.animation = `
+	  	const baseAnim = `
 	      flicker ${flickerDuration.toFixed(2)}s ease-in-out ${delay.toFixed(2)}s infinite,
 	      wander ${wanderDuration.toFixed(2)}s ease-in-out ${delay.toFixed(2)}s infinite
 	  	`;
+	  	firefly.style.animation = baseAnim;
+	  	firefly.dataset.baseAnim = baseAnim;
 
 	  	container.appendChild(firefly);
 	  }
@@ -1410,39 +1413,183 @@
 				"The frogs went quiet around your camp. He sent for you. Come alone."
 			];
 
-			const hookOverlay = document.getElementById('dream-hook-overlay');
-			const hookText = document.getElementById('dream-hook-text');
+			const thread = document.getElementById('dream-thread');
+			const threadText = document.getElementById('dream-thread-text');
+			const fireflies = document.getElementById('firefly-container');
 			let openKnot = null;
+			const THREAD_GAP = 48;
+			const SCRAMBLE_CHARS = '\u16A0\u16A2\u16A6\u16A8\u16B1\u16C9\u16DF\u16DE\u16CA\u16C7\u16B9\u16D2\u16CF';
+			let scrambleToken = 0;
+			let scrambleRaf = 0;
+			let veilRaf = 0;
+			let reviveTimer = 0;
+
+			function setDreamVeil(amount) {
+				if (!dreamcatcherContainer) return;
+				dreamcatcherContainer.style.setProperty('--dream-veil', amount.toFixed(3));
+			}
+
+			function hushFireflies() {
+				if (!fireflies) return;
+				clearTimeout(reviveTimer);
+				fireflies.classList.remove('dream-revive');
+				fireflies.querySelectorAll('.firefly').forEach((ff) => {
+					const panicDur = (0.16 + Math.random() * 0.32).toFixed(2);
+					// Negative delay = start mid-cycle so they aren't in phase
+					const panicDelay = (-Math.random() * Number(panicDur)).toFixed(2);
+					const outDelay = (Math.random() * 0.4).toFixed(2);
+					const outDur = (0.65 + Math.random() * 0.7).toFixed(2);
+					const amp = (0.55 + Math.random() * 1.35).toFixed(2);
+					ff.style.setProperty('--panic-dur', panicDur + 's');
+					ff.style.setProperty('--panic-delay', panicDelay + 's');
+					ff.style.setProperty('--out-delay', outDelay + 's');
+					ff.style.setProperty('--out-dur', outDur + 's');
+					ff.style.setProperty('--panic-amp', amp);
+				});
+				fireflies.classList.add('dream-hush');
+			}
+
+			function reviveFireflies() {
+				if (!fireflies) return;
+				fireflies.classList.remove('dream-hush');
+				fireflies.classList.add('dream-revive');
+				fireflies.querySelectorAll('.firefly').forEach((ff) => {
+					const anim = ff.dataset.baseAnim || ff.style.animation;
+					if (!ff.dataset.baseAnim && anim) ff.dataset.baseAnim = anim;
+					ff.style.animation = 'none';
+					void ff.offsetWidth;
+					ff.style.animation = ff.dataset.baseAnim || '';
+				});
+				clearTimeout(reviveTimer);
+				reviveTimer = setTimeout(() => {
+					fireflies.classList.remove('dream-revive');
+				}, 1600);
+			}
+
+			function easeVeilTo(target, ms) {
+				cancelAnimationFrame(veilRaf);
+				const start = parseFloat(getComputedStyle(dreamcatcherContainer).getPropertyValue('--dream-veil')) || 0;
+				const from = start;
+				const t0 = performance.now();
+				function step(now) {
+					const p = Math.min(1, (now - t0) / ms);
+					const eased = 1 - Math.pow(1 - p, 2);
+					setDreamVeil(from + (target - from) * eased);
+					if (p < 1) veilRaf = requestAnimationFrame(step);
+				}
+				veilRaf = requestAnimationFrame(step);
+			}
 
 			function closeHook() {
-				if (!hookOverlay) return;
-				hookOverlay.classList.remove('active');
-				hookOverlay.setAttribute('aria-hidden', 'true');
-				if (hookText) hookText.textContent = '';
+				scrambleToken++;
+				cancelAnimationFrame(scrambleRaf);
+				hang.classList.remove('is-reading');
+				easeVeilTo(0, 900);
+				reviveFireflies();
+				if (thread) {
+					thread.classList.remove('is-open', 'is-left');
+					thread.setAttribute('hidden', '');
+					thread.setAttribute('aria-hidden', 'true');
+				}
+				if (threadText) threadText.textContent = '';
 				if (openKnot) {
 					openKnot.classList.remove('is-open');
 					openKnot = null;
 				}
 			}
 
+			function pinThread(knot) {
+				if (!thread || !hang || !knot) return;
+				const hangW = hang.offsetWidth;
+				const knotX = knot.offsetLeft;
+				const knotY = knot.offsetTop;
+				const preferLeft = knotX > hangW * 0.55;
+				const offsetX = preferLeft ? -THREAD_GAP : THREAD_GAP;
+
+				thread.classList.toggle('is-left', preferLeft);
+				thread.style.left = `${Math.round(knotX + offsetX)}px`;
+				thread.style.top = `${Math.round(knotY)}px`;
+			}
+
+			function scrambleHook(text) {
+				cancelAnimationFrame(scrambleRaf);
+				const token = scrambleToken;
+				const queue = [];
+				for (let i = 0; i < text.length; i++) {
+					const start = Math.floor(Math.random() * 50);
+					const end = start + 10 + Math.floor(Math.random() * 48);
+					queue.push({ to: text[i], start, end, char: null });
+				}
+				const maxEnd = queue.reduce((m, q) => Math.max(m, q.end), 1);
+				let frame = 0;
+
+				function tick() {
+					if (token !== scrambleToken) return;
+					let output = '';
+					let complete = 0;
+					for (let i = 0; i < queue.length; i++) {
+						const item = queue[i];
+						if (frame >= item.end) {
+							complete++;
+							output += item.to;
+						} else if (frame >= item.start) {
+							if (!item.char || Math.random() < 0.28) {
+								item.char = SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+							}
+							output += '<span class="dud">' + item.char + '</span>';
+						}
+					}
+					threadText.innerHTML = output;
+					const progress = Math.min(1, frame / maxEnd);
+					// Dim follows the settle — catch/skitter already started
+					setDreamVeil(progress * 0.68);
+					if (complete === queue.length) {
+						setDreamVeil(0.68);
+						return;
+					}
+					frame++;
+					scrambleRaf = requestAnimationFrame(tick);
+				}
+				scrambleRaf = requestAnimationFrame(tick);
+			}
+
+			function sparkSkitter(knot) {
+				knot.classList.remove('is-open');
+				void knot.offsetWidth;
+				knot.classList.add('is-open');
+			}
+
 			function openHook(knot, index) {
-				if (!hookOverlay || !hookText) return;
+				if (!thread || !threadText) return;
 				if (openKnot && openKnot !== knot) {
 					openKnot.classList.remove('is-open');
 				}
 				const text = HOOKS[index % HOOKS.length];
-				hookText.textContent = '"' + text + '"';
-				hookOverlay.classList.add('active');
-				hookOverlay.setAttribute('aria-hidden', 'false');
-				knot.classList.add('is-open');
+				scrambleToken++;
+				cancelAnimationFrame(scrambleRaf);
+				cancelAnimationFrame(veilRaf);
+				threadText.textContent = '';
+				thread.removeAttribute('hidden');
+				thread.setAttribute('aria-hidden', 'false');
+				// Catch first — before dim / scramble
+				sparkSkitter(knot);
+				hang.classList.add('is-reading');
+				hushFireflies();
+				setDreamVeil(0);
 				openKnot = knot;
+				pinThread(knot);
+				thread.classList.add('is-open');
+				requestAnimationFrame(() => {
+					pinThread(knot);
+					scrambleHook(text);
+				});
 			}
 
 			knots.forEach((knot) => {
 				knot.addEventListener('click', (e) => {
 					e.stopPropagation();
 					const index = parseInt(knot.getAttribute('data-knot'), 10) || 0;
-					if (openKnot === knot && hookOverlay.classList.contains('active')) {
+					if (openKnot === knot && thread && thread.classList.contains('is-open')) {
 						closeHook();
 						return;
 					}
@@ -1450,12 +1597,15 @@
 				});
 			});
 
-			if (hookOverlay) {
-				hookOverlay.addEventListener('click', (e) => {
-					e.stopPropagation();
-					closeHook();
+			if (dreamcatcherContainer) {
+				dreamcatcherContainer.addEventListener('click', () => {
+					if (openKnot) closeHook();
 				});
 			}
+
+			window.addEventListener('resize', () => {
+				if (openKnot) pinThread(openKnot);
+			});
 		})();
 	</script>
 

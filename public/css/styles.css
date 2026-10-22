@@ -211,6 +211,34 @@ body::before {
 	100% { transform: translate(0px, 0px) rotate(0deg); }
 }
 
+/* Loom catch — fireflies panic, then go dark (per-fly vars set in JS) */
+@keyframes firefly-panic {
+	0%   { transform: translate(0, 0); }
+	20%  { transform: translate(calc(2px * var(--panic-amp, 1)), calc(-2px * var(--panic-amp, 1))); }
+	40%  { transform: translate(calc(-2px * var(--panic-amp, 1)), calc(1px * var(--panic-amp, 1))); }
+	60%  { transform: translate(calc(1.5px * var(--panic-amp, 1)), calc(2px * var(--panic-amp, 1))); }
+	80%  { transform: translate(calc(-1.5px * var(--panic-amp, 1)), calc(-1px * var(--panic-amp, 1))); }
+	100% { transform: translate(0, 0); }
+}
+
+@keyframes firefly-out {
+	0%   { opacity: 1; filter: brightness(1); }
+	35%  { opacity: 0.55; filter: brightness(0.7); }
+	100% { opacity: 0; filter: brightness(0.15); box-shadow: none; }
+}
+
+#firefly-container.dream-hush .firefly {
+	animation:
+		firefly-panic var(--panic-dur, 0.28s) linear var(--panic-delay, 0s) infinite,
+		firefly-out var(--out-dur, 0.95s) ease-in var(--out-delay, 0s) forwards !important;
+}
+
+#firefly-container.dream-revive .firefly {
+	animation:
+		flicker 2s ease-in-out infinite alternate,
+		wander 18s linear infinite !important;
+}
+
 .main {
 	position: relative;
 	height: 100vh;
@@ -413,6 +441,7 @@ body::before {
 }
 
 #dreamcatcher {
+	--dream-veil: 0;
 	position: relative;
 	height: 100vh;
 	width: 100%;
@@ -425,6 +454,15 @@ body::before {
 	background-position: center;
 	transition: background-position 0.1s ease;
 	overflow: hidden;
+}
+
+#dreamcatcher .dream-read-veil {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	pointer-events: none;
+	background: rgba(0, 0, 0, var(--dream-veil));
+	transition: background 0.1s linear;
 }
 
 #dreamcatcher::before {
@@ -470,7 +508,7 @@ body::before {
 .dreamcatcher-branch-wrap {
 	position: absolute;
 	inset: 0;
-	z-index: 2;
+	z-index: 3;
 	pointer-events: none;
 	overflow: visible;
 	box-sizing: border-box;
@@ -489,7 +527,10 @@ body::before {
 	margin: 0;
 	user-select: none;
 	-webkit-user-drag: none;
-	filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.55));
+	filter:
+		drop-shadow(0 12px 18px rgba(0, 0, 0, 0.55))
+		brightness(calc(1 - var(--dream-veil, 0) * 0.45));
+	transition: filter 0.1s linear;
 }
 
 .dreamcatcher-stage {
@@ -503,6 +544,7 @@ body::before {
 	pointer-events: none;
 	display: flex;
 	justify-content: center;
+	overflow: visible;
 }
 
 .dreamcatcher-hang {
@@ -515,7 +557,7 @@ body::before {
 	animation: dream-pendulum 7s ease-in-out infinite;
 	will-change: transform;
 	pointer-events: none;
-	filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.5));
+	overflow: visible;
 }
 
 .dreamcatcher-hang-img {
@@ -528,7 +570,11 @@ body::before {
 	user-select: none;
 	-webkit-user-drag: none;
 	pointer-events: none;
-	filter: saturate(0.62) brightness(0.96);
+	filter:
+		saturate(0.62)
+		brightness(calc(0.96 - var(--dream-veil, 0) * 0.42))
+		drop-shadow(0 16px 24px rgba(0, 0, 0, 0.5));
+	transition: filter 0.1s linear;
 }
 
 
@@ -584,13 +630,31 @@ body::before {
 		0 0 24px 8px rgba(136, 255, 212, 0.5);
 }
 
-.web-knot.is-open {
-	animation: none;
+.web-knot.is-open,
+.web-knot.is-open:hover,
+.web-knot.is-open:focus-visible {
 	opacity: 1;
-	transform: translate(-50%, -50%) scale(1.85);
+	outline: none;
+	/* Burst, then a light pinned tremor */
+	animation:
+		knot-catch 0.38s steps(2, end),
+		knot-skitter 1.15s linear 0.38s infinite;
 	box-shadow:
 		0 0 10px 4px rgba(180, 255, 230, 0.95),
 		0 0 28px 10px rgba(136, 255, 212, 0.55);
+}
+
+.dreamcatcher-hang.is-reading .web-knot:not(.is-open) {
+	opacity: 0.14;
+	animation: none;
+	filter: saturate(0.25) brightness(0.7);
+	box-shadow: none;
+	transform: translate(-50%, -50%) scale(0.85);
+	transition:
+		opacity 0.45s ease,
+		filter 0.45s ease,
+		transform 0.45s ease,
+		box-shadow 0.45s ease;
 }
 
 @keyframes knot-pulse {
@@ -598,37 +662,78 @@ body::before {
 	50% { opacity: 0.95; transform: translate(-50%, -50%) scale(1.08); }
 }
 
-.dream-hook-overlay {
+/* Immediate catch thrash */
+@keyframes knot-catch {
+	0%   { transform: translate(calc(-50% + 0px), calc(-50% + 0px)) scale(1.55); }
+	25%  { transform: translate(calc(-50% + 2px), calc(-50% - 1px)) scale(1.95); }
+	50%  { transform: translate(calc(-50% - 2px), calc(-50% + 1px)) scale(1.7); }
+	75%  { transform: translate(calc(-50% + 1px), calc(-50% + 1px)) scale(1.9); }
+	100% { transform: translate(calc(-50% + 0px), calc(-50% + 0px)) scale(1.85); }
+}
+
+/* Soft pinned tremor */
+@keyframes knot-skitter {
+	0%, 100% { transform: translate(calc(-50% + 0px), calc(-50% + 0px)) scale(1.85); }
+	20%      { transform: translate(calc(-50% + 1px), calc(-50% - 0.5px)) scale(1.87); }
+	40%      { transform: translate(calc(-50% - 1px), calc(-50% + 0.5px)) scale(1.83); }
+	60%      { transform: translate(calc(-50% + 0.5px), calc(-50% + 1px)) scale(1.86); }
+	80%      { transform: translate(calc(-50% - 0.5px), calc(-50% - 0.5px)) scale(1.84); }
+}
+
+.dream-thread {
 	position: absolute;
-	inset: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: rgba(0, 0, 0, 0.7);
-	opacity: 0;
-	pointer-events: none;
-	transition: opacity 0.4s ease;
-	z-index: 20;
-	padding: 1.5rem;
-	cursor: pointer;
-}
-
-.dream-hook-overlay.active {
-	opacity: 1;
-	pointer-events: auto;
-}
-
-.dream-hook-text {
+	z-index: 5;
+	left: 0;
+	top: 0;
+	max-width: min(17rem, 52vw);
+	padding: 0;
 	margin: 0;
-	max-width: 80vw;
-	text-align: center;
-	color: #fff;
+	box-sizing: border-box;
+	pointer-events: auto;
+	cursor: pointer;
+	opacity: 0;
+	transform: translate(0, -50%);
+	transition: opacity 0.4s ease;
+	background: none;
+	border: none;
+	box-shadow: none;
+}
+
+.dream-thread.is-open {
+	opacity: 1;
+}
+
+.dream-thread.is-left {
+	transform: translate(-100%, -50%);
+}
+
+.dream-thread-text {
+	margin: 0;
+	color: #c8ffe0;
 	font-family: 'EB Garamond', serif;
-	font-size: clamp(1.35rem, 2.6vw, 2rem);
+	font-size: clamp(1rem, 1.85vw, 1.25rem);
 	line-height: 1.45;
-	text-shadow: 0 0 10px rgba(136, 255, 212, 1);
-	pointer-events: none;
+	/* On the right of the orb → right-align; left side overrides below */
+	text-align: right;
+	letter-spacing: 0.01em;
+	text-shadow:
+		0 0 6px rgba(180, 255, 230, 0.95),
+		0 0 14px rgba(136, 255, 212, 0.75),
+		0 0 30px rgba(90, 210, 180, 0.45);
 	user-select: none;
+	pointer-events: none;
+}
+
+.dream-thread.is-left .dream-thread-text {
+	text-align: left;
+}
+
+.dream-thread-text .dud {
+	color: #88ffd4;
+	opacity: 0.5;
+	text-shadow:
+		0 0 4px rgba(136, 255, 212, 0.8),
+		0 0 12px rgba(90, 210, 180, 0.4);
 }
 
 @media (max-width: 768px) {
@@ -644,6 +749,14 @@ body::before {
 	.web-knot {
 		width: 28px;
 		height: 28px;
+	}
+
+	.dream-thread {
+		max-width: min(14.5rem, 64vw);
+	}
+
+	.dream-thread-text {
+		font-size: clamp(0.95rem, 3.8vw, 1.12rem);
 	}
 }
 
