@@ -228,12 +228,6 @@ body::before {
 		firefly-out var(--out-dur, 0.95s) ease-in var(--out-delay, 0s) both !important;
 }
 
-#firefly-container.dream-revive .firefly {
-	animation:
-		flicker 2s ease-in-out infinite alternate,
-		wander 18s linear infinite !important;
-}
-
 .main {
 	position: relative;
 	height: 100vh;
