@@ -31,9 +31,10 @@
 	<link href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:wght@200;300;400;500;600;700&family=PT+Sans+Narrow:wght@400;700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
 
 
+	<style>#map-overlay{transform:translateY(100vh);opacity:0}</style>
 	<link id="dynamic-css" rel="stylesheet" href="css/styles.css?rev=37">
 	<script>
-		const ASSET_REV = '67';
+		const ASSET_REV = '68';
 		const link = document.getElementById('dynamic-css');
 		link.href = `css/styles.css?rev=${ASSET_REV}`;
 	</script>
@@ -929,6 +930,13 @@
 				clearLinesTimeout = null;
 			}, 800);
 		};
+
+		const mapOverlay = document.getElementById('map-overlay');
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				mapOverlay.classList.add('ready');
+			});
+		});
 
 		document.getElementById('show-map-btn').addEventListener('click', function () {
 			const overlay = document.getElementById('map-overlay');
